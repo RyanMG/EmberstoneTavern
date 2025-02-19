@@ -5,9 +5,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@types/*": [".types/*"],
-      "@components/*": [".components/*"],
+      "@types/*": ["./types/*"],
+      "@components/*": ["./components/*"],
       "@constants/*": ["./constants/*"],
+      "@context/*": ["./app/context/*"],
+      "@hooks/*": ["./app/hooks/*"]
     }
   },
   "include": [

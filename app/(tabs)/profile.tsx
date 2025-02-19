@@ -1,27 +1,21 @@
-import { StyleSheet } from 'react-native';
-
-import { View } from '@/components/Themed';
+import { useAuth } from '@context/AuthContext';
+import Login from '@components/auth/Login';
+import PageContainer from '@components/common/PageContainers';
+import PageTitle from '@components/common/PageTitle';
 
 export default function Profile() {
+  const { authState } = useAuth();
   return (
-    <View style={styles.container}>
-    </View>
+    <PageContainer>
+      {authState?.authenticated ? (
+        <>
+          <PageTitle
+            text="Profile"
+          />
+        </>
+      ) : (
+        <Login />
+      )}
+    </PageContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});

@@ -1,27 +1,17 @@
-import { StyleSheet } from 'react-native';
-
-import { View } from '@/components/Themed';
+import { StyleSheet, Text } from 'react-native';
+import PageContainer from '@components/common/PageContainers';
 
 export default function Campaigns() {
   return (
-    <View style={styles.container}>
-    </View>
+    <PageContainer>
+      <Text style={styles.title}>Campaigns</Text>
+    </PageContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
+  }
 });
