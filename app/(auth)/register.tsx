@@ -13,10 +13,18 @@ import Colors from '@constants/Colors';
 
 export default function Register() {
   const { register } = useAuth();
+
+  const [firstName, setFirstName] = useState<string>('');
+  const [firstNameError, setFirstNameError] = useState<string | undefined>();
+  const [lastName, setLastName] = useState<string>('');
+  const [lastNameError, setLastNameError] = useState<string | undefined>();
+
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const [emailError, setEmailError] = useState<string | undefined>();
+
+  const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string | undefined>();
+
   const [agreed, setAgreed] = useState<boolean | undefined>(false);
   const [registerError, setRegisterError] = useState<string | undefined>();
   const router = useRouter();
@@ -24,16 +32,31 @@ export default function Register() {
   const onRegisterPress = async () => {
     setEmailError(undefined);
     setPasswordError(undefined);
+    setFirstNameError(undefined);
+    setLastNameError(undefined);
+    let hasError = false;
+
+    if (!firstName) {
+      setFirstNameError('First name is required');
+      hasError = true;
+    }
+
+    if (!lastName) {
+      setLastNameError('Last name is required');
+      hasError = true;
+    }
 
     if (!email || !email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
       setEmailError('Valid email is required');
+      hasError = true;
     }
 
     if (!password || password.length < 6) {
       setPasswordError('Password is required');
+      hasError = true;
     }
 
-    if (agreed && !emailError && !passwordError) {
+    if (!hasError) {
       const response = await register(email, password);
 
       if ('error' in response && response.error) {
@@ -47,12 +70,35 @@ export default function Register() {
       setAgreed(false);
     }
   }
+
   return (
     <PageContainer>
       <PageTitle
         text="Register"
       />
       <View style={styles.loginFormWrapper}>
+
+        <View style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+          <InputElement
+            label="First Name"
+            halfWidth
+            value={firstName}
+            onChangeText={setFirstName}
+            errorText={firstNameError}
+          />
+          <InputElement
+            label="Last Name"
+            halfWidth
+            value={lastName}
+            onChangeText={setLastName}
+            errorText={lastNameError}
+          />
+        </View>
+
         <InputElement
           label="Email Address"
           value={email}

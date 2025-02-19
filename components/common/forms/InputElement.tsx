@@ -5,6 +5,7 @@ import Colors from '@/constants/Colors';
 export default function InputElement({
   label,
   placeholder,
+  halfWidth = false,
   keyboardType = 'default',
   value,
   onChangeText,
@@ -12,6 +13,7 @@ export default function InputElement({
   errorText
 }: {
   label: string;
+  halfWidth?: boolean;
   placeholder?: string;
   keyboardType?: KeyboardTypeOptions | undefined;
   value: string;
@@ -20,7 +22,11 @@ export default function InputElement({
   errorText?: string;
 }) {
   return (
-    <View style={styles.inputWrapper}>
+    <View style={[
+      styles.inputWrapper,
+      halfWidth ? styles.halfWidth : ''
+
+    ]}>
       <Text style={styles.inputLabel}>{label}</Text>
       <TextInput
         style={styles.input}
@@ -41,6 +47,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     marginBottom: 10
+  },
+  halfWidth: {
+    width: '48%'
   },
   inputLabel: {
     color: Colors.TEXT.DARKEN,

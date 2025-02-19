@@ -55,6 +55,7 @@ export default function Login() {
         Creating or joinging campaigns requires you be logged into the application. Register or sign in to continue.
       </BodyText>
       <View style={styles.loginFormWrapper}>
+
         <InputElement
           label="Email Address"
           value={email}
