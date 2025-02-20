@@ -1,4 +1,4 @@
-import ContentBox from '@components/common/ContentBox';
+import PageContainer from '@components/common/PageContainers';
 import PageTitle from '@components/common/PageTitle';
 import BodyText from '@components/common/BodyText';
 import InputElement from '@components/common/forms/InputElement';
@@ -47,47 +47,58 @@ export default function Login() {
   }
 
   return (
-    <ContentBox>
+    <PageContainer>
       <PageTitle
         text="Login To App"
       />
-      <BodyText textSize="sm" italic={true}>
-        Creating or joinging campaigns requires you be logged into the application. Register or sign in to continue.
-      </BodyText>
-      <View style={styles.loginFormWrapper}>
+      <View style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'space-between', width: '100%'}}>
 
-        <InputElement
-          label="Email Address"
-          value={email}
-          onChangeText={setEmail}
-          errorText={emailError}
-        />
-        <InputElement
-          label="Password"
-          value={password}
-          secureTextEntry={true}
-          onChangeText={setPassword}
-          errorText={passwordError}
-        />
-        <Button
-          title="Login"
-          onPress={onLoginPress}
-        />
-        {loginError && <FormErrorText errorText={loginError} />}
+        <View style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
+          <View style={styles.loginFormWrapper}>
+            <InputElement
+              label="Email Address"
+              value={email}
+              onChangeText={setEmail}
+              errorText={emailError}
+            />
+            <InputElement
+              label="Password"
+              value={password}
+              secureTextEntry={true}
+              onChangeText={setPassword}
+              errorText={passwordError}
+            />
+            <Button
+              title="Login"
+              onPress={onLoginPress}
+            />
+            {loginError && <FormErrorText errorText={loginError} />}
+          </View>
+          <Divider />
+
+          <View style={{display: 'flex', padding: 10, flexDirection: 'column'}}>
+            <BodyText textSize="sm" italic={true}>
+              Don't yet have an account? Register to get started!
+            </BodyText>
+            <Spacer size="sm" />
+            <Button
+              title="Register"
+              onPress={() => {
+                router.replace('/register');
+              }}
+            />
+          </View>
+        </View>
       </View>
-      <Divider />
-      <BodyText textSize="sm" italic={true}>
-        Don't yet have an account? Register here!
-      </BodyText>
-      <Spacer size="sm" />
-      <Button
-        title="Register"
-        onPress={() => {
-          router.replace('/register');
-        }}
-      />
 
-    </ContentBox>
+      <View style={{width: '100%'}}>
+        <Button
+          title="Cancel"
+          theme="secondary"
+          onPress={() => router.push('/')}
+        />
+      </View>
+    </PageContainer>
   );
 }
 

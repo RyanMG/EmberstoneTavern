@@ -1,6 +1,10 @@
-import axios, { AxiosResponse } from 'axios';
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import axios from 'axios';
+import { createContext, useContext, useEffect, useState, useRef, ReactNode } from 'react';
 import useStorage from '@hooks/useStorage';
+import { useRouter } from 'expo-router';
+import {
+  TPerson
+} from '@types/person';
 
 const TOKEN_KEY = 'auth_token';
 
@@ -12,6 +16,7 @@ const AuthContext = createContext<{
   register: (firstName: string, lastName: string, email: string, password: string) => Promise<{success: boolean, message: string}>;
   login: (email: string, password: string) => Promise<{success: boolean, message: string}>;
   logout: () => Promise<void>;
+  getActiveUser: () => TPerson | null;
   loading: boolean;
 }>({
   authState: {
@@ -31,6 +36,7 @@ const AuthContext = createContext<{
     }
   },
   logout: async () => {},
+  getActiveUser: () => null,
   loading: true
 });
 
@@ -38,6 +44,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const { getStorageItem, setStorageItem, removeStorageItem } = useStorage();
   const [loading, setLoading] = useState<boolean>(true);
+  const activeUser = useRef<TPerson | null>(null);
+  const router = useRouter();
 
   const [authState, setAuthState] = useState<{
     token: string | null;
@@ -90,6 +98,17 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     })
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    axios.interceptors.response.use(response => {
+      return response;
+    }, (error) => {
+      if (401 === error.response.status) {
+        logout();
+        // @TODO notification for user
+        router.push('/(auth)/login');
+      } else {
+          return Promise.reject(error);
+      }
+    });
   }
 
   /**
@@ -136,15 +155,33 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   /**
+   * Fetch data for the active user
+   */
+  const fetchActiveUser = async (token: string) => {
+    try {
+      const response = await axios.get(`${process.env.EXPO_PUBLIC_API_ROOT_URL}/api/person`);
+
+      if (response.data.success) {
+        activeUser.current = response.data;
+      }
+
+    } catch (error) {
+      console.error("TODO active user fetch error");
+    }
+  }
+
+  const getActiveUser = () => activeUser.current;
+
+  /**
    * Initial
    */
   useEffect(() => {
     (async () => {
-      console.log('checking token via useEffect');
       const token = await getStorageItem(TOKEN_KEY) as string | null;
 
       if (token) {
         setTokenForSession(token);
+        await fetchActiveUser(token);
       }
 
       setLoading(false);
@@ -157,6 +194,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       register,
       login,
       logout,
+      getActiveUser,
       loading
     }}>
       {children}

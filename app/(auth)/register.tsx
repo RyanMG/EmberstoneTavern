@@ -9,7 +9,6 @@ import PageTitle from '@components/common/PageTitle';
 import InputElement from '@components/common/forms/InputElement';
 import Button from '@components/common/forms/Button';
 import FormErrorText from '@components/common/text/FormErrorText';
-import Spacer from '@components/common/Spacer';
 import Colors from '@constants/Colors';
 
 export default function Register() {
@@ -147,6 +146,7 @@ export default function Register() {
 
         <Button
           title="Cancel"
+          theme="secondary"
           onPress={() => router.push('/')}
         />
       </View>

@@ -1,6 +1,6 @@
 const Colors = {
   TEXT: {
-    ERROR: '#fd3f2a',
+    ERROR: '#CD1818',
     BASE: '#EEE',
     DARKEN: '#CCC',
   },
@@ -10,9 +10,9 @@ const Colors = {
     BASE: '#DDD'
   },
   BUTTON: {
-    PRIMARY: '#3663ee',
-    SECONDARY: '#d1dcf8',
-    DESTROY: '#9c2107'
+    PRIMARY: '#116D6E',
+    SECONDARY: '#4E3636',
+    DESTROY: '#CD1818'
   },
   CHECKBOX: {
     CHECKED: '#222'

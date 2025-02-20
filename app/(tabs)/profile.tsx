@@ -1,5 +1,5 @@
 import { useAuth } from '@context/AuthContext';
-import Login from '@components/auth/Login';
+import LoginPrompt from '@/components/auth/LoginPrompt';
 import PageContainer from '@components/common/PageContainers';
 import PageTitle from '@components/common/PageTitle';
 import Button from '@components/common/forms/Button';
@@ -19,7 +19,7 @@ export default function Profile() {
           />
         </>
       ) : (
-        <Login />
+        <LoginPrompt />
       )}
     </PageContainer>
   );
