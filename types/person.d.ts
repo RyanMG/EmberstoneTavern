@@ -5,4 +5,5 @@ export type TPerson = {
   email: string;
   bio: string;
   status: string;
+  profileImage: string;
 }

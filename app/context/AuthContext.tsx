@@ -161,7 +161,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await axios.get(`${process.env.EXPO_PUBLIC_API_ROOT_URL}/api/person`);
 
-      if (response.data.success) {
+      if (response.status === 200) {
         activeUser.current = response.data;
       }
 
