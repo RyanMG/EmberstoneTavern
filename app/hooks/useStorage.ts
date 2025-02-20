@@ -19,21 +19,23 @@ export default function useStorage<T>() {
 
   const getStorageItem = async (key: string): Promise<T | null> => {
     try {
+      let result;
+
       if (Platform.OS === 'web') {
-        const result = await AsyncStorage.getItem(key);
-        if (result) {
-          return JSON.parse(result);
-        } else {
-          return null;
-        }
+        result = await AsyncStorage.getItem(key);
       } else {
-        const result = await SecureStore.getItemAsync(key);
-        if (result) {
-          return JSON.parse(result);
-        } else {
-          return null;
-        }
+        result = await SecureStore.getItemAsync(key);
       }
+
+      if (result) {
+        if (typeof result === 'string') {
+          return result as T;
+        }
+        return JSON.parse(result);
+      } else {
+        return null;
+      }
+
     } catch (error) {
       console.error("Error retrieving data:", error);
       return null;

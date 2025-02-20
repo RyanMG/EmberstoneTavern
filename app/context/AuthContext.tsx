@@ -3,39 +3,41 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import useStorage from '@hooks/useStorage';
 
 const TOKEN_KEY = 'auth_token';
-const API_URL = 'http://localhost:8000';
 
 const AuthContext = createContext<{
   authState: {
     token: string | null;
     authenticated: boolean | null;
   };
-  register: (email: string, password: string) => Promise<AxiosResponse<any, any> | { error: boolean; errorMessage: string; }>;
-  login: (email: string, password: string) => Promise<AxiosResponse<any, any> | { error: boolean; errorMessage: string; }>;
+  register: (firstName: string, lastName: string, email: string, password: string) => Promise<{success: boolean, message: string}>;
+  login: (email: string, password: string) => Promise<{success: boolean, message: string}>;
   logout: () => Promise<void>;
+  loading: boolean;
 }>({
   authState: {
     token: null,
     authenticated: null,
   },
-  register: async (email, password) => {
+  register: async (firstName: string, lastName: string, email: string, password: string) => {
     return {
-      error: true,
-      errorMessage: 'Registration not implemented'
+      success: false,
+      message: 'Registration not implemented'
     }
   },
-  login: async (email, password) => {
+  login: async (email: string, password: string) => {
     return {
-      error: true,
-      errorMessage: 'Login not implemented'
+      success: false,
+      message: 'Login not implemented'
     }
   },
-  logout: async () => {}
+  logout: async () => {},
+  loading: true
 });
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
 
   const { getStorageItem, setStorageItem, removeStorageItem } = useStorage();
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [authState, setAuthState] = useState<{
     token: string | null;
@@ -48,26 +50,36 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   /**
    * Register a user
    */
-  const register = async (email: string, password: string) => {
+  const register = async (firstName: string, lastName: string, email: string, password: string): Promise<{success: boolean, message: string}> => {
     try {
-      const resp = await axios.post(`${API_URL}/register`, {
+      const resp = await axios.post(`${process.env.EXPO_PUBLIC_API_ROOT_URL}/auth/register`, {
+        firstName,
+        lastName,
         email,
         password
       });
 
       if (resp.status === 200) {
         login(email, password);
+        return {
+          success: true,
+          message: "User registered successfully"
+        }
       }
 
-      return resp;
+      return {
+        success: false,
+        message: "Invalid username or password"
+      }
 
     } catch (error) {
       return {
-        error: true,
-        errorMessage: (error as Error).message
+        success: false,
+        message: (error as Error).message
       }
     }
   }
+
   /**
    * Set the auth token in state and for axios use
    */
@@ -83,22 +95,31 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   /**
    * Log the user in by setting their auth token
    */
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<{success: boolean, message: string}> => {
     try {
-      const response = await axios.post(`${API_URL}/auth`, {
+      const response = await axios.post(`${process.env.EXPO_PUBLIC_API_ROOT_URL}/auth/login`, {
         email,
         password
       })
 
-      setTokenForSession(response.data.token);
-      await setStorageItem(TOKEN_KEY, response.data.token);
+      if (response.data.success){
+        setTokenForSession(response.data.message);
+        await setStorageItem(TOKEN_KEY, response.data.message);
+        return {
+          success: true,
+          message: "User logged in successfully"
+        };
+      }
 
-      return response;
+      return {
+        success: false,
+        message: response.data.message
+      };
 
     } catch (error) {
       return {
-        error: true,
-        errorMessage: (error as Error).message
+        success: false,
+        message: (error as Error).message
       }
     }
   }
@@ -119,20 +140,24 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
    */
   useEffect(() => {
     (async () => {
+      console.log('checking token via useEffect');
       const token = await getStorageItem(TOKEN_KEY) as string | null;
 
       if (token) {
         setTokenForSession(token);
       }
+
+      setLoading(false);
     })()
-  })
+  }, [])
 
   return (
     <AuthContext.Provider value={{
       authState,
       register,
       login,
-      logout
+      logout,
+      loading
     }}>
       {children}
     </AuthContext.Provider>

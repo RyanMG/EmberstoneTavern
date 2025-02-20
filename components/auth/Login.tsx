@@ -37,8 +37,8 @@ export default function Login() {
     if (!emailError && !passwordError) {
       const response = await login(email, password);
 
-      if ('error' in response && response.error) {
-        setLoginError(response.errorMessage);
+      if (!response.success) {
+        setLoginError(response.message);
         return;
       }
 

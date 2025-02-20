@@ -9,6 +9,7 @@ import PageTitle from '@components/common/PageTitle';
 import InputElement from '@components/common/forms/InputElement';
 import Button from '@components/common/forms/Button';
 import FormErrorText from '@components/common/text/FormErrorText';
+import Spacer from '@components/common/Spacer';
 import Colors from '@constants/Colors';
 
 export default function Register() {
@@ -34,7 +35,7 @@ export default function Register() {
     setPasswordError(undefined);
     setFirstNameError(undefined);
     setLastNameError(undefined);
-    let hasError = false;
+    let hasError: boolean = false;
 
     if (!firstName) {
       setFirstNameError('First name is required');
@@ -52,15 +53,15 @@ export default function Register() {
     }
 
     if (!password || password.length < 6) {
-      setPasswordError('Password is required');
+      setPasswordError('A password of at least 6 charaters is required');
       hasError = true;
     }
 
     if (!hasError) {
-      const response = await register(email, password);
+      const response = await register(firstName, lastName, email, password);
 
-      if ('error' in response && response.error) {
-        setRegisterError(response.errorMessage);
+      if (!response.success) {
+        setRegisterError(response.message);
         return;
       }
 
@@ -76,71 +77,78 @@ export default function Register() {
       <PageTitle
         text="Register"
       />
-      <View style={styles.loginFormWrapper}>
+      <View style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'space-between', width: '100%'}}>
 
-        <View style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
+        <View style={styles.loginFormWrapper}>
+          <View style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+            <InputElement
+              label="First Name"
+              halfWidth
+              value={firstName}
+              onChangeText={setFirstName}
+              errorText={firstNameError}
+            />
+            <InputElement
+              label="Last Name"
+              halfWidth
+              value={lastName}
+              onChangeText={setLastName}
+              errorText={lastNameError}
+            />
+          </View>
+
           <InputElement
-            label="First Name"
-            halfWidth
-            value={firstName}
-            onChangeText={setFirstName}
-            errorText={firstNameError}
+            label="Email Address"
+            value={email}
+            onChangeText={setEmail}
+            errorText={emailError}
           />
           <InputElement
-            label="Last Name"
-            halfWidth
-            value={lastName}
-            onChangeText={setLastName}
-            errorText={lastNameError}
+            label="Password"
+            value={password}
+            secureTextEntry={true}
+            onChangeText={setPassword}
+            errorText={passwordError}
           />
+          <BouncyCheckbox
+            onPress={(isChecked: boolean) => setAgreed(isChecked)}
+            isChecked={agreed}
+
+            text="I agree to the terms and conditions"
+            fillColor={Colors.CHECKBOX.CHECKED}
+            unFillColor={'transparent'}
+            innerIconStyle={{
+              borderRadius: 3,
+              borderColor: Colors.BORDER.BASE
+            }}
+            iconStyle={{
+              borderRadius: 3,
+              borderColor: Colors.BORDER.BASE
+            }}
+            textStyle={{
+              textDecorationLine: 'none',
+              fontStyle: 'italic'
+            }}
+            style={{
+              marginBottom: 10
+            }}
+          />
+          <Button
+            title="Register"
+            disabled={!agreed}
+            onPress={onRegisterPress}
+          />
+          {registerError && <FormErrorText errorText={registerError} />}
         </View>
 
-        <InputElement
-          label="Email Address"
-          value={email}
-          onChangeText={setEmail}
-          errorText={emailError}
-        />
-        <InputElement
-          label="Password"
-          value={password}
-          secureTextEntry={true}
-          onChangeText={setPassword}
-          errorText={passwordError}
-        />
-        <BouncyCheckbox
-          onPress={(isChecked: boolean) => setAgreed(isChecked)}
-          isChecked={agreed}
-
-          text="I agree to the terms and conditions"
-          fillColor={Colors.CHECKBOX.CHECKED}
-          unFillColor={'transparent'}
-          innerIconStyle={{
-            borderRadius: 3,
-            borderColor: Colors.BORDER.BASE
-          }}
-          iconStyle={{
-            borderRadius: 3,
-            borderColor: Colors.BORDER.BASE
-          }}
-          textStyle={{
-            textDecorationLine: 'none',
-            fontStyle: 'italic'
-          }}
-          style={{
-            marginBottom: 10
-          }}
-        />
         <Button
-          title="Register"
-          disabled={!agreed}
-          onPress={onRegisterPress}
+          title="Cancel"
+          onPress={() => router.push('/')}
         />
-        {registerError && <FormErrorText errorText={registerError} />}
       </View>
     </PageContainer>
   );
@@ -148,6 +156,7 @@ export default function Register() {
 
 const styles = StyleSheet.create({
   loginFormWrapper: {
+    flex: 1,
     width: '100%',
     paddingTop: 20,
     paddingBottom: 20,

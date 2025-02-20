@@ -4,7 +4,8 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import AuthProvider from '@context/AuthContext';
+import AuthProvider, { useAuth } from '@context/AuthContext';
+import AppLoadingScreen from '@components/AppLoadingScreen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export {
@@ -51,6 +52,10 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const { loading } = useAuth()
+
+  if (loading) return <AppLoadingScreen />;
+
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
