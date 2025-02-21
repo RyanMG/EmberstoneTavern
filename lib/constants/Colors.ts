@@ -2,18 +2,30 @@ const BASE_GREEN = '#116D6E';
 const BASE_RED = '#CD1818';
 const BASE_BROWN = '#4E3636';
 
+const GRAY = '#DDD';
+const GRAY_LIGHTEN20 = '#EEE';
+const GRAY_LIGHTEN50 = '#FFF';
+const GRAY_DARKEN20 = '#AAA';
+const GRAY_DARKEN50 = '#888';
+
+const BLACK = '#222';
+const BLACK_LIGHTEN20 = '#333';
+const BLACK_LIGHTEN50 = '#444';
+const BLACK_DARKEN20 = '#111';
+const BLACK_DARKEN50 = '#000';
+
 const Colors = {
   TEXT: {
     ERROR: BASE_RED,
     GREEN: BASE_GREEN,
-    BASE: '#EEE',
-    DARKEN20: '#CCC',
-    DARKEN50: '#AAA',
+    BASE: GRAY,
+    DARKEN20: GRAY_DARKEN20,
+    DARKEN50: GRAY_DARKEN50,
   },
   BORDER: {
-    LIGHTEN: '#CCC',
-    DARKEN: '#888',
-    BASE: '#DDD',
+    LIGHTEN: GRAY_LIGHTEN20,
+    DARKEN: GRAY_DARKEN20,
+    BASE: GRAY,
     GREEN: BASE_GREEN
   },
   BUTTON: {
@@ -22,11 +34,18 @@ const Colors = {
     DESTROY: BASE_RED
   },
   CHECKBOX: {
-    CHECKED: '#222'
+    CHECKED: BLACK
   },
-  BG_BASE: '#333',
-  BG_LIGHTEN: '#444',
-  TABS_ACTIVE: '#CCC'
+  BACKGROUND: {
+    BASE: BLACK_LIGHTEN20,
+    LIGHTEN: BLACK_LIGHTEN50,
+    BROWN: BASE_BROWN,
+    GREEN: BASE_GREEN
+  },
+  TABS: {
+    ACTIVE: GRAY,
+    BASE: BLACK_LIGHTEN20
+  }
 };
 
 export default Colors;
