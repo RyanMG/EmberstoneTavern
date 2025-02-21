@@ -1,8 +1,10 @@
 import { TCampaign } from "@definitions/campaign";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Colors from "@constants/Colors";
 
 import CampaignIcon from './CampaignIcon';
+import { Link } from "expo-router";
+import BodyText from "@components/common/BodyText";
 
 export default function CampaignCard({
   campaign
@@ -10,13 +12,18 @@ export default function CampaignCard({
   campaign: TCampaign;
 }) {
   return (
-    <View style={styles.cardContainer}>
-      <CampaignIcon iconLink={campaign.iconLink} />
-      <View style={{display: 'flex', flexDirection: 'column', flex: 10, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>{campaign.title}</Text>
-        <Text>{campaign.description}</Text>
+    <Link
+      push
+      href={`/campaigns/${campaign.id}`}
+    >
+      <View style={styles.cardContainer}>
+        <CampaignIcon iconLink={campaign.iconLink} />
+        <View style={{display: 'flex', flexDirection: 'column', flex: 10, justifyContent: 'flex-start', alignItems: 'flex-start', padding: 15}}>
+          <BodyText textSize="lg">{campaign.title}</BodyText>
+          <BodyText textSize="sm" italic={true}>{campaign.description}</BodyText>
+        </View>
       </View>
-    </View>
+    </Link>
   );
 }
 

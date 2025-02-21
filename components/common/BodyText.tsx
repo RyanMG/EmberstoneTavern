@@ -5,16 +5,19 @@ import { ReactNode } from 'react';
 export default function BodyText({
   textSize = 'md',
   italic = false,
+  bold = false,
   children
 }: {
-  textSize?: 'sm' | 'md' | 'lg';
+  textSize?: 'sm' | 'md' | 'lg' | 'xl';
   italic?: boolean;
+  bold?: boolean;
   children: ReactNode;
 }) {
   return (
     <Text style={[
       styles.text,
       italic ? styles.italic : '',
+      bold ? styles.bold : '',
       styles[textSize as keyof typeof styles]
     ]}>
       {children}
@@ -25,10 +28,14 @@ export default function BodyText({
 const styles = StyleSheet.create({
   text: {
     color: Colors.TEXT.BASE,
-    fontStyle: 'normal'
+    fontStyle: 'normal',
+    fontWeight: 'normal'
   },
   italic: {
     fontStyle: 'italic'
+  },
+  bold: {
+    fontWeight: 'bold'
   },
   sm: {
     fontSize: 14,
@@ -41,5 +48,9 @@ const styles = StyleSheet.create({
   lg: {
     fontSize: 18,
     lineHeight: 32
+  },
+  xl: {
+    fontSize: 24,
+    lineHeight: 36
   }
 });

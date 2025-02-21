@@ -7,12 +7,12 @@ import CampaignCard from '@components/campaigns/CampaignCard';
 import SectionHeader from '@components/common/SectionHeader';
 
 import { TCampaign } from '@definitions/campaign';
-import { fetchUserCampaigns } from '@/lib/api/campaignApi';
+import { fetchActiveUserCampaigns } from '@/lib/api/campaignApi';
 
 export default function UserCampaignList() {
   const { isPending, error, data } = useQuery<TCampaign[]>({
     queryKey: ['campaigns'],
-    queryFn: fetchUserCampaigns,
+    queryFn: fetchActiveUserCampaigns,
   })
   const { showNotification } = useNotification();
 
