@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Colors from '@/lib/constants/Colors';
-import { Link, RelativePathString } from 'expo-router';
+import { Link } from 'expo-router';
 
 export default function PageTitle({
   text,
   back
 }: {
   text: string,
-  back?: RelativePathString
+  back?: '/campaigns'
 }) {
   return (
     <View style={styles.titleContainer}>
