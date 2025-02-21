@@ -1,4 +1,4 @@
-import { useAuth } from '@context/AuthContext';
+import { useAuth } from '@/lib/context/AuthContext';
 import LoginPrompt from '@/components/auth/LoginPrompt';
 import PageContainer from '@components/common/PageContainers';
 import ProfilePage from '@components/profile/ProfilePage';

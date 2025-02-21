@@ -2,7 +2,8 @@ import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { Tabs } from 'expo-router';
-import Colors from '@/constants/Colors';
+import Colors from '@/lib/constants/Colors';
+import { useAuth } from '@/lib/context/AuthContext';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -13,6 +14,8 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
+  const { authState } = useAuth();
+
   return (
     <Tabs
       screenOptions={{
@@ -29,13 +32,16 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="beer" color={color} />
         }}
       />
+
       <Tabs.Screen
         name="campaigns"
         options={{
           title: 'Campaigns',
+          href: authState?.authenticated ? '/(tabs)/campaigns' : null,
           tabBarIcon: ({ color }) => <TabBarIcon name="sitemap" color={color} />
         }}
       />
+
       <Tabs.Screen
         name="profile"
         options={{

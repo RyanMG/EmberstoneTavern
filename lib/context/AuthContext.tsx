@@ -1,10 +1,13 @@
-import axios from 'axios';
-import { createContext, useContext, useEffect, useState, useRef, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import useStorage from '@hooks/useStorage';
+import { useNotification } from '@context/NotificationContext';
 import { useRouter } from 'expo-router';
 import {
   TPerson
-} from '@types/person';
+} from '@definitions/person'
+import { fetchActiveUser } from '@api/personApi'
+import { registerUser, loginUser } from '@api/authApi'
+import axios from 'axios';
 
 const TOKEN_KEY = 'auth_token';
 
@@ -12,16 +15,17 @@ const AuthContext = createContext<{
   authState: {
     token: string | null;
     authenticated: boolean | null;
+    activeUser: TPerson | null;
   };
   register: (firstName: string, lastName: string, email: string, password: string) => Promise<{success: boolean, message: string}>;
   login: (email: string, password: string) => Promise<{success: boolean, message: string}>;
   logout: () => Promise<void>;
-  getActiveUser: () => TPerson | null;
   loading: boolean;
 }>({
   authState: {
     token: null,
     authenticated: null,
+    activeUser: null
   },
   register: async (firstName: string, lastName: string, email: string, password: string) => {
     return {
@@ -36,111 +40,91 @@ const AuthContext = createContext<{
     }
   },
   logout: async () => {},
-  getActiveUser: () => null,
   loading: true
 });
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-
   const { getStorageItem, setStorageItem, removeStorageItem } = useStorage();
   const [loading, setLoading] = useState<boolean>(true);
-  const activeUser = useRef<TPerson | null>(null);
+
   const router = useRouter();
+  const { showNotification } = useNotification();
 
   const [authState, setAuthState] = useState<{
     token: string | null;
     authenticated: boolean | null;
+    activeUser: TPerson | null;
   }>({
     token: null,
     authenticated: null,
+    activeUser: null
+  });
+
+  axios.interceptors.response.use(response => {
+    return response;
+  }, (error) => {
+    if (401 === error.response.status) {
+      logout();
+      showNotification('Session expired. Please log in again.');
+      router.push('/(auth)/login');
+    } else {
+      return Promise.reject(error);
+    }
   });
 
   /**
    * Register a user
    */
   const register = async (firstName: string, lastName: string, email: string, password: string): Promise<{success: boolean, message: string}> => {
-    try {
-      const resp = await axios.post(`${process.env.EXPO_PUBLIC_API_ROOT_URL}/auth/register`, {
-        firstName,
-        lastName,
-        email,
-        password
-      });
+    const resp = await registerUser(firstName, lastName, email, password);
 
-      if (resp.status === 200) {
-        login(email, password);
-        return {
-          success: true,
-          message: "User registered successfully"
-        }
-      }
-
-      return {
-        success: false,
-        message: "Invalid username or password"
-      }
-
-    } catch (error) {
-      return {
-        success: false,
-        message: (error as Error).message
-      }
+    if (resp.success) {
+      login(email, password);
     }
+
+    return resp;
   }
 
   /**
    * Set the auth token in state and for axios use
    */
-  const setTokenForSession = (token: string) => {
+  const setSession = async (token: string) => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    const activeUser = await fetchActiveUser(token);
+
+    if ('error' in activeUser) {
+      return;
+    }
+
     setAuthState({
       token: token,
-      authenticated: true
+      authenticated: true,
+      activeUser: activeUser
     })
-
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    axios.interceptors.response.use(response => {
-      return response;
-    }, (error) => {
-      if (401 === error.response.status) {
-        logout();
-        // @TODO notification for user
-        router.push('/(auth)/login');
-      } else {
-          return Promise.reject(error);
-      }
-    });
   }
 
   /**
    * Log the user in by setting their auth token
    */
   const login = async (email: string, password: string): Promise<{success: boolean, message: string}> => {
-    try {
-      const response = await axios.post(`${process.env.EXPO_PUBLIC_API_ROOT_URL}/auth/login`, {
-        email,
-        password
-      })
+    const response = await loginUser(email, password);
 
-      if (response.data.success){
-        setTokenForSession(response.data.message);
-        await setStorageItem(TOKEN_KEY, response.data.message);
-        return {
-          success: true,
-          message: "User logged in successfully"
-        };
-      }
+    if (response.success && response.token) {
+      await setSession(response.token);
+      await setStorageItem(TOKEN_KEY, response.token);
 
       return {
-        success: false,
-        message: response.data.message
+        success: true,
+        message: "User logged in successfully"
       };
-
-    } catch (error) {
-      return {
-        success: false,
-        message: (error as Error).message
-      }
     }
+
+    showNotification('Error logging in.');
+    return {
+      success: false,
+      message: "Failed to log user in"
+    };
   }
   /**
    * Log the user out by removing their auth token
@@ -150,28 +134,12 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     axios.defaults.headers.common['Authorization'] = '';
     setAuthState({
       token: null,
-      authenticated: false
+      authenticated: false,
+      activeUser: null
     })
   }
 
   /**
-   * Fetch data for the active user
-   */
-  const fetchActiveUser = async (token: string) => {
-    try {
-      const response = await axios.get(`${process.env.EXPO_PUBLIC_API_ROOT_URL}/api/person`);
-
-      if (response.status === 200) {
-        activeUser.current = response.data;
-      }
-
-    } catch (error) {
-      console.error("TODO active user fetch error");
-    }
-  }
-
-  const getActiveUser = () => activeUser.current;
-
   /**
    * Initial
    */
@@ -180,8 +148,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       const token = await getStorageItem(TOKEN_KEY) as string | null;
 
       if (token) {
-        setTokenForSession(token);
-        await fetchActiveUser(token);
+        await setSession(token);
       }
 
       setLoading(false);
@@ -194,7 +161,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       register,
       login,
       logout,
-      getActiveUser,
       loading
     }}>
       {children}

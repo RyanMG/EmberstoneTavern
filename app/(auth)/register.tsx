@@ -1,4 +1,4 @@
-import { useAuth } from '@context/AuthContext';
+import { useAuth } from '@/lib/context/AuthContext';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { View, StyleSheet } from 'react-native';
@@ -9,7 +9,7 @@ import PageTitle from '@components/common/PageTitle';
 import InputElement from '@components/common/forms/InputElement';
 import Button from '@components/common/forms/Button';
 import FormErrorText from '@components/common/text/FormErrorText';
-import Colors from '@constants/Colors';
+import Colors from '@/lib/constants/Colors';
 
 export default function Register() {
   const { register } = useAuth();

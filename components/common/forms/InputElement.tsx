@@ -1,6 +1,6 @@
 import {StyleSheet, TextInput, KeyboardTypeOptions, Text, View} from 'react-native';
 import FormErrorText from '@components/common/text/FormErrorText';
-import Colors from '@/constants/Colors';
+import Colors from '@/lib/constants/Colors';
 
 export default function InputElement({
   label,

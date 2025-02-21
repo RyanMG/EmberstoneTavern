@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { useAuth } from '@context/AuthContext';
+import { useAuth } from '@/lib/context/AuthContext';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');

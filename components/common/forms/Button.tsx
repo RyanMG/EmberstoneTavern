@@ -1,5 +1,5 @@
 import { Button as RNButton } from 'react-native';
-import Colors from '@constants/Colors';
+import Colors from '@/lib/constants/Colors';
 
 export default function Button({
   title,

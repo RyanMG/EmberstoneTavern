@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import Colors from '@/constants/Colors';
+import Colors from '@/lib/constants/Colors';
 
 export default function Divider() {
   return (

@@ -5,12 +5,13 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@images/*": ["./assets/images/*"],
-      "@types/*": ["./types/*"],
+      "@api/*": ["lib/api/*"],
       "@components/*": ["./components/*"],
-      "@constants/*": ["./constants/*"],
-      "@context/*": ["./app/context/*"],
-      "@hooks/*": ["./app/hooks/*"]
+      "@constants/*": ["lib/constants/*"],
+      "@context/*": ["lib/context/*"],
+      "@definitions/*": ["lib/definitions/*"],
+      "@hooks/*": ["lib/hooks/*"],
+      "@images/*": ["./assets/images/*"]
     }
   },
   "include": [

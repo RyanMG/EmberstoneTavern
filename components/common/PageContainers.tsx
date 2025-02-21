@@ -1,11 +1,25 @@
 import { ReactNode } from 'react';
 import { View, StyleSheet } from 'react-native';
-import Colors from '@/constants/Colors';
+import { Snackbar } from 'react-native-paper';
+import { useNotification } from '@context/NotificationContext';
+import Colors from '@constants/Colors';
 
 export default function PageContainer({ children }: { children: ReactNode }) {
+  const { snackbarMessage, setSnackbarMessage } = useNotification();
+
   return (
     <View style={styles.container}>
       {children}
+      <Snackbar
+        visible={!!snackbarMessage}
+        onDismiss={() => setSnackbarMessage(null)}
+        elevation={5}
+        action={{
+          label: 'Dismiss',
+          onPress: () => setSnackbarMessage(null),
+        }}>
+        {snackbarMessage}
+      </Snackbar>
     </View>
   );
 }
