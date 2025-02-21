@@ -1,14 +1,13 @@
 import { useAuth } from '@/lib/context/AuthContext';
 import PageTitle from '@components/common/PageTitle';
-import ProfileImage from './ProfileImage';
+import CommonUserProfileDetails from './CommonUserProfileDetails';
 import Button from '@components/common/forms/Button';
-import Spacer from '@components/common/Spacer';
-import Colors from '@/lib/constants/Colors';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 export default function ProfilePage() {
   const { authState, logout } = useAuth();
   const activeUser = authState?.activeUser;
+  if (!activeUser) return null;
 
   return (
     <>
@@ -16,13 +15,7 @@ export default function ProfilePage() {
         text="Profile"
       />
       <View style={{display: 'flex', flexDirection: 'column', flex: 1,  width: '100%'}}>
-        <View style={{display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1}}>
-          <ProfileImage image={activeUser?.profileImage} />
-          <Spacer />
-
-          <Text style={{fontSize: 24, color: Colors.TEXT.BASE}}>{activeUser?.firstName} {activeUser?.lastName}</Text>
-        </View>
-
+        <CommonUserProfileDetails user={activeUser} />
         <View style={{display: 'flex', flexDirection: 'row',alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
           <View style={{width: '48%'}}>
             <Button

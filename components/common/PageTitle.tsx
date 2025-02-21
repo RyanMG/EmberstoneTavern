@@ -7,7 +7,7 @@ export default function PageTitle({
   back
 }: {
   text: string,
-  back?: '/campaigns'
+  back?: '/campaigns' | '/campaigns/[id]'
 }) {
   return (
     <View style={styles.titleContainer}>
