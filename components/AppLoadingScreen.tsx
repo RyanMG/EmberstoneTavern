@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import BodyText from './common/BodyText';
 
 export default function AppLoadingScreen() {

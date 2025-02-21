@@ -50,7 +50,7 @@ export const loginUser = async (email: string, password: string): Promise<{succe
       success: false
     }
 
-  } catch (error) {
+  } catch {
     return {
       success: false
     }
