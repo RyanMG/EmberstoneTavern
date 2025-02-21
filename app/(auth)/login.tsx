@@ -76,7 +76,7 @@ export default function Login() {
           </View>
           <Divider />
 
-          <View style={{display: 'flex', padding: 10, flexDirection: 'column'}}>
+          <View style={{display: 'flex', paddingLeft: 40, paddingRight: 40, marginTop: 20, flexDirection: 'column'}}>
             <BodyText textSize="sm" italic={true}>
               Don't yet have an account? Register to get started!
             </BodyText>
