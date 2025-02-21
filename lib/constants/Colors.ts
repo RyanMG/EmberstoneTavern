@@ -1,18 +1,25 @@
+const BASE_GREEN = '#116D6E';
+const BASE_RED = '#CD1818';
+const BASE_BROWN = '#4E3636';
+
 const Colors = {
   TEXT: {
-    ERROR: '#CD1818',
+    ERROR: BASE_RED,
+    GREEN: BASE_GREEN,
     BASE: '#EEE',
-    DARKEN: '#CCC',
+    DARKEN20: '#CCC',
+    DARKEN50: '#AAA',
   },
   BORDER: {
     LIGHTEN: '#CCC',
     DARKEN: '#888',
-    BASE: '#DDD'
+    BASE: '#DDD',
+    GREEN: BASE_GREEN
   },
   BUTTON: {
-    PRIMARY: '#116D6E',
-    SECONDARY: '#4E3636',
-    DESTROY: '#CD1818'
+    PRIMARY: BASE_GREEN,
+    SECONDARY: BASE_BROWN,
+    DESTROY: BASE_RED
   },
   CHECKBOX: {
     CHECKED: '#222'

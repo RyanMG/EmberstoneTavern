@@ -1,12 +1,6 @@
 import PageContainer from '@components/common/PageContainers';
 import PageTitle from '@components/common/PageTitle';
-import PageLoading from '@components/common/PageLoading';
-
-import {View, Text} from 'react-native';
-
-import {
-  useQuery,
-} from '@tanstack/react-query'
+import UserCampaignList from '@components/campaigns/UserCampaignList';
 
 import { useAuth } from '@/lib/context/AuthContext';
 import { Redirect } from 'expo-router';
@@ -21,7 +15,7 @@ export default function Campaigns() {
       <PageTitle
         text="Campaigns"
       />
-      <PageLoading />
+      <UserCampaignList />
     </PageContainer>
   );
 }

@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     width: '48%'
   },
   inputLabel: {
-    color: Colors.TEXT.DARKEN,
+    color: Colors.TEXT.DARKEN20,
     fontSize: 14,
     marginBottom: 5
   },
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: Colors.BORDER.BASE,
-    color: Colors.TEXT.DARKEN,
+    color: Colors.TEXT.DARKEN20,
     padding: 10
   }
 })
