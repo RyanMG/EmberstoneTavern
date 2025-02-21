@@ -1,10 +1,13 @@
 import { StyleSheet, Text } from 'react-native';
 import PageContainer from '@components/common/PageContainers';
+import PageTitle from '@components/common/PageTitle';
 
 export default function Campaigns() {
   return (
     <PageContainer>
-      <Text style={styles.title}>Campaigns</Text>
+      <PageTitle
+        text="Campaigns"
+      />
     </PageContainer>
   );
 }
