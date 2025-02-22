@@ -15,6 +15,17 @@ export const fetchActiveUserCampaigns = async (): Promise<TCampaign[]> => {
   }
 }
 
+export const getActiveUserCompletedCampaigns = async (): Promise<TCampaign[]> => {
+  try {
+   const { data } = await axios.get(`${API_ROOT}/completed`);
+
+   return data;
+
+  } catch (error) {
+    throw new Error(`Failed to fetch completed user campaigns: ${(error as Error).message}`)
+  }
+}
+
 export const fetchCampaign = async (id: string): Promise<TCampaign> => {
   try {
    const { data } = await axios.get(`${API_ROOT}/${id}`);

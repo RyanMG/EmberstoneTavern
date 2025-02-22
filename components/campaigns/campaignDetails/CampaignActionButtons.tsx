@@ -1,15 +1,16 @@
 import { TCampaign } from '@definitions/campaign';
+import { TDialogContent } from '@definitions/ui';
 import { useAuth } from '@context/AuthContext';
 import { removeUserFromCampaign } from '@api/campaignApi';
 
 import { View } from 'react-native';
-import { Button as PaperButton, Dialog, Portal, Text } from 'react-native-paper';
+
 import { useState } from 'react';
 import { useNotification } from '@context/NotificationContext';
 import { useRouter } from 'expo-router';
 
 import Button from '@components/common/forms/Button';
-import Colors from '@constants/Colors';
+import Dialog from '@components/common/Dialog';
 
 export default function CampaignActionButtons({
   campaign
@@ -17,12 +18,7 @@ export default function CampaignActionButtons({
   campaign: TCampaign
 }) {
   const { authState } = useAuth();
-  const [dialogContent, setDialogContent] = useState<{
-    title: string
-    body: string
-    actionLabel: string
-    action?: () => void
-  } | null>(null);
+  const [dialogContent, setDialogContent] = useState<TDialogContent>(null);
   const { showNotification } = useNotification();
   const router = useRouter();
 
@@ -96,18 +92,7 @@ export default function CampaignActionButtons({
         )}
       </View>
 
-      <Portal>
-        <Dialog visible={dialogContent !== null} onDismiss={() => setDialogContent(null)} style={{backgroundColor: Colors.BACKGROUND.GREEN, borderWidth: 1, borderRadius: 5, borderColor: Colors.BORDER.BASE}}>
-          <Dialog.Title style={{color: Colors.TEXT.BASE, fontWeight: 'bold'}}>{dialogContent?.title}</Dialog.Title>
-          <Dialog.Content>
-            <Text style={{color: Colors.TEXT.BASE, fontSize: 16, lineHeight: 21}}>{dialogContent?.body}</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <PaperButton mode="outlined" buttonColor={Colors.BACKGROUND.BROWN} textColor={Colors.TEXT.BASE} onPress={() => dialogContent?.action?.()}>{dialogContent?.actionLabel}</PaperButton>
-            <PaperButton mode="outlined" buttonColor={Colors.BACKGROUND.GREEN} textColor={Colors.TEXT.BASE} onPress={() => setDialogContent(null)}>Cancel</PaperButton>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <Dialog dialogContent={dialogContent} setDialogContent={setDialogContent} />
     </>
   )
 }
