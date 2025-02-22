@@ -53,7 +53,7 @@ export default function CampaignOwnerActions({
       </View>
 
       <Dialog dialogContent={dialogContent} setDialogContent={setDialogContent} />
-      <InviteMembersModal visible={inviteMembersModalVisible} setModalVisible={() => setInviteMembersModalVisible(false)} />
+      <InviteMembersModal visible={inviteMembersModalVisible} setModalVisible={() => setInviteMembersModalVisible(false)} campaign={campaign} />
     </>
   )
 }

@@ -47,7 +47,7 @@ export const createCampaign = async (campaign: TCampaign): Promise<TCampaign> =>
   }
 }
 
-export const removeUserFromCampaign = async (campaignId: string, userId: string): Promise<GenericHTTPResponse> => {
+export const removeUserFromCampaign = async (campaignId: string, userId: string): Promise<GenericHTTPResponse<null>> => {
   try {
    const { data } = await axios.delete(`${API_ROOT}/${campaignId}/users/${userId}`);
 
@@ -57,12 +57,22 @@ export const removeUserFromCampaign = async (campaignId: string, userId: string)
   }
 }
 
-export const addUserToCampaign = async (campaignId: string, userId: string): Promise<GenericHTTPResponse> => {
+export const addUserToCampaign = async (campaignId: string, userId: string): Promise<GenericHTTPResponse<string>> => {
   try {
    const { data } = await axios.put(`${API_ROOT}/${campaignId}/users/${userId}`);
 
    return data;
   } catch (error) {
     throw new Error(`Failed to add user to campaign: ${(error as Error).message}`)
+  }
+}
+
+export const joinCampaign = async (campaignCode: string): Promise<GenericHTTPResponse<null>> => {
+  try {
+   const { data } = await axios.put(`${API_ROOT}/join/${campaignCode}`);
+
+   return data;
+  } catch (error) {
+    throw new Error(`Failed to join campaign: ${(error as Error).message}`)
   }
 }

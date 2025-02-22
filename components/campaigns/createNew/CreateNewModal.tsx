@@ -1,5 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
-import InputElement from '@components/common/forms/InputElement';
+import { View, StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import {
@@ -11,10 +10,11 @@ import {
 } from '@definitions/campaign';
 
 import Button from '@components/common/forms/Button';
+import InputElement from '@components/common/forms/InputElement';
 import ModalWrapper from '@components/common/ModalWrapper';
+import ModalHeader from '@components/common/ModalHeader';
 import Spacer from '@components/common/Spacer';
 import FormErrorText from '@components/common/text/FormErrorText';
-import Colors from '@/lib/constants/Colors';
 
 import { createCampaign } from '@api/campaignApi';
 import { useNotification } from '@context/NotificationContext';
@@ -57,7 +57,7 @@ export default function CreateNewCampaignModal({
     <ModalWrapper visible={visible} setModalVisible={setModalVisible}>
       <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', flex: 1, width: '100%'}}>
         <View style={{width: '100%', flex: 1}}>
-          <Text style={styles.modalHeader}>Create New Campaign</Text>
+          <ModalHeader text="Create New Campaign" />
           <Spacer />
           <InputElement
             label="Campaign Title"
@@ -110,15 +110,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-  },
-  modalHeader: {
-    color: Colors.TEXT.GREEN,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.BORDER.GREEN,
-    paddingBottom: 4,
   },
   modalText: {
     marginBottom: 15,

@@ -1,5 +1,6 @@
 const BASE_GREEN = '#116D6E';
 const BASE_RED = '#731106';
+const RED_LIGHTEN20 = '#b51c0b';
 const BASE_BROWN = '#4E3636';
 
 const GRAY = '#DDD';
@@ -16,7 +17,7 @@ const BLACK_DARKEN50 = '#000';
 
 const Colors = {
   TEXT: {
-    ERROR: BASE_RED,
+    ERROR: RED_LIGHTEN20,
     GREEN: BASE_GREEN,
     BASE: GRAY,
     DARKEN20: GRAY_DARKEN20,

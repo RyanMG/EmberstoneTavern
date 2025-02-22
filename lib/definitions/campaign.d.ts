@@ -6,6 +6,7 @@ export type TCampaign = {
   description: string;
   createdAt: string;
   iconLink: string;
+  campaignCode: string;
   campaignStatus: TCampaignStatus;
   owner: TPerson;
   members: TPerson[];
