@@ -7,15 +7,19 @@ import PageTitle from "@components/common/PageTitle";
 import PageLoading from "@components/common/PageLoading";
 import CampaignDetailsMain from "@components/campaigns/campaignDetails/CampaignDetailsMain";
 import CampaignMembers from "@components/campaigns/campaignDetails/CampaignMembers";
-import CampaignActionButtons from "@/components/campaigns/campaignDetails/CampaignDetailsActionButtons";
+import CampaignMemberActions from "@components/campaigns/campaignDetails/CampaignMemberActions";
+import CampaignOwnerActions from "@components/campaigns/campaignDetails/CampaignOwnerActions";
 import Spacer from "@components/common/Spacer";
 
 import { TCampaign } from "@definitions/campaign";
 import { fetchCampaign } from "@api/campaignApi";
 import { useNotification } from "@context/NotificationContext";
+import { useAuth } from "@context/AuthContext";
+import { Redirect } from "expo-router";
 
 export default function CampaignPage() {
   let { id }: { id: string } = useLocalSearchParams();
+  const { authState } = useAuth();
 
   const { isPending, error, data } = useQuery<TCampaign>({
     queryKey: ['campaign'],
@@ -29,6 +33,11 @@ export default function CampaignPage() {
     return null;
   }
 
+  if (data === null) {
+    showNotification('Campaign not found');
+    return <Redirect href="/campaigns" />
+  }
+
   return (
     <PageContainer>
       <PageTitle
@@ -36,13 +45,19 @@ export default function CampaignPage() {
         back="/campaigns"
       />
       <View style={styles.container}>
-        <View>
+        <View style={{flex: 1}}>
           <CampaignDetailsMain campaign={data} />
           <Spacer />
           <CampaignMembers campaign={data} />
         </View>
 
-        <CampaignActionButtons campaign={data} />
+        {authState?.activeUser?.id === data.owner.id && (
+          <CampaignOwnerActions campaign={data} />
+        )}
+        {authState?.activeUser?.id !== data.owner.id && (
+          <CampaignMemberActions campaign={data} />
+        )}
+
       </View>
 
     </PageContainer>
