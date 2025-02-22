@@ -1,5 +1,5 @@
 const BASE_GREEN = '#116D6E';
-const BASE_RED = '#CD1818';
+const BASE_RED = '#731106';
 const BASE_BROWN = '#4E3636';
 
 const GRAY = '#DDD';

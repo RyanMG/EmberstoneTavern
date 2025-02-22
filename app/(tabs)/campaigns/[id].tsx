@@ -7,6 +7,7 @@ import PageTitle from "@components/common/PageTitle";
 import PageLoading from "@components/common/PageLoading";
 import CampaignDetailsMain from "@components/campaigns/campaignDetails/CampaignDetailsMain";
 import CampaignMembers from "@components/campaigns/campaignDetails/CampaignMembers";
+import CampaignActionButtons from "@components/campaigns/campaignDetails/CampaignActionButtons";
 import Spacer from "@components/common/Spacer";
 
 import { TCampaign } from "@definitions/campaign";
@@ -35,9 +36,13 @@ export default function CampaignPage() {
         back="/campaigns"
       />
       <View style={styles.container}>
-        <CampaignDetailsMain campaign={data} />
-        <Spacer />
-        <CampaignMembers campaign={data} />
+        <View>
+          <CampaignDetailsMain campaign={data} />
+          <Spacer />
+          <CampaignMembers campaign={data} />
+        </View>
+
+        <CampaignActionButtons campaign={data} />
       </View>
 
     </PageContainer>
@@ -48,6 +53,7 @@ const styles=StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'space-between',
     flex: 1,
     gap: 2,
     width: '100%'
