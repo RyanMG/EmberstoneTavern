@@ -7,7 +7,7 @@ import PageTitle from "@components/common/PageTitle";
 import PageLoading from "@components/common/PageLoading";
 import CampaignDetailsMain from "@components/campaigns/campaignDetails/CampaignDetailsMain";
 import CampaignMembers from "@components/campaigns/campaignDetails/CampaignMembers";
-import CampaignActionButtons from "@components/campaigns/campaignDetails/CampaignActionButtons";
+import CampaignActionButtons from "@/components/campaigns/campaignDetails/CampaignDetailsActionButtons";
 import Spacer from "@components/common/Spacer";
 
 import { TCampaign } from "@definitions/campaign";

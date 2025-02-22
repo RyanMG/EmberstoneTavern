@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import { View } from 'react-native';
 import BodyText from '@components/common/BodyText';
 import ProfileImage from '@components/profile/ProfileImage';
 import Spacer from '@components/common/Spacer';

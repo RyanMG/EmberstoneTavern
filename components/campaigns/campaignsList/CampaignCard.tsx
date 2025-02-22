@@ -2,7 +2,7 @@ import { TCampaign } from "@definitions/campaign";
 import { View, StyleSheet } from "react-native";
 import Colors from "@constants/Colors";
 
-import CampaignIcon from './CampaignIcon';
+import CampaignIcon from '../CampaignIcon';
 import { Link } from "expo-router";
 import BodyText from "@components/common/BodyText";
 

@@ -37,6 +37,16 @@ export const fetchCampaign = async (id: string): Promise<TCampaign> => {
   }
 }
 
+export const createCampaign = async (campaign: TCampaign): Promise<TCampaign> => {
+  try {
+   const { data } = await axios.post(`${API_ROOT}`, campaign);
+
+   return data;
+  } catch (error) {
+    throw new Error(`Failed to create campaign: ${(error as Error).message}`)
+  }
+}
+
 export const removeUserFromCampaign = async (campaignId: string, userId: string): Promise<GenericHTTPResponse> => {
   try {
    const { data } = await axios.delete(`${API_ROOT}/${campaignId}/users/${userId}`);

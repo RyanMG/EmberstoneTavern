@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: Colors.BORDER.BASE,
     color: Colors.TEXT.DARKEN20,
+    backgroundColor: Colors.BACKGROUND.LIGHTEN,
     padding: 10
   }
 })
