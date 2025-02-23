@@ -110,9 +110,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string): Promise<{success: boolean, message: string}> => {
     const response = await loginUser(email, password);
 
-    if (response.success && response.token) {
-      await setSession(response.token);
-      await setStorageItem(TOKEN_KEY, response.token);
+    if (response.success && response.data) {
+      await setSession(response.data);
+      await setStorageItem(TOKEN_KEY, response.data);
 
       return {
         success: true,

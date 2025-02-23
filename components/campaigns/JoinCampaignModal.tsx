@@ -36,7 +36,7 @@ export default function JoinCampaignModal({
     mutate
   } = useMutation({
     mutationFn: () => {
-      return joinCampaign(campaignCode);
+      return joinCampaign(campaignCode.toUpperCase());
     }
   })
 
