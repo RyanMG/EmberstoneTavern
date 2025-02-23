@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "EmberstoneTavern",
-    "slug": "EmberstoneTavern",
+    "slug": "emberstonetavern",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,7 +15,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true ,
+      "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
       }
@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "cd8c2513-fa28-470e-9656-c2ef99bea85b"
+      }
+    },
+    "owner": "davidryanhall"
   }
 }
