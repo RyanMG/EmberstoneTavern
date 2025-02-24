@@ -1,8 +1,6 @@
 import PageContainer from '@components/common/PageContainers';
 import PageTitle from '@components/common/PageTitle';
-import { Text } from 'react-native';
-
-const API_ROOT = process.env.EXPO_PUBLIC_API_ROOT_URL;
+import BodyText from '@components/common/BodyText';
 
 export default function Tavern() {
   return (
@@ -10,7 +8,7 @@ export default function Tavern() {
       <PageTitle
         text="The Emberstone Tavern"
       />
-      <Text>{API_ROOT}</Text>
+      <BodyText textSize="md">Welcome to the Emberstone Tavern.</BodyText>
     </PageContainer>
   );
 }
