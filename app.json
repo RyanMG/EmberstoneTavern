@@ -45,6 +45,12 @@
         "projectId": "cd8c2513-fa28-470e-9656-c2ef99bea85b"
       }
     },
-    "owner": "davidryanhall"
+    "owner": "davidryanhall",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/cd8c2513-fa28-470e-9656-c2ef99bea85b"
+    }
   }
 }
