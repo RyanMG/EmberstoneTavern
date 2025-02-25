@@ -29,6 +29,10 @@ export default function Campaigns() {
         ...pageHeaderOptions,
         title: 'Campaign'
       }}/>
+      <Stack.Screen name="[id]/edit" options={{
+        ...pageHeaderOptions,
+        title: 'Edit Campaign'
+      }}/>
       <Stack.Screen name="new/index" options={{
         ...pageHeaderOptions,
         title: 'Create New Campaign'

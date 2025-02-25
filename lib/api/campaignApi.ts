@@ -64,6 +64,18 @@ export const createCampaign = async (campaign: TCampaign): Promise<TCampaign> =>
   }
 }
 
+export const updateCampaign = async (campaign: TCampaign): Promise<TCampaign> => {
+  try {
+   const { data } = await axios.put<TCampaign>(`${API_ROOT}/${campaign.id}`, campaign);
+
+   CAMPAIGN_CACHE[data.id] = data;
+   return data;
+
+  } catch (error) {
+    throw new Error(`Failed to update campaign: ${(error as Error).message}`)
+  }
+}
+
 export const removeUserFromCampaign = async (campaignId: string, userId: string): Promise<GenericHTTPResponse<null>> => {
   try {
    const { data } = await axios.delete(`${API_ROOT}/${campaignId}/users/${userId}`);

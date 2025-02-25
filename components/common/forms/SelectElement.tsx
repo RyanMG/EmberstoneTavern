@@ -11,6 +11,7 @@ interface ISelectElementProp<T> {
   options: Item[];
   onSelectValue: (value: T) => void;
   errorText?: string;
+  disabled?: boolean;
 }
 
 export default function SelectElement<T>({
@@ -20,7 +21,8 @@ export default function SelectElement<T>({
   placeholder = null,
   label,
   errorText,
-  halfWidth = false
+  halfWidth = false,
+  disabled = false
 }: ISelectElementProp<T>) {
 
   let placeHolderValue = {};
@@ -42,6 +44,7 @@ export default function SelectElement<T>({
         value={value}
         placeholder={placeHolderValue}
         items={options}
+        disabled={disabled}
       />
     </FormElementWrapper>
   );

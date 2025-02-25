@@ -8,12 +8,14 @@ import { useState } from 'react';
 import Button from '@components/common/forms/Button';
 import Dialog from '@components/common/Dialog';
 import InviteMembersModal from '@components/campaigns/InviteMembersModal';
+import { useRouter } from 'expo-router';
 
 export default function CampaignOwnerActions({
   campaign
 }: {
   campaign: TCampaign
 }) {
+  const router = useRouter();
   const [dialogContent, setDialogContent] = useState<TDialogContent>(null);
   const [inviteMembersModalVisible, setInviteMembersModalVisible] = useState<boolean>(false);
 
@@ -30,12 +32,7 @@ export default function CampaignOwnerActions({
         <View style={{width: '48%'}}>
           <Button
             title="Edit"
-            onPress={() => setDialogContent({
-              title: 'Edit Campaign',
-              body: `Not done yet.`,
-              actionLabel: 'Edit',
-              action: () => console.log('Edit')
-            })}
+            onPress={() => router.push(`/campaigns/${campaign.id}/edit`)}
           />
         </View>
         <View style={{width: '48%'}}>

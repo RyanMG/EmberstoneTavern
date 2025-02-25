@@ -1,7 +1,6 @@
 import PageContainer from "@/components/common/PageContainers";
-import PageTitle from "@/components/common/PageTitle";
 import PageLoading from '@components/common/PageLoading';
-import CreateNewCampaignForm from '@/components/campaigns/createNew/CreateNewCampaignForm';
+import CreateNewCampaignForm from '@/components/campaigns/createOrEditCampaign/CreateNewCampaignForm';
 
 import { fetchCampaignSettings } from '@api/campaignApi';
 import { useQuery } from '@tanstack/react-query';
@@ -26,9 +25,6 @@ export default function CreateNewCampaign() {
 
   return (
     <PageContainer>
-      <PageTitle
-        text="Create New Campaign"
-      />
       {isPending && <PageLoading />}
       {isSuccess && <CreateNewCampaignForm campaignSettings={data} />}
     </PageContainer>
