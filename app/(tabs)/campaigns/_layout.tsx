@@ -7,9 +7,8 @@ export default function Campaigns() {
   if (!authState?.authenticated) return <Redirect href="/" />
 
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }}/>
-      <Stack.Screen name="[id]" options={{ headerShown: false }}/>
+    <Stack screenOptions={{ headerShown: false }} >
+      <Stack.Screen name="index" />
     </Stack>
   );
 }

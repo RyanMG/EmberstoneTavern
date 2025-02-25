@@ -1,12 +1,13 @@
 import { View } from 'react-native';
 import Button from '@components/common/forms/Button';
 import { useState } from 'react';
-import CreateNewCampaignModal from '@components/campaigns/createNew/CreateNewModal';
+import { useRouter } from 'expo-router';
+
 import JoinCampaignModal from '@components/campaigns/JoinCampaignModal';
 
 export default function CampaignsListActionButtons() {
 
-  const [createModalVisible, setCreateModalVisible] = useState(false);
+  const router = useRouter();
   const [joinModalVisible, setJoinModalVisible] = useState(false);
 
   return (
@@ -15,7 +16,7 @@ export default function CampaignsListActionButtons() {
         title="Create Campaign"
         theme="primary"
         onPress={() => {
-          setCreateModalVisible(true);
+          router.push('/campaigns/new');
         }}
       />
       <Button
@@ -25,9 +26,7 @@ export default function CampaignsListActionButtons() {
           setJoinModalVisible(true);
         }}
       />
-      <CreateNewCampaignModal visible={createModalVisible} setModalVisible={() => setCreateModalVisible(false)} />
       <JoinCampaignModal visible={joinModalVisible} setModalVisible={() => setJoinModalVisible(false)} />
-
     </View>
   );
 }

@@ -5,7 +5,7 @@ import Spacer from '@components/common/Spacer';
 import InputElement from '@components/common/forms/InputElement';
 import { TCampaign } from '@definitions/campaign';
 
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useState, useEffect } from 'react';
 import {
@@ -98,20 +98,3 @@ export default function JoinCampaignModal({
     </ModalWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-});

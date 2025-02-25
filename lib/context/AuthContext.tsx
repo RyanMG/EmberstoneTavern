@@ -120,10 +120,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       };
     }
 
-    showNotification('Error logging in.');
     return {
       success: false,
-      message: "Failed to log user in"
+      message: response.message
     };
   }
   /**

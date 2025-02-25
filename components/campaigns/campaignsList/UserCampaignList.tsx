@@ -6,7 +6,6 @@ import { useNotification } from '@/lib/context/NotificationContext';
 import PageLoading from '@components/AppLoadingScreen';
 import CampaignCard from '@/components/campaigns/campaignsList/CampaignCard';
 import CompletedCampaignsList from '@/components/campaigns/campaignsList/CompletedCampaignsList';
-import CampaignsListActionButtons from '@components/campaigns/campaignsList/CampaignsListActionButtons';
 
 import SectionHeader from '@components/common/SectionHeader';
 import Spacer from '@components/common/Spacer';
@@ -54,8 +53,6 @@ export default function UserCampaignList() {
           <CompletedCampaignsList />
         )}
       </View>
-
-      <CampaignsListActionButtons />
     </View>
   );
 }
