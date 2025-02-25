@@ -14,6 +14,7 @@ export default function PageContainer({ children }: { children: ReactNode }) {
         visible={!!snackbarMessage}
         onDismiss={() => setSnackbarMessage(null)}
         elevation={5}
+        duration={3000}
         action={{
           label: 'Dismiss',
           onPress: () => setSnackbarMessage(null),
