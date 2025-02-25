@@ -11,7 +11,8 @@
       "@context/*": ["lib/context/*"],
       "@definitions/*": ["lib/definitions/*"],
       "@hooks/*": ["lib/hooks/*"],
-      "@images/*": ["./assets/images/*"]
+      "@images/*": ["./assets/images/*"],
+      "@utils/*": ["lib/utils/*"]
     }
   },
   "include": [
