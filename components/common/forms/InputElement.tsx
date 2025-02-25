@@ -1,6 +1,18 @@
-import {StyleSheet, TextInput, KeyboardTypeOptions, Text, View} from 'react-native';
-import FormErrorText from '@components/common/text/FormErrorText';
+import {StyleSheet, TextInput, KeyboardTypeOptions} from 'react-native';
+import FormElementWrapper from '@components/common/forms/FormElementWrapper';
 import Colors from '@/lib/constants/Colors';
+
+interface IInputElementProps {
+  label: string;
+  placeholder?: string;
+  halfWidth?: boolean;
+  keyboardType?: KeyboardTypeOptions | undefined;
+  value: string;
+  onChangeText: (text: string) => void;
+  secureTextEntry?: boolean;
+  isMultiline?: boolean;
+  errorText?: string;
+}
 
 export default function InputElement({
   label,
@@ -10,34 +22,28 @@ export default function InputElement({
   value,
   onChangeText,
   secureTextEntry = false,
+  isMultiline = false,
   errorText
-}: {
-  label: string;
-  halfWidth?: boolean;
-  placeholder?: string;
-  keyboardType?: KeyboardTypeOptions | undefined;
-  value: string;
-  onChangeText: (text: string) => void;
-  secureTextEntry?: boolean;
-  errorText?: string;
-}) {
-  return (
-    <View style={[
-      styles.inputWrapper,
-      halfWidth ? styles.halfWidth : ''
+}: IInputElementProps) {
 
-    ]}>
-      <Text style={styles.inputLabel}>{label}</Text>
+  return (
+    <FormElementWrapper
+      label={label}
+      halfWidth={halfWidth}
+      errorText={errorText}
+    >
       <TextInput
         style={styles.input}
         onChangeText={onChangeText}
         value={value}
+        multiline={isMultiline}
+        numberOfLines={isMultiline ? 7 : 1}
+        maxLength={isMultiline ? 500 : 50}
         placeholder={placeholder}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
       />
-      {errorText && <FormErrorText errorText={errorText} />}
-    </View>
+    </FormElementWrapper>
   );
 }
 
@@ -57,7 +63,6 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   input: {
-    height: 40,
     borderWidth: 1,
     borderRadius: 5,
     borderColor: Colors.BORDER.BASE,
