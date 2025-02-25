@@ -97,7 +97,7 @@ export const joinCampaign = async (campaignCode: string): Promise<GenericHTTPRes
 export const fetchCampaignSettings = async (): Promise<TCampaignSetting[]> => {
   try {
     if (CAMPAIGN_CACHE['settings']) {
-      return CAMPAIGN_CACHE['settings'];
+      return CAMPAIGN_CACHE['settings'] as TCampaignSetting[];
     }
 
     const { data } = await axios.get<TCampaignSetting[]>(`${API_ROOT}/settings`);
