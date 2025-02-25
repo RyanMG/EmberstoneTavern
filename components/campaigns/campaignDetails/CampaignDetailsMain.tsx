@@ -11,13 +11,17 @@ export default function CampaignDetailsMain({
   campaign: TCampaign
 }) {
   return (
-    <View style={styles.mainDetails}>
-      <CampaignIcon iconLink={campaign.iconLink} />
-      <View style={{display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', padding: 15}}>
-        <BodyText textSize="xl" bold={true}>{campaign.title}</BodyText>
-        <BodyText textSize="md" italic={true}>{campaign.description}</BodyText>
+    <>
+      <View style={styles.mainDetails}>
+        <CampaignIcon iconLink={campaign.iconLink} />
+        <View style={{display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', paddingLeft: 15}}>
+          <BodyText textSize="xl" bold={true}>{campaign.title}</BodyText>
+          <BodyText textSize="md" italic={true}>Set in: {campaign.campaignSetting?.name}</BodyText>
+        </View>
       </View>
-    </View>
+      <BodyText textSize="md" italic={true}>{campaign.description}</BodyText>
+    </>
+
   );
 }
 
@@ -28,6 +32,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 2,
+    marginBottom: 10,
     width: '100%'
   }
 });

@@ -16,8 +16,8 @@ export default function CampaignIcon({
 
 const styles = StyleSheet.create({
   image: {
-    width: 75,
-    height: 75,
+    width: 60,
+    height: 60,
     backgroundColor: '#FFF',
     borderRadius: 5
   },

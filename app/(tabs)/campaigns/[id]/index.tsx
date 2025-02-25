@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { View, StyleSheet } from "react-native";
 
 import PageContainer from "@components/common/PageContainers";
-import PageTitle from "@components/common/PageTitle";
 import PageLoading from "@components/common/PageLoading";
 import CampaignDetailsMain from "@components/campaigns/campaignDetails/CampaignDetailsMain";
 import CampaignMembers from "@components/campaigns/campaignDetails/CampaignMembers";
@@ -30,7 +29,7 @@ export default function CampaignPage() {
   if (isPending) return <PageLoading />
   if (error) {
     showNotification(error.message);
-    return null;
+    return <Redirect href="/campaigns" />
   }
 
   if (data === null) {
@@ -40,10 +39,6 @@ export default function CampaignPage() {
 
   return (
     <PageContainer>
-      <PageTitle
-        text="Campaign Details"
-        back="/campaigns"
-      />
       <View style={styles.container}>
         <View style={{flex: 1}}>
           <CampaignDetailsMain campaign={data} />
