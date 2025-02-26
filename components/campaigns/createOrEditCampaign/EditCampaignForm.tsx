@@ -2,7 +2,8 @@ import { View } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import {
-  useMutation
+  useMutation,
+  useQueryClient
 } from '@tanstack/react-query';
 
 import {
@@ -34,6 +35,7 @@ export default function EditCampaignForm({
 
   const router = useRouter();
   const { showNotification } = useNotification();
+  const queryClient = useQueryClient();
 
   const {
     isPending,
@@ -50,6 +52,7 @@ export default function EditCampaignForm({
   useEffect(() => {
     if (isSuccess) {
       showNotification('Campaign updated.');
+      queryClient.invalidateQueries({ queryKey: ['activeCampaigns'] });
       router.push(`/campaigns/${data.id}`);
     }
   }, [isSuccess])

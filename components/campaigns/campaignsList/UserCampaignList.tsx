@@ -17,7 +17,7 @@ import { fetchActiveUserCampaigns } from '@/lib/api/campaignApi';
 export default function UserCampaignList() {
   const [showCompletedCampaigns, setShowCompletedCampaigns] = useState<boolean>(false)
   const { isPending, error, data } = useQuery<TCampaign[]>({
-    queryKey: ['campaigns'],
+    queryKey: ['activeCampaigns'],
     queryFn: fetchActiveUserCampaigns,
   })
   const { showNotification } = useNotification();
@@ -29,30 +29,29 @@ export default function UserCampaignList() {
   }
 
   return (
-    <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start', width: '100%', flex: 1 }}>
-      <View style={{ display: 'flex', flexDirection: 'column', flex: 1, width: '100%' }}>
-        <SectionHeader text="Active campaigns" />
+    <View style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+      <SectionHeader text="Active campaigns" />
 
-        {data.length === 0 && (
-          <NoResultsBox text="No active campaigns" />
-        )}
-        {data.length > 0 && (
-          <View>
-            <FlatList
-              data={data}
-              renderItem={({ item }) => <CampaignCard campaign={item} />}
-              keyExtractor={item => item.id}
-            />
-          </View>
-        )}
+      {data.length === 0 && (
+        <NoResultsBox text="No active campaigns" />
+      )}
 
-        <Spacer />
+      {data.length > 0 && (
+        <View>
+          <FlatList
+            data={data}
+            renderItem={({ item }) => <CampaignCard campaign={item} />}
+            keyExtractor={item => item.id}
+          />
+        </View>
+      )}
 
-        <SectionHeader text="Completed campaigns" headerButtonLabel={showCompletedCampaigns ? "Hide completed" : "Show completed"} headerButtonAction={() => setShowCompletedCampaigns(!showCompletedCampaigns)} />
-        {showCompletedCampaigns && (
-          <CompletedCampaignsList />
-        )}
-      </View>
+      <Spacer />
+
+      <SectionHeader text="Completed campaigns" headerButtonLabel={showCompletedCampaigns ? "Hide completed" : "Show completed"} headerButtonAction={() => setShowCompletedCampaigns(!showCompletedCampaigns)} />
+      {showCompletedCampaigns && (
+        <CompletedCampaignsList />
+      )}
     </View>
   );
 }

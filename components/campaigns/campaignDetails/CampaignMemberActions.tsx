@@ -8,6 +8,7 @@ import { View } from 'react-native';
 import { useState } from 'react';
 import { useNotification } from '@context/NotificationContext';
 import { useRouter } from 'expo-router';
+import { useQueryClient } from '@tanstack/react-query';
 
 import Button from '@components/common/forms/Button';
 import Dialog from '@components/common/Dialog';
@@ -21,6 +22,7 @@ export default function CampaignMemberActions({
   const [dialogContent, setDialogContent] = useState<TDialogContent>(null);
   const { showNotification } = useNotification();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   return (
     <>
@@ -48,6 +50,7 @@ export default function CampaignMemberActions({
                 const resp = await removeUserFromCampaign(campaign.id, authState?.activeUser?.id!);
                 if (resp.success) {
                   showNotification('You have left the campaign.');
+                  queryClient.invalidateQueries({ queryKey: ['activeCampaigns'] });
                   router.push('/');
                   setDialogContent(null);
                   return;

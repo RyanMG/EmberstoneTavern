@@ -10,7 +10,7 @@ import BodyText from '@components/common/BodyText';
 import InputElementWithButton from '@components/common/forms/InputElementWithButton';
 import Spacer from '@components/common/Spacer';
 
-import { inviteMemberByEmail } from '@api/campaignApi';
+import { inviteMemberByEmail } from '@api/campaignInvitesApi';
 import { TCampaign } from '@definitions/campaign';
 import { isValidEmail } from '@utils/formUtils';
 import { useNotification } from '@context/NotificationContext';
@@ -29,7 +29,7 @@ export default function InviteMembersModal({
   const [emailError, setEmailError] = useState<string | undefined>();
   const { showNotification } = useNotification();
 
-  const { isPending, isError, isSuccess, data, mutate } = useMutation({
+  const { isPending, isError, isSuccess, mutate } = useMutation({
     mutationFn: () => inviteMemberByEmail(campaign.id, email)
   })
 
