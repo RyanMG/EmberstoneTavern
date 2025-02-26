@@ -58,6 +58,16 @@ export const updateCampaign = async (campaign: TCampaign): Promise<TCampaign> =>
   }
 }
 
+export const deleteCampaign = async (campaignId: string): Promise<GenericHTTPResponse<null>> => {
+  try {
+   const { data } = await axios.delete(`${API_ROOT}/${campaignId}`);
+
+   return data;
+  } catch (error) {
+    throw new Error(`Failed to delete campaign: ${(error as Error).message}`)
+  }
+}
+
 export const removeUserFromCampaign = async (campaignId: string, userId: string): Promise<GenericHTTPResponse<null>> => {
   try {
    const { data } = await axios.delete(`${API_ROOT}/${campaignId}/users/${userId}`);

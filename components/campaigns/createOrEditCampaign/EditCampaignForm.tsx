@@ -52,8 +52,15 @@ export default function EditCampaignForm({
   useEffect(() => {
     if (isSuccess) {
       showNotification('Campaign updated.');
-      queryClient.invalidateQueries({ queryKey: ['activeCampaigns'] });
-      router.push(`/campaigns/${data.id}`);
+      queryClient.invalidateQueries({
+        queryKey: ['campaign', { id: campaignData.id }]
+      })
+
+      if (router.canGoBack()) {
+        router.back();
+      } else {
+        router.replace(`/campaigns/${data.id}`);
+      }
     }
   }, [isSuccess])
 
