@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { TCampaign, TCampaignSetting } from '@definitions/campaign';
+import {
+  TCampaign,
+  TCampaignSetting,
+  TCampaignInvite
+ } from '@definitions/campaign';
 import { GenericHTTPResponse } from '@definitions/api';
 
 const API_ROOT = `${process.env.EXPO_PUBLIC_API_ROOT_URL}/api/campaigns`;
@@ -93,6 +97,28 @@ export const addUserToCampaign = async (campaignId: string, userId: string): Pro
    return data;
   } catch (error) {
     throw new Error(`Failed to add user to campaign: ${(error as Error).message}`)
+  }
+}
+
+export const inviteMemberByEmail = async (campaignId: string, email: string): Promise<GenericHTTPResponse<null>> => {
+  try {
+   const { data } = await axios.post(`${API_ROOT}/${campaignId}/invite`, {
+     email
+   });
+
+   return data;
+  } catch (error) {
+    throw new Error(`Failed to invite member: ${(error as Error).message}`)
+  }
+}
+
+
+export const fetchInvites = async (): Promise<TCampaignInvite[]> => {
+  try {
+    const { data } = await axios.get<TCampaignInvite[]>(`${API_ROOT}/invites`);
+    return data;
+  } catch (error) {
+    throw new Error(`Failed to fetch invites: ${(error as Error).message}`)
   }
 }
 

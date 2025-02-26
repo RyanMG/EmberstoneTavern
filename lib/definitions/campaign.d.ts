@@ -18,3 +18,11 @@ export type TCampaignSetting = {
   id: number;
   name?: string;
 }
+
+export type TCampaignInvite = {
+  id: number;
+  inviteDate: string;
+  campaignOverview: TCampaign;
+  owner: TPerson;
+  player: TPerson;
+}

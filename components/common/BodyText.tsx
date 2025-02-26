@@ -7,12 +7,14 @@ export default function BodyText({
   italic = false,
   bold = false,
   link = false,
+  center = false,
   children
 }: {
   textSize?: 'sm' | 'md' | 'lg' | 'xl';
   italic?: boolean;
   bold?: boolean;
   link?: boolean;
+  center?: boolean;
   children: ReactNode;
 }) {
   return (
@@ -21,6 +23,7 @@ export default function BodyText({
       italic ? styles.italic : '',
       bold ? styles.bold : '',
       link ? styles.link : '',
+      center ? styles.center : '',
       styles[textSize as keyof typeof styles]
     ]}>
       {children}
@@ -33,6 +36,9 @@ const styles = StyleSheet.create({
     color: Colors.TEXT.BASE,
     fontStyle: 'normal',
     fontWeight: 'normal'
+  },
+  center: {
+    textAlign: 'center'
   },
   italic: {
     fontStyle: 'italic'

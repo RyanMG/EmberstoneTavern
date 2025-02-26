@@ -5,9 +5,9 @@ import Colors from '@constants/Colors';
 import { ReactNode } from 'react';
 
 interface IFormElementWrapperProps {
-  label: string
+  label?: string
   errorText?: string
-  halfWidth: boolean
+  halfWidth?: boolean
   children: ReactNode | ReactNode[]
 }
 
@@ -22,7 +22,7 @@ export default function FormElementWrapper({
       styles.inputWrapper,
       halfWidth ? styles.halfWidth : ''
     ]}>
-      <Text style={styles.inputLabel}>{label}</Text>
+      {label && <Text style={styles.inputLabel}>{label}</Text>}
       {children}
       {errorText && <FormErrorText errorText={errorText} />}
     </View>
@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
   inputWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    marginBottom: 10
+    justifyContent: 'flex-start'
   },
   halfWidth: {
     width: '48%'

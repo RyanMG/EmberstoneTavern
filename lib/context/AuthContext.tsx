@@ -94,6 +94,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     const activeUser = await fetchActiveUser(token);
 
     if ('error' in activeUser) {
+      logout();
       return;
     }
 

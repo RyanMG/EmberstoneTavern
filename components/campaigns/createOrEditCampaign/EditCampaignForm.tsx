@@ -55,7 +55,7 @@ export default function EditCampaignForm({
   }, [isSuccess])
 
   return (
-    <View style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%', paddingLeft: 20, paddingRight: 20}}>
+    <View style={{display: 'flex', flexDirection: 'column', width: '100%', paddingLeft: 20, paddingRight: 20}}>
       <InputElement
         label="Campaign Title"
         value={title}

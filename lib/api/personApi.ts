@@ -16,7 +16,7 @@ export const fetchActiveUser = async (token: string): Promise<TPerson | { error:
       }
     });
 
-    if (response.status === 200) {
+    if (response.status === 200 && response.data) {
       return response.data;
     }
 

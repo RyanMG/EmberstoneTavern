@@ -3,7 +3,7 @@ import FormElementWrapper from '@components/common/forms/FormElementWrapper';
 import Colors from '@/lib/constants/Colors';
 
 interface IInputElementProps {
-  label: string;
+  label?: string;
   placeholder?: string;
   halfWidth?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
@@ -11,8 +11,13 @@ interface IInputElementProps {
   onChangeText: (text: string) => void;
   secureTextEntry?: boolean;
   isMultiline?: boolean;
+  disabled?: boolean;
   errorText?: string;
 }
+
+export {
+  IInputElementProps
+};
 
 export default function InputElement({
   label,
@@ -23,6 +28,7 @@ export default function InputElement({
   onChangeText,
   secureTextEntry = false,
   isMultiline = false,
+  disabled = false,
   errorText
 }: IInputElementProps) {
 
@@ -42,32 +48,20 @@ export default function InputElement({
         placeholder={placeholder}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
+        editable={!disabled}
       />
     </FormElementWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  inputWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    marginBottom: 10
-  },
-  halfWidth: {
-    width: '48%'
-  },
-  inputLabel: {
-    color: Colors.TEXT.DARKEN20,
-    fontSize: 14,
-    marginBottom: 5
-  },
   input: {
     borderWidth: 1,
     borderRadius: 5,
     borderColor: Colors.BORDER.BASE,
     color: Colors.TEXT.DARKEN20,
     backgroundColor: Colors.BACKGROUND.LIGHTEN,
-    padding: 10
+    padding: 10,
+    flex: 1,
   }
 })
