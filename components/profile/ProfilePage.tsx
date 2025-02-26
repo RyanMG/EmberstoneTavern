@@ -1,8 +1,11 @@
+import { View } from 'react-native';
+
 import { useAuth } from '@/lib/context/AuthContext';
 import PageTitle from '@components/common/PageTitle';
 import CommonUserProfileDetails from './CommonUserProfileDetails';
+import AllUserRostersList from './AllUserRostersList';
 import Button from '@components/common/forms/Button';
-import { View } from 'react-native';
+import Spacer from '@components/common/Spacer';
 
 export default function ProfilePage() {
   const { authState, logout } = useAuth();
@@ -14,8 +17,13 @@ export default function ProfilePage() {
       <PageTitle
         text="Profile"
       />
-      <View style={{display: 'flex', flexDirection: 'column', flex: 1,  width: '100%'}}>
-        <CommonUserProfileDetails user={activeUser} />
+      <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1,  width: '100%'}}>
+        <View>
+          <CommonUserProfileDetails user={activeUser} />
+          <Spacer />
+          <AllUserRostersList />
+        </View>
+
         <View style={{display: 'flex', flexDirection: 'row',alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
           <View style={{width: '48%'}}>
             <Button
