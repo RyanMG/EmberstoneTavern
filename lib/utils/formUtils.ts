@@ -9,3 +9,8 @@ export function createFormSelectOptions<T>(options: T[], {
 }): Item[] {
   return options.map(option => ({ label: String(option[labelKey]), value: option[valueKey] }));
 }
+
+export function isValidEmail(email: string): boolean {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}

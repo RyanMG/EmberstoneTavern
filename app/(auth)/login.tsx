@@ -6,11 +6,13 @@ import Divider from '@components/common/Divider';
 import Spacer from '@components/common/Spacer';
 import Button from '@components/common/forms/Button';
 import FormErrorText from '@components/common/text/FormErrorText';
+
 import { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import { useAuth } from '@/lib/context/AuthContext';
+import { isValidEmail } from '@utils/formUtils';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
@@ -26,7 +28,7 @@ export default function Login() {
     setEmailError(undefined);
     setPasswordError(undefined);
 
-    if (!email || !email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+    if (!email || !isValidEmail(email)) {
       setEmailError('Valid email is required');
     }
 

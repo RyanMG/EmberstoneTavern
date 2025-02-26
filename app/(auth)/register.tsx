@@ -10,6 +10,7 @@ import InputElement from '@components/common/forms/InputElement';
 import Button from '@components/common/forms/Button';
 import FormErrorText from '@components/common/text/FormErrorText';
 import Colors from '@/lib/constants/Colors';
+import { isValidEmail } from '@/lib/utils/formUtils';
 
 export default function Register() {
   const { register } = useAuth();
@@ -46,7 +47,7 @@ export default function Register() {
       hasError = true;
     }
 
-    if (!email || !email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+    if (!email || !isValidEmail(email)) {
       setEmailError('Valid email is required');
       hasError = true;
     }
