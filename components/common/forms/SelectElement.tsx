@@ -29,9 +29,10 @@ export default function SelectElement<T>({
   if (placeholder) {
     placeHolderValue = {
       label: placeholder,
-      value: null
+      value: undefined
     }
   }
+
   return (
     <FormElementWrapper
       label={label}

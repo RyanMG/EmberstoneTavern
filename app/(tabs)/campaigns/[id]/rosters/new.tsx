@@ -27,8 +27,8 @@ export default function CreateNewRosterPage() {
   const { authState } = useAuth();
 
   const [name, setName] = useState<string>('');
-  const [grandAllianceId, setGrandAllianceId] = useState<number | undefined>();
-  const [factionId, setFactionId] = useState<number | undefined>();
+  const [grandAllianceId, setGrandAllianceId] = useState<number | "">("");
+  const [factionId, setFactionId] = useState<number | "">("");
   const [factionOptions, setFactionOptions] = useState<TFaction[]>([])
 
   const grandAllianceQuery = useQuery({
@@ -39,13 +39,25 @@ export default function CreateNewRosterPage() {
   const factionQuery = useQuery({
     queryKey: ['factions', grandAllianceId],
     queryFn: () => {
-      return fetchFactionsByGrandAlliance(grandAllianceId!);
+      return fetchFactionsByGrandAlliance(Number(grandAllianceId!));
     },
     enabled: !!grandAllianceId,
   })
 
   const { mutate: createRoster } = useMutation({
-    mutationFn: (roster: TRoster) => createCampaignRoster(id, roster),
+    mutationFn: () => {
+      return createCampaignRoster(id, {
+        name: name,
+        campaignId: id,
+        playerId: authState.activeUser!.id,
+        grandAllianceId: Number(grandAllianceId!),
+        factionId: Number(factionId!),
+        emberstoneTotal: 0,
+        emberStoneVault: 0,
+        pointTotal: 0,
+        hasFactionTerrain: false
+      } as TRoster);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['campaignRoster', {campaignId: id}],
@@ -89,7 +101,9 @@ export default function CreateNewRosterPage() {
             valueKey: 'id',
           })}
           />
+
         <Spacer />
+
         <SelectElement
           label="Faction"
           placeholder="Select a faction for this roster"
@@ -113,12 +127,8 @@ export default function CreateNewRosterPage() {
           />
           <Button
             title="Create Roster"
-            onPress={() => createRoster({
-              id: '',
-              name: '',
-              campaignId: id,
-              userId: authState.activeUser!.id,
-            })}
+            disabled={!name || !grandAllianceId || !factionId}
+            onPress={() => createRoster()}
           />
         </View>
 

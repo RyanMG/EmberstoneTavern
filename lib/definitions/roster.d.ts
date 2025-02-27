@@ -1,8 +1,14 @@
 export type TRoster = {
-  id: string;
+  id?: string;
   name: string;
   campaignId: string;
-  userId: string;
+  playerId: string;
+  grandAllianceId?: number;
+  factionId?: number;
+  pointTotal: number;
+  hasFactionTerrain: boolean;
+  emberstoneTotal: number;
+  emberStoneVault: number;
 }
 
 export type TRosterUnit = {
