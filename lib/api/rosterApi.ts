@@ -31,3 +31,12 @@ export async function getCampaignRoster(campaignId: string): Promise<TRoster> {
      throw new Error(`Failed to fetch user's campaign roster: ${(error as Error).message}`)
    }
 }
+
+export async function createCampaignRoster(campaignId: string, roster: TRoster): Promise<TRoster> {
+  try {
+    return axios.post<TRoster>(`${API_ROOT}/campaign/${campaignId}`, roster).then((res) => res.data);
+
+   } catch (error) {
+     throw new Error(`Failed to create campaign roster: ${(error as Error).message}`)
+   }
+}
