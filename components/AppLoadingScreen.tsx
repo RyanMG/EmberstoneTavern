@@ -1,11 +1,15 @@
 import { View, StyleSheet } from 'react-native';
 import BodyText from './common/BodyText';
+import PageContainer from './common/PageContainers';
 
 export default function AppLoadingScreen() {
   return (
-    <View style={styles.container}>
-      <BodyText>Loading...</BodyText>
-    </View>
+    <PageContainer>
+      <View style={styles.container}>
+        <BodyText>Loading...</BodyText>
+      </View>
+    </PageContainer>
+
   );
 }
 

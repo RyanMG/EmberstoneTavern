@@ -15,7 +15,7 @@ const BLACK_LIGHTEN50 = '#444';
 const BLACK_DARKEN20 = '#111';
 const BLACK_DARKEN50 = '#000';
 
-const Colors = {
+const colors = {
   TEXT: {
     ERROR: RED_LIGHTEN20,
     GREEN: BASE_GREEN,
@@ -54,4 +54,4 @@ const Colors = {
   }
 };
 
-export default Colors;
+export default colors;

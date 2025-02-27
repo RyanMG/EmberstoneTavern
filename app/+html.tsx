@@ -1,5 +1,5 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
-import Colors from '@/lib/constants/Colors';
+import Colors from '@/lib/constants/colors';
 
 // This file is web-only and used to configure the root HTML for every
 // web page during static rendering.

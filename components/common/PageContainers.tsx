@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { useNotification } from '@context/NotificationContext';
-import Colors from '@constants/Colors';
+import Colors from '@/lib/constants/colors';
 
 export default function PageContainer({ children }: { children: ReactNode }) {
   const { snackbarMessage, setSnackbarMessage } = useNotification();

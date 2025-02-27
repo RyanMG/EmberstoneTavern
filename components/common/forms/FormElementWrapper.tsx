@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet } from 'react-native';
 import FormErrorText from '@components/common/text/FormErrorText';
 
-import Colors from '@constants/Colors';
+import Colors from '@/lib/constants/colors';
 import { ReactNode } from 'react';
 
 interface IFormElementWrapperProps {

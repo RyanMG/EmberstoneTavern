@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Modal, View, StyleSheet } from 'react-native';
-import Colors from '@/lib/constants/Colors';
+import Colors from '@/lib/constants/colors';
 
 export default function ModalWrapper({
   visible,

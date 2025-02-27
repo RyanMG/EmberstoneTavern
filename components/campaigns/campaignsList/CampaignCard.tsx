@@ -1,6 +1,6 @@
 import { TCampaign } from "@definitions/campaign";
 import { View, StyleSheet } from "react-native";
-import Colors from "@constants/Colors";
+import Colors from "@/lib/constants/colors";
 
 import CampaignIcon from '../CampaignIcon';
 import { Link } from "expo-router";

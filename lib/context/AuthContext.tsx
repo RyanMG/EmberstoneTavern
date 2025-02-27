@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import useStorage from '@hooks/useStorage';
+import Token from '@classes/Token';
 import { useNotification } from '@context/NotificationContext';
 import { useRouter } from 'expo-router';
 import {
@@ -13,7 +14,7 @@ const TOKEN_KEY = 'auth_token';
 
 const AuthContext = createContext<{
   authState: {
-    token: string | null;
+    token: Token | null;
     authenticated: boolean | null;
     activeUser: TPerson | null;
   };
@@ -51,7 +52,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const { showNotification } = useNotification();
 
   const [authState, setAuthState] = useState<{
-    token: string | null;
+    token: Token | null;
     authenticated: boolean | null;
     activeUser: TPerson | null;
   }>({
@@ -88,10 +89,10 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   /**
    * Set the auth token in state and for axios use
    */
-  const setSession = async (token: string) => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  const setSession = async (token: Token) => {
+    axios.defaults.headers.common['Authorization'] = token.getBearerToken();
 
-    const activeUser = await fetchActiveUser(token);
+    const activeUser = await fetchActiveUser();
 
     if ('error' in activeUser) {
       logout();
@@ -112,7 +113,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     const response = await loginUser(email, password);
 
     if (response.success && response.data) {
-      await setSession(response.data);
+      const token = new Token(response.data);
+      await setSession(token);
       await setStorageItem(TOKEN_KEY, response.data);
 
       return {
@@ -145,9 +147,10 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
    */
   useEffect(() => {
     (async () => {
-      const token = await getStorageItem(TOKEN_KEY) as string | null;
+      const storedToken = await getStorageItem(TOKEN_KEY) as string | null;
+      const token = new Token(storedToken);
 
-      if (token) {
+      if (token.hasValue()) {
         await setSession(token);
       }
 

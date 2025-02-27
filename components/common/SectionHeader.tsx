@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet } from 'react-native';
-import Colors from '@constants/Colors';
+import Colors from '@/lib/constants/colors';
 import { Button } from 'react-native-paper'
 
 export default function SectionHeader({

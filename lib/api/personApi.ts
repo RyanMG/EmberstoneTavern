@@ -8,13 +8,9 @@ const API_ROOT = process.env.EXPO_PUBLIC_API_ROOT_URL;
 /**
  * Fetch data for the active user
  */
-export const fetchActiveUser = async (token: string): Promise<TPerson | { error: string }> => {
+export const fetchActiveUser = async (): Promise<TPerson | { error: string }> => {
   try {
-    const response = await axios.get(`${API_ROOT}/api/person`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    const response = await axios.get(`${API_ROOT}/api/person`);
 
     if (response.status === 200 && response.data) {
       return response.data;

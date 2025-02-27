@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import ModalWrapper from '@components/common/ModalWrapper';
 import ModalHeader from '@components/common/ModalHeader';
 import Button from '@components/common/forms/Button';
-import Colors from '@/lib/constants/Colors';
+import Colors from '@/lib/constants/colors';
 import BodyText from '@components/common/BodyText';
 import InputElementWithButton from '@components/common/forms/InputElementWithButton';
 import Spacer from '@components/common/Spacer';

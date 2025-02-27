@@ -1,5 +1,5 @@
 import { Button as PaperButton, Dialog as PaperDialog, Portal, Text } from 'react-native-paper';
-import Colors from '@constants/Colors';
+import Colors from '@/lib/constants/colors';
 import { TDialogContent } from '@definitions/ui';
 
 export default function Dialog({

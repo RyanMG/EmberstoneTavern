@@ -6,6 +6,7 @@
     "paths": {
       "@/*": ["./*"],
       "@api/*": ["lib/api/*"],
+      "@classes/*": ["./lib/classes/*"],
       "@components/*": ["./components/*"],
       "@constants/*": ["lib/constants/*"],
       "@context/*": ["lib/context/*"],
