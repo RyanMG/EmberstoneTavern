@@ -15,7 +15,7 @@ export default function SectionHeader({
     <View style={styles.wrapper}>
       <Text style={styles.text}>{text}</Text>
       {headerButtonAction && (
-        <Button onPress={headerButtonAction} mode="text" rippleColor="transparent" textColor={Colors.TEXT.GREEN}>{headerButtonLabel}</Button>
+        <Button onPress={headerButtonAction} mode="text" rippleColor="transparent" textColor={COLORS.TEXT.GREEN}>{headerButtonLabel}</Button>
       )}
     </View>
 
