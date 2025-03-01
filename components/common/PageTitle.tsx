@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Colors from '@/lib/constants/colors';
+import Colors from '@constants/Colors';
 import { Link } from 'expo-router';
 
 export default function PageTitle({

@@ -9,7 +9,7 @@ import PageTitle from '@components/common/PageTitle';
 import InputElement from '@components/common/forms/InputElement';
 import Button from '@components/common/forms/Button';
 import FormErrorText from '@components/common/text/FormErrorText';
-import Colors from '@/lib/constants/colors';
+import Colors from '@constants/Colors';
 import { isValidEmail } from '@/lib/utils/formUtils';
 
 export default function Register() {

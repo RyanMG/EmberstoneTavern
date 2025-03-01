@@ -1,5 +1,5 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
-import Colors from '@/lib/constants/colors';
+import Colors from '@constants/Colors';
 
 // This file is web-only and used to configure the root HTML for every
 // web page during static rendering.
@@ -30,6 +30,6 @@ export default function Root({ children }: { children: React.ReactNode }) {
 
 const responsiveBackground = `
   body {
-    background-color: ${Colors.BG_BASE};
+    background-color: ${Colors.BACKGROUND.BASE};
   }
 `;

@@ -1,6 +1,6 @@
 import {StyleSheet, TextInput, KeyboardTypeOptions} from 'react-native';
 import FormElementWrapper from '@components/common/forms/FormElementWrapper';
-import Colors from '@/lib/constants/colors';
+import Colors from '@constants/Colors';
 
 interface IInputElementProps {
   label?: string;

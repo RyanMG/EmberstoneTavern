@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from 'react-native';
-import Colors from '@/lib/constants/colors';
+import Colors from '@constants/Colors';
 import { ReactNode } from 'react';
 
 export default function BodyText({

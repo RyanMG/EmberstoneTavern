@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from 'react-native';
-import Colors from '@/lib/constants/colors';
+import Colors from '@constants/Colors';
 
 export default function FormErrorText({ errorText }: { errorText: string }) {
   return (

@@ -1,7 +1,7 @@
 import RNPickerSelect, { Item } from 'react-native-picker-select';
 import FormElementWrapper from '@components/common/forms/FormElementWrapper';
 import { StyleSheet } from 'react-native';
-import Colors from '@/lib/constants/colors';
+import Colors from '@constants/Colors';
 
 interface ISelectElementProp<T> {
   label: string;

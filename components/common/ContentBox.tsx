@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { View, StyleSheet } from 'react-native';
-import Colors from '@/lib/constants/colors';
+import Colors from '@constants/Colors';
 
 export default function ContentBox({ children }: { children: ReactNode }) {
   return (

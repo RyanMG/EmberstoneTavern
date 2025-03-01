@@ -1,6 +1,6 @@
 import { useAuth } from '@/lib/context/AuthContext';
 import { Redirect, Stack, ScreenProps } from 'expo-router';
-import Colors from '@/lib/constants/colors';
+import Colors from '@constants/Colors';
 
 export default function Campaigns() {
   const { authState } = useAuth();
