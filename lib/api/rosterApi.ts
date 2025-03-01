@@ -40,3 +40,12 @@ export async function createCampaignRoster(campaignId: string, roster: TRoster):
      throw new Error(`Failed to create campaign roster: ${(error as Error).message}`)
    }
 }
+
+export async function getAllCampaignRosters(campaignId: string): Promise<TRoster[]> {
+  try {
+    return axios.get<TRoster[]>(`${API_ROOT}/campaign/${campaignId}`).then((res) => res.data);
+
+   } catch (error) {
+     throw new Error(`Failed to fetch user's campaign roster: ${(error as Error).message}`)
+   }
+}

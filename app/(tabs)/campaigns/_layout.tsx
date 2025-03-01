@@ -1,6 +1,6 @@
 import { useAuth } from '@/lib/context/AuthContext';
 import { Redirect, Stack, ScreenProps } from 'expo-router';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 
 export default function Campaigns() {
   const { authState } = useAuth();
@@ -8,17 +8,17 @@ export default function Campaigns() {
   if (!authState?.authenticated) return <Redirect href="/" />
   const pageHeaderOptions: ScreenProps['options'] = {
     headerStyle: {
-      backgroundColor: Colors.BACKGROUND.BROWN,
+      backgroundColor: COLORS.BACKGROUND.BROWN,
       height: 45,
-      borderBottomColor: Colors.BORDER.DARKEN50,
+      borderBottomColor: COLORS.BORDER.DARKEN50,
       borderBottomWidth: 1
     },
-    headerTintColor: Colors.TEXT.BASE,
+    headerTintColor: COLORS.TEXT.BASE,
     headerTitleAlign: 'center',
     headerTitleStyle: {
       textAlign: 'center',
       fontWeight: 'bold',
-      color: Colors.TEXT.DARKEN20
+      color: COLORS.TEXT.DARKEN20
     },
   };
 
@@ -45,7 +45,7 @@ export default function Campaigns() {
         ...pageHeaderOptions,
         title: 'Create New Roster'
       }}/>
-      <Stack.Screen name="[id]/rosters/[id]" options={{
+      <Stack.Screen name="[id]/rosters/[rosterId]" options={{
         ...pageHeaderOptions,
         title: 'Roster details page'
       }}/>

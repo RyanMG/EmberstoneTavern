@@ -1,6 +1,6 @@
 import {StyleSheet, TextInput, KeyboardTypeOptions} from 'react-native';
 import FormElementWrapper from '@components/common/forms/FormElementWrapper';
-import Colors from '@/lib/constants/Colors';
+import COLORS from '@constants/colors';
 
 interface IInputElementProps {
   label?: string;
@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: Colors.BORDER.BASE,
-    color: Colors.TEXT.DARKEN20,
-    backgroundColor: Colors.BACKGROUND.LIGHTEN,
+    borderColor: COLORS.BORDER.BASE,
+    color: COLORS.TEXT.DARKEN20,
+    backgroundColor: COLORS.BACKGROUND.LIGHTEN,
     padding: 10,
     flex: 1,
   }

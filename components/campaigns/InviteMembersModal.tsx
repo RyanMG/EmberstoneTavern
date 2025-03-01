@@ -5,13 +5,13 @@ import { useMutation } from '@tanstack/react-query';
 import ModalWrapper from '@components/common/ModalWrapper';
 import ModalHeader from '@components/common/ModalHeader';
 import Button from '@components/common/forms/Button';
-import Colors from '@/lib/constants/Colors';
+import COLORS from '@constants/colors';
 import BodyText from '@components/common/BodyText';
 import InputElementWithButton from '@components/common/forms/InputElementWithButton';
 import Spacer from '@components/common/Spacer';
 
 import { inviteMemberByEmail } from '@api/campaignInvitesApi';
-import { TCampaign } from '@definitions/campaign';
+import Campaign from '@classes/Campaign';
 import { isValidEmail } from '@utils/formUtils';
 import { useNotification } from '@context/NotificationContext';
 
@@ -22,7 +22,7 @@ export default function InviteMembersModal({
 }: {
   visible: boolean
   setModalVisible: (visible: boolean) => void
-  campaign: TCampaign
+  campaign: Campaign
 }) {
 
   const [email, setEmail] = useState<string>('');
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '50%',
-    borderColor: Colors.BORDER.DARKEN,
+    borderColor: COLORS.BORDER.DARKEN,
     borderWidth: 1,
     borderRadius: 5,
     padding: 5,

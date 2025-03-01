@@ -1,4 +1,4 @@
-import { TCampaign } from '@definitions/campaign';
+import Campaign from '@classes/Campaign';
 import { TDialogContent } from '@definitions/ui';
 import { deleteCampaign } from '@api/campaignApi';
 
@@ -14,7 +14,7 @@ import InviteMembersModal from '@components/campaigns/InviteMembersModal';
 export default function CampaignOwnerActions({
   campaign
 }: {
-  campaign: TCampaign
+  campaign: Campaign
 }) {
   const router = useRouter();
   const [dialogContent, setDialogContent] = useState<TDialogContent>(null);

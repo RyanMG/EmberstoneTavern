@@ -9,7 +9,7 @@ export default function CampaignIcon({
     <Image
       style={styles.image}
       source={{ uri: iconLink }}
-      defaultSource={require('@images/campaign_icon.png')}
+      defaultSource={require('@images/campaign_icon.svg')}
     />
   );
 }

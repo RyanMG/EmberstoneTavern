@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import Colors from '@/lib/constants/Colors';
+import COLORS from '@constants/colors';
 
 export default function Divider() {
   return (
@@ -10,7 +10,7 @@ export default function Divider() {
 const styles = StyleSheet.create({
   divider: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.BORDER.DARKEN,
+    borderBottomColor: COLORS.BORDER.DARKEN,
     marginVertical: 20,
     width: '100%'
   }

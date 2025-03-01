@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import Colors from "@/lib/constants/Colors";
+import COLORS from "@constants/colors";
 import BodyText from "@components/common/BodyText";
 
 export default function NoResultsBox({
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   box: {
     borderWidth: 1,
-    borderColor: Colors.BORDER.BASE,
+    borderColor: COLORS.BORDER.BASE,
     borderRadius: 5,
     paddingLeft: 20,
     paddingRight: 20,

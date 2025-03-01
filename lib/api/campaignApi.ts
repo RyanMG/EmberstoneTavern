@@ -3,6 +3,7 @@ import {
   TCampaign,
   TCampaignSetting
  } from '@definitions/campaign';
+import Campaign from '@classes/Campaign';
 import { GenericHTTPResponse } from '@definitions/api';
 
 const API_ROOT = `${process.env.EXPO_PUBLIC_API_ROOT_URL}/api/campaigns`;
@@ -28,30 +29,30 @@ export const getActiveUserCompletedCampaigns = async (): Promise<TCampaign[]> =>
   }
 }
 
-export const fetchCampaign = async (id: TCampaign['id']): Promise<TCampaign> => {
+export const fetchCampaign = async (id: TCampaign['id']): Promise<Campaign> => {
   try {
-   const { data } = await axios.get<TCampaign>(`${API_ROOT}/${id}`);
-   return data;
+    const { data }: { data: TCampaign } = await axios.get<TCampaign>(`${API_ROOT}/${id}`);
+    return new Campaign(data);
 
   } catch (error) {
     throw new Error(`Failed to fetch campaign: ${(error as Error).message}`)
   }
 }
 
-export const createCampaign = async (campaign: TCampaign): Promise<TCampaign> => {
+export const createCampaign = async (campaign: TCampaign): Promise<Campaign> => {
   try {
    const { data } = await axios.post<TCampaign>(`${API_ROOT}`, campaign);
-   return data;
+   return new Campaign(data);
 
   } catch (error) {
     throw new Error(`Failed to create campaign: ${(error as Error).message}`)
   }
 }
 
-export const updateCampaign = async (campaign: TCampaign): Promise<TCampaign> => {
+export const updateCampaign = async (campaign: TCampaign): Promise<Campaign> => {
   try {
    const { data } = await axios.put<TCampaign>(`${API_ROOT}/${campaign.id}`, campaign);
-   return data;
+   return new Campaign(data);
 
   } catch (error) {
     throw new Error(`Failed to update campaign: ${(error as Error).message}`)

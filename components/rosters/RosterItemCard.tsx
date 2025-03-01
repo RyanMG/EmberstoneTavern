@@ -1,14 +1,28 @@
 import { TRoster } from '@definitions/roster';
-import { Text } from 'react-native';
+import { View } from 'react-native';
+import { Link } from 'expo-router';
+
+import BodyText from '@components/common/BodyText';
+import Card from '@components/common/Card';
 
 export default function RosterItemCard({
+  campaignId,
   roster
 }: {
+  campaignId: string;
   roster: TRoster
 }) {
   return (
-    <Text>
-      {roster.name}
-    </Text>
+    <Link
+      push
+      href={`/campaigns/${campaignId}/rosters/${roster.id}`}
+    >
+      <Card>
+        <View style={{width: '100%', padding: 10}}>
+          <BodyText textSize="lg" bold={true}>{roster.name}</BodyText>
+          <BodyText textSize="md" italic={true}>{roster.faction?.name}</BodyText>
+        </View>
+      </Card>
+    </Link>
   );
 }

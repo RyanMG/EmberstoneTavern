@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from 'react-native';
-import Colors from '@/lib/constants/Colors';
+import COLORS from '@constants/colors';
 import { ReactNode } from 'react';
 
 export default function BodyText({
@@ -33,9 +33,9 @@ export default function BodyText({
 
 const styles = StyleSheet.create({
   text: {
-    color: Colors.TEXT.BASE,
+    color: COLORS.TEXT.BASE,
     fontStyle: 'normal',
-    fontWeight: 'normal'
+    fontWeight: 'normal',
   },
   center: {
     textAlign: 'center'
@@ -47,22 +47,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   link: {
-    color: Colors.TEXT.LINK
+    color: COLORS.TEXT.LINK
   },
   sm: {
     fontSize: 14,
-    lineHeight: 21
+    lineHeight: 16
   },
   md: {
     fontSize: 16,
-    lineHeight: 24
+    lineHeight: 20
   },
   lg: {
     fontSize: 18,
-    lineHeight: 32
+    lineHeight: 20
   },
   xl: {
     fontSize: 24,
-    lineHeight: 36
+    lineHeight: 26
   }
 });

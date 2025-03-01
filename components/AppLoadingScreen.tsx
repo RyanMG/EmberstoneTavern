@@ -1,10 +1,11 @@
 import { View, StyleSheet } from 'react-native';
-import BodyText from './common/BodyText';
+import COLORS from '@constants/colors';
+import PageLoading from './common/PageLoading';
 
 export default function AppLoadingScreen() {
   return (
     <View style={styles.container}>
-      <BodyText>Loading...</BodyText>
+      <PageLoading />
     </View>
   );
 }
@@ -12,7 +13,11 @@ export default function AppLoadingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    width: '100%',
+    padding: 20,
+    backgroundColor: COLORS.BACKGROUND.BASE
   },
 })
