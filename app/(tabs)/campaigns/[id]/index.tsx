@@ -21,7 +21,7 @@ export default function CampaignPage() {
   const { authState } = useAuth();
 
   const { isPending, error, data } = useQuery<TCampaign>({
-    queryKey: ['campaign'],
+    queryKey: ['campaign', {id: id}],
     queryFn: () => fetchCampaign(id!),
   })
   const { showNotification } = useNotification();

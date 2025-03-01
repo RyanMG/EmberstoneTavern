@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 export default function CampaignPage() {
   let { id }: { id: string } = useLocalSearchParams();
   const campaignDataQuery = useQuery({
-    queryKey: ['campaign'],
+    queryKey: ['campaign', { id }],
     queryFn: () => fetchCampaign(id!),
   })
 

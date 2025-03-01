@@ -1,14 +1,15 @@
 import { TCampaign } from '@definitions/campaign';
 import { TDialogContent } from '@definitions/ui';
+import { deleteCampaign } from '@api/campaignApi';
 
 import { View } from 'react-native';
-
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-
+import { useRouter } from 'expo-router';
+import { useQueryClient } from '@tanstack/react-query';
 import Button from '@components/common/forms/Button';
 import Dialog from '@components/common/Dialog';
 import InviteMembersModal from '@components/campaigns/InviteMembersModal';
-import { useRouter } from 'expo-router';
 
 export default function CampaignOwnerActions({
   campaign
@@ -18,6 +19,16 @@ export default function CampaignOwnerActions({
   const router = useRouter();
   const [dialogContent, setDialogContent] = useState<TDialogContent>(null);
   const [inviteMembersModalVisible, setInviteMembersModalVisible] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: () => deleteCampaign(campaign.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['activeCampaigns'] });
+      queryClient.invalidateQueries({ queryKey: ['completedCampaigns'] });
+      router.replace('/(tabs)/campaigns');
+    }
+  })
 
   return (
     <>
@@ -43,7 +54,7 @@ export default function CampaignOwnerActions({
               title: 'Delete Campaign',
               body: `Are you sure you want to delete the campaign "${campaign.title}"? This action cannot be undone!`,
               actionLabel: 'Yes, Delete',
-              action: () => console.log('Delete')
+              action: () => mutate()
             })}
           />
         </View>

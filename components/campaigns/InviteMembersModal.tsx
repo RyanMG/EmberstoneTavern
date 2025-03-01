@@ -38,6 +38,7 @@ export default function InviteMembersModal({
       setEmailError("Error inviting member");
     }
     if (isSuccess) {
+      setEmail('');
       setModalVisible(false);
       showNotification(`Invite sent to ${email}`);
     }
