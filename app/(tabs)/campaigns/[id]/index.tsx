@@ -10,7 +10,7 @@ import CampaignMemberActions from "@components/campaigns/campaignDetails/Campaig
 import CampaignOwnerActions from "@components/campaigns/campaignDetails/CampaignOwnerActions";
 import Spacer from "@components/common/Spacer";
 
-import { TCampaign } from "@definitions/campaign";
+import Campaign from "@classes/Campaign";
 import { fetchCampaign } from "@api/campaignApi";
 import { useNotification } from "@context/NotificationContext";
 import { useAuth } from "@context/AuthContext";
@@ -20,7 +20,7 @@ export default function CampaignPage() {
   let { id }: { id: string } = useLocalSearchParams();
   const { authState } = useAuth();
 
-  const { isPending, error, data } = useQuery<TCampaign>({
+  const { isPending, error, data } = useQuery<Campaign>({
     queryKey: ['campaign', {id: id}],
     queryFn: () => fetchCampaign(id!),
   })

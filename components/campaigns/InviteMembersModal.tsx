@@ -11,7 +11,7 @@ import InputElementWithButton from '@components/common/forms/InputElementWithBut
 import Spacer from '@components/common/Spacer';
 
 import { inviteMemberByEmail } from '@api/campaignInvitesApi';
-import { TCampaign } from '@definitions/campaign';
+import Campaign from '@classes/Campaign';
 import { isValidEmail } from '@utils/formUtils';
 import { useNotification } from '@context/NotificationContext';
 
@@ -22,7 +22,7 @@ export default function InviteMembersModal({
 }: {
   visible: boolean
   setModalVisible: (visible: boolean) => void
-  campaign: TCampaign
+  campaign: Campaign
 }) {
 
   const [email, setEmail] = useState<string>('');

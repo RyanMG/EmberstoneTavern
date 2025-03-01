@@ -1,4 +1,5 @@
 import { TPerson } from "@definitions/person";
+import { TRoster } from "@definitions/roster";
 
 class Person {
   readonly id: string;
@@ -8,6 +9,7 @@ class Person {
   readonly bio: string;
   readonly status: string;
   readonly profileImage: string;
+  readonly roster?: TRoster;
 
   constructor(person: TPerson) {
     this.id = person.id;
@@ -17,6 +19,7 @@ class Person {
     this.bio = person.bio;
     this.status = person.status;
     this.profileImage = person.profileImage;
+    this.roster = person.roster;
   }
 
   getFullName(): string {
@@ -33,6 +36,10 @@ class Person {
 
   isNotTheSameAs(otherId: string): boolean {
     return this.id !== otherId;
+  }
+
+  hasRoster(): boolean {
+    return !!this.roster;
   }
 }
 

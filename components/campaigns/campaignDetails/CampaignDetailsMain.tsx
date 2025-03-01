@@ -1,14 +1,14 @@
 import CampaignIcon from "@components/campaigns/CampaignIcon";
 import BodyText from "@components/common/BodyText";
 
-import { TCampaign } from "@definitions/campaign";
+import Campaign from "@classes/Campaign";
 
 import { View, StyleSheet } from "react-native";
 
 export default function CampaignDetailsMain({
   campaign
 }: {
-  campaign: TCampaign
+  campaign: Campaign
 }) {
   return (
     <>

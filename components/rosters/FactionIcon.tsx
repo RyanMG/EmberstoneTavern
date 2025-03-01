@@ -1,18 +1,18 @@
 import { Image, StyleSheet } from 'react-native';
 
-export default function CampaignIcon({
-  iconLink
+export default function FactionIcon({
+  factionName
 }: {
-  iconLink: string;
+  factionName: 'string';
 }) {
   return (
     <Image
       style={styles.image}
-      source={{ uri: iconLink }}
-      defaultSource={require('@images/campaign_icon.svg')}
+      source={require('@images/sigmar/chaos/beasts.svg') }
     />
   );
 }
+
 
 const styles = StyleSheet.create({
   image: {

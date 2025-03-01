@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   text: {
     color: COLORS.TEXT.BASE,
     fontStyle: 'normal',
-    fontWeight: 'normal'
+    fontWeight: 'normal',
   },
   center: {
     textAlign: 'center'
@@ -51,18 +51,18 @@ const styles = StyleSheet.create({
   },
   sm: {
     fontSize: 14,
-    lineHeight: 21
+    lineHeight: 16
   },
   md: {
     fontSize: 16,
-    lineHeight: 24
+    lineHeight: 20
   },
   lg: {
     fontSize: 18,
-    lineHeight: 32
+    lineHeight: 20
   },
   xl: {
     fontSize: 24,
-    lineHeight: 36
+    lineHeight: 26
   }
 });

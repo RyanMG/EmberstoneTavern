@@ -2,6 +2,7 @@ import { TCampaign } from "@definitions/campaign";
 import { View, StyleSheet } from "react-native";
 import COLORS from "@constants/colors";
 
+import Card from '@components/common/Card'
 import CampaignIcon from '../CampaignIcon';
 import { Link } from "expo-router";
 import BodyText from "@components/common/BodyText";
@@ -16,12 +17,12 @@ export default function CampaignCard({
       push
       href={`/campaigns/${campaign.id}`}
     >
-      <View style={styles.cardContainer}>
+      <Card>
         <CampaignIcon iconLink={campaign.iconLink} />
         <View style={{display: 'flex', flexDirection: 'column', flex: 10, justifyContent: 'flex-start', alignItems: 'flex-start', padding: 15}}>
           <BodyText textSize="lg" bold={true}>{campaign.title}</BodyText>
         </View>
-      </View>
+      </Card>
     </Link>
   );
 }

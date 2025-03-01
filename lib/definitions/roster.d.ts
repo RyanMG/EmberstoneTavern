@@ -1,10 +1,14 @@
+import { TGrandAlliance, TFaction } from '@definitions/sigmar';
+
 export type TRoster = {
   id?: string;
   name: string;
   campaignId: string;
   playerId: string;
   grandAllianceId?: number;
+  grandAlliance?: TGrandAlliance;
   factionId?: number;
+  faction?: TFaction;
   pointTotal: number;
   hasFactionTerrain: boolean;
   emberstoneTotal: number;

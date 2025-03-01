@@ -49,7 +49,7 @@ export default function CreateNewRosterPage() {
       return createCampaignRoster(id, {
         name: name,
         campaignId: id,
-        playerId: authState.activeUser!.id,
+        playerId: authState.activeUser?.getId(),
         grandAllianceId: Number(grandAllianceId!),
         factionId: Number(factionId!),
         emberstoneTotal: 0,
@@ -62,7 +62,7 @@ export default function CreateNewRosterPage() {
       queryClient.invalidateQueries({
         queryKey: ['campaignRoster', {campaignId: id}],
       })
-      router.replace(`/(tabs)/campaigns/${id}`);
+      router.replace(`/(tabs)/campaigns/${id}/rosters/${id}`);
     }
   })
 

@@ -45,7 +45,7 @@ export default function Campaigns() {
         ...pageHeaderOptions,
         title: 'Create New Roster'
       }}/>
-      <Stack.Screen name="[id]/rosters/[id]" options={{
+      <Stack.Screen name="[id]/rosters/[rosterId]" options={{
         ...pageHeaderOptions,
         title: 'Roster details page'
       }}/>
