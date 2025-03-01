@@ -1,11 +1,9 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import useStorage from '@hooks/useStorage';
 import Token from '@classes/Token';
+import Person from '@classes/Person';
 import { useNotification } from '@context/NotificationContext';
 import { useRouter } from 'expo-router';
-import {
-  TPerson
-} from '@definitions/person'
 import { fetchActiveUser } from '@api/personApi'
 import { registerUser, loginUser } from '@api/authApi'
 import axios from 'axios';
@@ -16,7 +14,7 @@ const AuthContext = createContext<{
   authState: {
     token: Token | null;
     authenticated: boolean | null;
-    activeUser: TPerson | null;
+    activeUser: Person | null;
   };
   register: (firstName: string, lastName: string, email: string, password: string) => Promise<{success: boolean, message: string}>;
   login: (email: string, password: string) => Promise<{success: boolean, message: string}>;
@@ -54,7 +52,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [authState, setAuthState] = useState<{
     token: Token | null;
     authenticated: boolean | null;
-    activeUser: TPerson | null;
+    activeUser: Person | null;
   }>({
     token: null,
     authenticated: null,
@@ -102,7 +100,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     setAuthState({
       token: token,
       authenticated: true,
-      activeUser: activeUser
+      activeUser: new Person(activeUser)
     })
   }
 

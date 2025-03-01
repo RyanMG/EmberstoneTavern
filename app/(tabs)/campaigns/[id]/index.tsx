@@ -46,10 +46,10 @@ export default function CampaignPage() {
           <CampaignMembers campaign={data} />
         </View>
 
-        {authState?.activeUser?.id === data.owner.id && (
+        {authState?.activeUser?.isSameAs(data.owner.id) && (
           <CampaignOwnerActions campaign={data} />
         )}
-        {authState?.activeUser?.id !== data.owner.id && (
+        {authState?.activeUser?.isNotTheSameAs(data.owner.id) && (
           <CampaignMemberActions campaign={data} />
         )}
 
