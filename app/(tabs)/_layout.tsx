@@ -2,7 +2,7 @@ import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { Tabs } from 'expo-router';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 import { useAuth } from '@/lib/context/AuthContext';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -20,11 +20,11 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: Colors.TABS.ACTIVE,
-        tabBarInactiveTintColor: Colors.TABS.BASE,
+        tabBarActiveTintColor: COLORS.TABS.ACTIVE,
+        tabBarInactiveTintColor: COLORS.TABS.BASE,
         tabBarStyle: {
-          backgroundColor: Colors.BACKGROUND.GREEN,
-          borderTopColor: Colors.BORDER.BASE,
+          backgroundColor: COLORS.BACKGROUND.GREEN,
+          borderTopColor: COLORS.BORDER.BASE,
         }
       }}>
       <Tabs.Screen

@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 import PageLoading from './common/PageLoading';
 
 export default function AppLoadingScreen() {
@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     padding: 20,
-    backgroundColor: Colors.BACKGROUND.BASE
+    backgroundColor: COLORS.BACKGROUND.BASE
   },
 })

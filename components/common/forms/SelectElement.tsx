@@ -1,7 +1,7 @@
 import RNPickerSelect, { Item } from 'react-native-picker-select';
 import FormElementWrapper from '@components/common/forms/FormElementWrapper';
 import { StyleSheet } from 'react-native';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 
 interface ISelectElementProp<T> {
   label: string;
@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
   pickerInput: {
     padding: 10,
     borderWidth: 1,
-    borderColor: Colors.BORDER.BASE,
+    borderColor: COLORS.BORDER.BASE,
     borderRadius: 5,
-    backgroundColor: Colors.BACKGROUND.LIGHTEN,
-    color: Colors.TEXT.DARKEN20
+    backgroundColor: COLORS.BACKGROUND.LIGHTEN,
+    color: COLORS.TEXT.DARKEN20
   }
 });

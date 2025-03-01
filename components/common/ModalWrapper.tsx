@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Modal, View, StyleSheet } from 'react-native';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 
 export default function ModalWrapper({
   visible,
@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   modalView: {
-    borderColor: Colors.BORDER.BASE,
+    borderColor: COLORS.BORDER.BASE,
     borderWidth: 1,
-    backgroundColor: Colors.BACKGROUND.LIGHTEN,
+    backgroundColor: COLORS.BACKGROUND.LIGHTEN,
     width: '98%',
     height: '98%',
     padding: 20,

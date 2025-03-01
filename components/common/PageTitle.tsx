@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 import { Link } from 'expo-router';
 
 export default function PageTitle({
@@ -32,14 +32,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingBottom: 6,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.BORDER.GREEN
+    borderBottomColor: COLORS.BORDER.GREEN
   },
   title: {
     textAlign: 'left',
     fontSize: 24,
     lineHeight: 24,
     fontWeight: 'bold',
-    color: Colors.TEXT.GREEN
+    color: COLORS.TEXT.GREEN
   },
   backButton: {
     marginTop: 3,

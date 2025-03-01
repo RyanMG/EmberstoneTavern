@@ -9,7 +9,7 @@ import PageTitle from '@components/common/PageTitle';
 import InputElement from '@components/common/forms/InputElement';
 import Button from '@components/common/forms/Button';
 import FormErrorText from '@components/common/text/FormErrorText';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 import { isValidEmail } from '@/lib/utils/formUtils';
 
 export default function Register() {
@@ -119,15 +119,15 @@ export default function Register() {
             isChecked={agreed}
 
             text="I agree to the terms and conditions"
-            fillColor={Colors.CHECKBOX.CHECKED}
+            fillColor={COLORS.CHECKBOX.CHECKED}
             unFillColor={'transparent'}
             innerIconStyle={{
               borderRadius: 3,
-              borderColor: Colors.BORDER.BASE
+              borderColor: COLORS.BORDER.BASE
             }}
             iconStyle={{
               borderRadius: 3,
-              borderColor: Colors.BORDER.BASE
+              borderColor: COLORS.BORDER.BASE
             }}
             textStyle={{
               textDecorationLine: 'none',

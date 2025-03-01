@@ -1,6 +1,6 @@
 import { TCampaign } from "@definitions/campaign";
 import { View, StyleSheet } from "react-native";
-import Colors from "@constants/Colors";
+import COLORS from "@constants/colors";
 
 import CampaignIcon from '../CampaignIcon';
 import { Link } from "expo-router";
@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     height: 60,
-    backgroundColor: Colors.BACKGROUND.BROWN,
-    borderColor: Colors.BORDER.DARKEN,
+    backgroundColor: COLORS.BACKGROUND.BROWN,
+    borderColor: COLORS.BORDER.DARKEN,
     borderWidth: 1,
     borderRadius: 5,
     justifyContent: 'center',

@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet } from 'react-native';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 import { Button } from 'react-native-paper'
 
 export default function SectionHeader({
@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.BORDER.DARKEN50,
+    borderBottomColor: COLORS.BORDER.DARKEN50,
     marginTop: 3,
     marginBottom: 10,
     paddingBottom: 3
   },
   text:{
     fontSize: 18,
-    color: Colors.TEXT.DARKEN50,
+    color: COLORS.TEXT.DARKEN50,
     fontWeight: 'bold',
   }
 })

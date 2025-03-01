@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from 'react-native';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 
 export default function ModalHeader({
   text
@@ -15,12 +15,12 @@ export default function ModalHeader({
 
 const styles = StyleSheet.create({
   modalHeader: {
-    color: Colors.TEXT.GREEN,
+    color: COLORS.TEXT.GREEN,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 24,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.BORDER.GREEN,
+    borderBottomColor: COLORS.BORDER.GREEN,
     paddingBottom: 4,
   }
 });

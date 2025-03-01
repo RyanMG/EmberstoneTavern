@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet } from 'react-native';
 import FormErrorText from '@components/common/text/FormErrorText';
 
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 import { ReactNode } from 'react';
 
 interface IFormElementWrapperProps {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     width: '48%'
   },
   inputLabel: {
-    color: Colors.TEXT.DARKEN20,
+    color: COLORS.TEXT.DARKEN20,
     fontSize: 14,
     marginBottom: 5
   },
@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: Colors.BORDER.BASE,
-    color: Colors.TEXT.DARKEN20,
-    backgroundColor: Colors.BACKGROUND.LIGHTEN,
+    borderColor: COLORS.BORDER.BASE,
+    color: COLORS.TEXT.DARKEN20,
+    backgroundColor: COLORS.BACKGROUND.LIGHTEN,
     padding: 10
   }
 })

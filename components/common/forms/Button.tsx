@@ -1,5 +1,5 @@
 import { Button as PaperButton, IconButton } from 'react-native-paper';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 
 export default function Button({
   title,
@@ -22,7 +22,7 @@ export default function Button({
     return (
       <IconButton
         icon={iconName}
-        iconColor={theme === 'primary' ? Colors.BUTTON.PRIMARY : theme === 'secondary' ? Colors.BUTTON.SECONDARY : Colors.BUTTON.DESTROY}
+        iconColor={theme === 'primary' ? COLORS.BUTTON.PRIMARY : theme === 'secondary' ? COLORS.BUTTON.SECONDARY : COLORS.BUTTON.DESTROY}
         size={20}
         onPress={onPress}
       />
@@ -31,8 +31,8 @@ export default function Button({
 
   return (
     <PaperButton
-      buttonColor={theme === 'primary' ? Colors.BUTTON.PRIMARY : theme === 'secondary' ? Colors.BUTTON.SECONDARY : Colors.BUTTON.DESTROY}
-      textColor={Colors.TEXT.BASE}
+      buttonColor={theme === 'primary' ? COLORS.BUTTON.PRIMARY : theme === 'secondary' ? COLORS.BUTTON.SECONDARY : COLORS.BUTTON.DESTROY}
+      textColor={COLORS.TEXT.BASE}
       icon={iconName}
       onPress={onPress}
       mode="contained"

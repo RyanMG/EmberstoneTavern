@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { useNotification } from '@context/NotificationContext';
-import Colors from '@constants/Colors';
+import COLORS from '@constants/colors';
 
 export default function PageContainer({ children }: { children: ReactNode }) {
   const { snackbarMessage, setSnackbarMessage } = useNotification();
@@ -33,6 +33,6 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     padding: 20,
-    backgroundColor: Colors.BACKGROUND.BASE
+    backgroundColor: COLORS.BACKGROUND.BASE
   }
 })
