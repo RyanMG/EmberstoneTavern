@@ -18,6 +18,7 @@ import { createCampaignRoster } from '@api/rosterApi';
 import { fetchGrandAlliances, fetchFactionsByGrandAlliance } from '@api/sigmarDataApi';
 import { TRoster } from '@definitions/roster';
 import { TFaction } from '@definitions/sigmar';
+import { GenericHTTPResponse } from '@definitions/api';
 
 export default function CreateNewRosterPage() {
   const { id }: {id: string} = useLocalSearchParams();
@@ -44,7 +45,7 @@ export default function CreateNewRosterPage() {
     enabled: !!grandAllianceId,
   })
 
-  const { mutate: createRoster } = useMutation({
+  const { mutate: createRoster } = useMutation<GenericHTTPResponse<TRoster>>({
     mutationFn: () => {
       return createCampaignRoster(id, {
         name: name,
@@ -58,11 +59,12 @@ export default function CreateNewRosterPage() {
         hasFactionTerrain: false
       } as TRoster);
     },
-    onSuccess: () => {
+    onSuccess: ({data}: {data: TRoster}) => {
+      debugger;
       queryClient.invalidateQueries({
         queryKey: ['campaignRoster', {campaignId: id}],
       })
-      router.replace(`/(tabs)/campaigns/${id}/rosters/${id}`);
+      router.replace(`/(tabs)/campaigns/${id}/rosters/${data.id}`);
     }
   })
 

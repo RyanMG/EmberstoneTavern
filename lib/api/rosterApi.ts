@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
   TRoster
 } from '@definitions/roster';
+import { GenericHTTPResponse } from '@definitions/api';
 
 const API_ROOT = `${process.env.EXPO_PUBLIC_API_ROOT_URL}/api/rosters`;
 
@@ -32,9 +33,9 @@ export async function getCampaignRoster(campaignId: string): Promise<TRoster> {
    }
 }
 
-export async function createCampaignRoster(campaignId: string, roster: TRoster): Promise<TRoster> {
+export async function createCampaignRoster(campaignId: string, roster: TRoster): Promise<GenericHTTPResponse<TRoster>> {
   try {
-    return axios.post<TRoster>(`${API_ROOT}/campaign/${campaignId}`, roster).then((res) => res.data);
+    return axios.post<GenericHTTPResponse<TRoster>>(`${API_ROOT}/campaign/${campaignId}`, roster).then((res) => res.data);
 
    } catch (error) {
      throw new Error(`Failed to create campaign roster: ${(error as Error).message}`)

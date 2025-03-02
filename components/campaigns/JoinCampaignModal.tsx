@@ -76,6 +76,7 @@ export default function JoinCampaignModal({
             value={campaignCode}
             onChangeText={text => setCampaignCode(text)}
           />
+          <Spacer />
           <Button
             title={isPending ? "Joining..." : "Join Campaign"}
             disabled={isPending}
