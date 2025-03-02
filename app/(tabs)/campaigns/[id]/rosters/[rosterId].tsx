@@ -32,7 +32,6 @@ export default function CreateNewRosterPage() {
   }
 
   if (data === null) {
-    debugger;
     showNotification('Roster not found');
     return <Redirect href={`/campaigns/${id}`} />
   }
