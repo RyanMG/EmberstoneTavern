@@ -1,8 +1,10 @@
 import { TGrandAlliance, TFaction } from '@definitions/sigmar';
+import { TUnit } from '@definitions/unit';
 
 export type TRoster = {
   id?: string;
   name: string;
+  general: TUnit;
   campaignId: string;
   playerId: string;
   grandAllianceId?: number;
@@ -13,17 +15,11 @@ export type TRoster = {
   hasFactionTerrain: boolean;
   emberstoneTotal: number;
   emberStoneVault: number;
+  regiments: TRegiment[];
 }
 
-export type TRosterUnit = {
+export type TRegiment = {
   id: number;
-  unitName: string;
-  unitCost: number;
-  battleWounds: number;
-  battleScars: TBattleScar[];
-  isReinforced: boolean;
-  path: TPath;
-  isGeneral: boolean;
-  isHero: boolean;
-  emberstoneWeapon?: TEmberstoneWeapon;
+  rosterId: string;
+  units: TUnit[];
 }
