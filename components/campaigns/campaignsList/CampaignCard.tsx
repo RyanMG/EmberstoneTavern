@@ -1,6 +1,5 @@
 import { TCampaign } from "@definitions/campaign";
-import { View, StyleSheet } from "react-native";
-import COLORS from "@constants/colors";
+import { View } from "react-native";
 
 import Card from '@components/common/Card'
 import CampaignIcon from '../CampaignIcon';
@@ -26,18 +25,3 @@ export default function CampaignCard({
     </Link>
   );
 }
-
-const styles = StyleSheet.create({
-  cardContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    height: 60,
-    backgroundColor: COLORS.BACKGROUND.BROWN,
-    borderColor: COLORS.BORDER.DARKEN,
-    borderWidth: 1,
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 15
-  }
-});

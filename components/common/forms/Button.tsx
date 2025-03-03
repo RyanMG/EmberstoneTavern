@@ -1,4 +1,4 @@
-import { Button as PaperButton, IconButton } from 'react-native-paper';
+import { Button as PaperButton } from 'react-native-paper';
 import COLORS from '@constants/colors';
 
 export default function Button({
