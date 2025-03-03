@@ -60,7 +60,6 @@ export default function CreateNewRosterPage() {
       } as TRoster);
     },
     onSuccess: ({data}: {data: TRoster}) => {
-      debugger;
       queryClient.invalidateQueries({
         queryKey: ['campaignRoster', {campaignId: id}],
       })

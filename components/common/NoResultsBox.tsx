@@ -10,7 +10,7 @@ export default function NoResultsBox({
   return (
     <View style={styles.wrapper}>
       <View style={styles.box}>
-        <BodyText>{text}</BodyText>
+        <BodyText textSize="sm" center={true}>{text}</BodyText>
       </View>
     </View>
   );

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   divider: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.BORDER.DARKEN,
-    marginVertical: 20,
+    marginVertical: 10,
     width: '100%'
   }
 })
