@@ -1,6 +1,6 @@
 export type TDialogContent = {
   title: string
   body: string
-  actionLabel: string
+  actionLabel?: string
   action?: () => void
 } | null;

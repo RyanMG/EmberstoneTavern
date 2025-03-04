@@ -8,6 +8,7 @@ export default function BodyText({
   bold = false,
   link = false,
   center = false,
+  onPress,
   children
 }: {
   textSize?: 'sm' | 'md' | 'lg' | 'xl';
@@ -15,6 +16,7 @@ export default function BodyText({
   bold?: boolean;
   link?: boolean;
   center?: boolean;
+  onPress?: () => void;
   children: ReactNode;
 }) {
   return (
@@ -25,7 +27,7 @@ export default function BodyText({
       link ? styles.link : '',
       center ? styles.center : '',
       styles[textSize as keyof typeof styles]
-    ]}>
+    ]} onPress={onPress}>
       {children}
     </Text>
   );
@@ -47,7 +49,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   link: {
-    color: COLORS.TEXT.LINK
+    color: COLORS.TEXT.LINK,
+    cursor: 'pointer'
   },
   sm: {
     fontSize: 14,

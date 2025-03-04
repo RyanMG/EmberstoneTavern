@@ -4,13 +4,17 @@ import { useRouter } from 'expo-router';
 import { View, StyleSheet } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
+import Dialog from '@components/common/Dialog';
 import PageContainer from '@components/common/PageContainers';
 import PageTitle from '@components/common/PageTitle';
 import InputElement from '@components/common/forms/InputElement';
 import Button from '@components/common/forms/Button';
 import FormErrorText from '@components/common/text/FormErrorText';
+import BodyText from '@components/common/BodyText';
+
 import COLORS from '@constants/colors';
 import { isValidEmail } from '@/lib/utils/formUtils';
+import { TDialogContent } from '@definitions/ui';
 
 export default function Register() {
   const { register } = useAuth();
@@ -28,6 +32,9 @@ export default function Register() {
 
   const [agreed, setAgreed] = useState<boolean | undefined>(false);
   const [registerError, setRegisterError] = useState<string | undefined>();
+
+  const [dialogContent, setDialogContent] = useState<TDialogContent>(null);
+
   const router = useRouter();
 
   const onRegisterPress = async () => {
@@ -114,29 +121,38 @@ export default function Register() {
             onChangeText={setPassword}
             errorText={passwordError}
           />
-          <BouncyCheckbox
-            onPress={(isChecked: boolean) => setAgreed(isChecked)}
-            isChecked={agreed}
 
-            text="I agree to the terms and conditions"
-            fillColor={COLORS.CHECKBOX.CHECKED}
-            unFillColor={'transparent'}
-            innerIconStyle={{
-              borderRadius: 3,
-              borderColor: COLORS.BORDER.BASE
-            }}
-            iconStyle={{
-              borderRadius: 3,
-              borderColor: COLORS.BORDER.BASE
-            }}
-            textStyle={{
-              textDecorationLine: 'none',
-              fontStyle: 'italic'
-            }}
-            style={{
-              marginBottom: 10
-            }}
-          />
+          <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 10}}>
+            <BouncyCheckbox
+              onPress={(isChecked: boolean) => setAgreed(isChecked)}
+              isChecked={agreed}
+              fillColor={COLORS.CHECKBOX.CHECKED}
+              unFillColor={'transparent'}
+              innerIconStyle={{
+                borderRadius: 3,
+                borderColor: COLORS.BORDER.BASE
+              }}
+              iconStyle={{
+                borderRadius: 3,
+                borderColor: COLORS.BORDER.BASE
+              }}
+              textStyle={{
+                textDecorationLine: 'none',
+                fontStyle: 'italic'
+              }}
+            />
+            <BodyText
+              italic={true}
+              link={true}
+              onPress={() => setDialogContent({
+                title: 'Terms and Conditions',
+                body: `Terms and conditions coming at some point. In the meantime, don't be a dick.`
+              })}
+            >
+              I agree to the terms and conditions
+            </BodyText>
+          </View>
+
           <Button
             title="Register"
             disabled={!agreed}
@@ -151,6 +167,12 @@ export default function Register() {
           onPress={() => router.push('/')}
         />
       </View>
+
+      <Dialog
+        dialogContent={dialogContent}
+        setDialogContent={setDialogContent}
+      />
+
     </PageContainer>
   );
 }

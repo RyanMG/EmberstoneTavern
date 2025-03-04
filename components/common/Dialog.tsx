@@ -17,7 +17,9 @@ export default function Dialog({
           <Text style={{color: COLORS.TEXT.BASE, fontSize: 16, lineHeight: 21}}>{dialogContent?.body}</Text>
         </PaperDialog.Content>
         <PaperDialog.Actions>
-          <PaperButton mode="outlined" buttonColor={COLORS.BACKGROUND.BROWN} textColor={COLORS.TEXT.BASE} onPress={() => dialogContent?.action?.()}>{dialogContent?.actionLabel}</PaperButton>
+          {dialogContent?.actionLabel && (
+            <PaperButton mode="outlined" buttonColor={COLORS.BACKGROUND.BROWN} textColor={COLORS.TEXT.BASE} onPress={() => dialogContent?.action?.()}>{dialogContent?.actionLabel}</PaperButton>
+          )}
           <PaperButton mode="outlined" buttonColor={COLORS.BACKGROUND.GREEN} textColor={COLORS.TEXT.BASE} onPress={() => setDialogContent(null)}>Cancel</PaperButton>
         </PaperDialog.Actions>
       </PaperDialog>
