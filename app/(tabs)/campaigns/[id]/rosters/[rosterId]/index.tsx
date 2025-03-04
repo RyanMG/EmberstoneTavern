@@ -50,7 +50,7 @@ export default function CreateNewRosterPage() {
         <Divider />
 
         {!data.general && (
-          <CreateGeneral regimentId={data.regiments[0].id} />
+          <CreateGeneral regimentId={data.regiments[0].id} rosterId={rosterId} campaignId={campaignId} />
         )}
 
         {data.general && (

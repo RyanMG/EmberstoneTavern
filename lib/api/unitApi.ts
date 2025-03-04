@@ -4,6 +4,9 @@ import {
   TPath,
   TUnitType
 } from '@definitions/unit';
+import { GenericHTTPResponse } from '@definitions/api';
+
+import { TRoster } from '@definitions/roster';
 
 const API_ROOT = `${process.env.EXPO_PUBLIC_API_ROOT_URL}/api/units`;
 
@@ -25,9 +28,9 @@ export async function fetchPaths(isHero: boolean, unitTypeId: number): Promise<T
    }
 }
 
-export async function saveNewRosterUnit(unit: TUnit) {
+export async function saveNewRosterUnit(rosterId: TRoster['id'], unit: TUnit): Promise<GenericHTTPResponse<TUnit>> {
   try {
-    return axios.post<TUnit>(`${API_ROOT}`, unit).then((res) => res.data);
+    return axios.post<GenericHTTPResponse<TUnit>>(`${API_ROOT}?rosterId=${rosterId}`, unit).then((res) => res.data);
 
    } catch (error) {
      throw new Error(`Failed to save new unit: ${(error as Error).message}`)

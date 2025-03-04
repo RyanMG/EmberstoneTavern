@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
+import { useRouter } from 'expo-router';
 
 import ModalWrapper from '@components/common/ModalWrapper';
-import ModalHeader from '@components/common/ModalHeader';
 import InputElement from '@components/common/forms/InputElement';
 import SelectElement from '@components/common/forms/SelectElement';
 import Spacer from '@components/common/Spacer';
@@ -12,6 +12,8 @@ import Button from '@components/common/forms/Button';
 import { createFormSelectOptions } from '@utils/formUtils';
 
 import { TUnit, TPath, TUnitType } from '@definitions/unit';
+import type { GenericHTTPResponse } from '@definitions/api';
+import { TRegiment, TRoster } from '@definitions/roster';
 import { fetchPaths, fetchUnitTypes, saveNewRosterUnit } from '@api/unitApi';
 import { useNotification } from '@context/NotificationContext';
 
@@ -19,21 +21,33 @@ export default function UnitManagmentModal({
   visible,
   setModalVisible,
   title,
-  regimentId
+  regimentId,
+  rosterId,
+  successActions,
+  failureActions
 }: {
   visible: boolean
   setModalVisible: (visible: boolean) => void
   title: string
-  regimentId: number
+  regimentId: TRegiment['id'];
+  rosterId: TRoster['id'];
+  successActions: {
+    routeOnSuccess: '/(tabs)/campaigns/[id]/rosters/[rosterId]';
+    onSuccessMessage: string;
+  },
+  failureActions: {
+    onFailureMessage: string;
+  }
 }) {
 
   const { showNotification } = useNotification();
+  const router = useRouter();
 
   const [unitName, setUnitName] = useState<string>("");
   const [warscrollName, setWarscrollName] = useState<string>("");
   const [unitCost, setUnitCost] = useState<string>("");
   const [unitTypeId, setUnitTypeId] = useState<TUnitType['id'] | null>(null);
-  const [generalPath, setGeneralPath] = useState<TPath['id'] | null>(null);
+  const [generalPathId, setGeneralPathId] = useState<TPath['id'] | null>(null);
 
   const unitTypeQuery = useQuery({
     queryKey: ['unitTypes'],
@@ -45,25 +59,34 @@ export default function UnitManagmentModal({
     queryFn: () => fetchPaths(true, unitTypeId!),
     enabled: !!unitTypeId,
   })
-  const saveUnitMutation = useMutation({
-    mutationFn: () => saveNewRosterUnit({
+  const saveUnitMutation = useMutation<GenericHTTPResponse<TUnit | string>>({
+    mutationFn: () => saveNewRosterUnit(rosterId, {
       regimentId: regimentId,
       unitName,
       warscrollName,
       unitCost: Number(unitCost),
-      unitType: {
-        id: unitTypeId!
-      },
+      unitTypeId: unitTypeId!,
       battleWounds: 0,
       battleScars: [],
       isReinforced: false,
-      path: {
-        id: generalPath!
-      },
+      pathId: generalPathId,
+      pathRank: 1,
       isGeneral: true,
       isHero: true,
       emberstoneWeapon: null
-    } as unknown as TUnit)
+    } as unknown as TUnit),
+    onSuccess: (data: GenericHTTPResponse<TUnit | string>) => {
+      if (data.success) {
+        router.replace(successActions.routeOnSuccess);
+        showNotification(successActions.onSuccessMessage);
+
+      } else {
+        showNotification(failureActions.onFailureMessage);
+      }
+    },
+    onError: (error) => {
+      showNotification(failureActions.onFailureMessage);
+    }
   })
 
   if (unitTypeQuery.isError || pathQuery.isError) {
@@ -74,10 +97,9 @@ export default function UnitManagmentModal({
     <ModalWrapper
       visible={visible}
       setModalVisible={setModalVisible}
+      title={title}
     >
       <View style={{width: '100%'}}>
-        <ModalHeader text={title} />
-        <Spacer />
         <View style={{display: 'flex', flexDirection: 'column', gap: 10}}>
           <InputElement
             label="General's Name"
@@ -112,10 +134,10 @@ export default function UnitManagmentModal({
 
           <SelectElement
             label="Path"
-            onSelectValue={value => setGeneralPath(value)}
+            onSelectValue={value => setGeneralPathId(value)}
             placeholder="Select a Path for your general"
             disabled={!unitTypeId}
-            value={generalPath}
+            value={generalPathId}
             options={createFormSelectOptions(pathQuery.data || [], {
               labelKey: 'name',
               valueKey: 'id',
