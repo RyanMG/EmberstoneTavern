@@ -79,8 +79,9 @@ export default function CreateNewRosterPage() {
   return (
     <PageContainer>
       <RosterForm
-        campaignId={id}
         name={name}
+        saveText="Create Roster"
+        cancelRoute={`/(tabs)/campaigns/${id}` as '/(tabs)/campaigns/[id]/rosters/[rosterId]'}
         setName={setName}
         grandAllianceOptions={grandAllianceQuery.data || []}
         grandAllianceId={grandAllianceId}

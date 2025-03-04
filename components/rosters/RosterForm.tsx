@@ -13,8 +13,8 @@ import { TRoster } from '@definitions/roster';
 import { createFormSelectOptions } from '@utils/formUtils';
 
 interface IRosterFormProps {
-  campaignId: string;
-  rosterId?: string;
+  saveText: string;
+  cancelRoute: '/(tabs)/campaigns/[id]/rosters/[rosterId]' | '/(tabs)/campaigns/[id]';
   name: string;
   setName: (name: string) => void;
   grandAllianceOptions: TGrandAlliance[];
@@ -27,8 +27,8 @@ interface IRosterFormProps {
 }
 
 export default function RosterForm({
-  campaignId,
-  rosterId,
+  saveText,
+  cancelRoute,
   name,
   setName,
   grandAllianceOptions,
@@ -78,11 +78,11 @@ export default function RosterForm({
           theme="secondary"
           disabled={rosterMutation.isPending}
           onPress={() => {
-            router.replace(`/(tabs)/campaigns/${campaignId}/rosters/${rosterId}`);
+            router.replace(cancelRoute);
           }}
         />
         <Button
-          title="Update Roster"
+          title={saveText}
           disabled={!name || !grandAllianceId || !factionId || rosterMutation.isPending}
           onPress={() => rosterMutation.mutate()}
         />

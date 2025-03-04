@@ -69,8 +69,8 @@ export default function EditRosterForm({
 
   return (
     <RosterForm
-      campaignId={campaignId}
-      rosterId={rosterId}
+      saveText="Update Roster"
+      cancelRoute={`/(tabs)/campaigns/${campaignId}/rosters/${rosterId}` as '/(tabs)/campaigns/[id]/rosters/[rosterId]'}
       name={name}
       setName={setName}
       grandAllianceOptions={grandAlliances}
