@@ -1,17 +1,11 @@
-import { View, StyleSheet } from 'react-native';
 import { useMutation, useQuery,useQueryClient } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState, useEffect } from 'react';
 
 import PageContainer from '@/components/common/PageContainers';
-import InputElement from '@/components/common/forms/InputElement';
-import SelectElement from '@/components/common/forms/SelectElement';
 import PageLoading from '@/components/common/PageLoading';
+import RosterForm from '@/components/rosters/RosterForm';
 
-import Button from '@/components/common/forms/Button';
-import Spacer from '@/components/common/Spacer';
-
-import { createFormSelectOptions } from '@utils/formUtils';
 import { useAuth } from '@context/AuthContext';
 import { useNotification } from '@context/NotificationContext';
 import { createCampaignRoster } from '@api/rosterApi';
@@ -45,9 +39,9 @@ export default function CreateNewRosterPage() {
     enabled: !!grandAllianceId,
   })
 
-  const { mutate: createRoster } = useMutation<GenericHTTPResponse<TRoster>>({
+  const createRosterMutation = useMutation<GenericHTTPResponse<TRoster>>({
     mutationFn: () => {
-      return createCampaignRoster(id, {
+      return createCampaignRoster({
         name: name,
         campaignId: id,
         playerId: authState.activeUser?.getId(),
@@ -84,63 +78,18 @@ export default function CreateNewRosterPage() {
 
   return (
     <PageContainer>
-      <View style={styles.container}>
-        <InputElement
-          label="Roster Name"
-          value={name}
-          onChangeText={setName}
-        />
-        <Spacer />
-
-        <SelectElement
-          label="Grand Alliance"
-          placeholder="Select a Grand Alliance for this roster"
-          onSelectValue={value => setGrandAllianceId(value)}
-          value={grandAllianceId}
-          options={createFormSelectOptions(grandAllianceQuery.data, {
-            labelKey: 'name',
-            valueKey: 'id',
-          })}
-          />
-
-        <Spacer />
-
-        <SelectElement
-          label="Faction"
-          placeholder="Select a faction for this roster"
-          disabled={!grandAllianceId}
-          onSelectValue={value => setFactionId(value)}
-          value={factionId}
-          options={createFormSelectOptions(factionOptions, {
-            labelKey: 'name',
-            valueKey: 'id',
-          })}
-          />
-        <Spacer />
-
-        <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap: 10}}>
-          <Button
-            title="Cancel"
-            theme="secondary"
-            onPress={() => {
-              router.replace(`/(tabs)/campaigns/${id}`);
-            }}
-          />
-          <Button
-            title="Create Roster"
-            disabled={!name || !grandAllianceId || !factionId}
-            onPress={() => createRoster()}
-          />
-        </View>
-
-      </View>
+      <RosterForm
+        campaignId={id}
+        name={name}
+        setName={setName}
+        grandAllianceOptions={grandAllianceQuery.data || []}
+        grandAllianceId={grandAllianceId}
+        setGrandAllianceId={setGrandAllianceId}
+        factionId={factionId}
+        setFactionId={setFactionId}
+        factionOptions={factionOptions}
+        rosterMutation={createRosterMutation}
+      />
     </PageContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    padding: 20
-  }
-});

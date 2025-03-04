@@ -34,12 +34,21 @@ export async function getCampaignRoster(campaignId: string): Promise<TRoster> {
    }
 }
 
-export async function createCampaignRoster(campaignId: string, roster: TRoster): Promise<GenericHTTPResponse<TRoster>> {
+export async function createCampaignRoster(roster: TRoster): Promise<GenericHTTPResponse<TRoster>> {
   try {
-    return axios.post<GenericHTTPResponse<TRoster>>(`${API_ROOT}/campaign/${campaignId}`, roster).then((res) => res.data);
+    return axios.post<GenericHTTPResponse<TRoster>>(`${API_ROOT}`, roster).then((res) => res.data);
 
    } catch (error) {
      throw new Error(`Failed to create campaign roster: ${(error as Error).message}`)
+   }
+}
+
+export async function updateRoster(rosterId: string, roster: TRoster): Promise<GenericHTTPResponse<TRoster>> {
+  try {
+    return axios.put<GenericHTTPResponse<TRoster>>(`${API_ROOT}/${rosterId}`, roster).then((res) => res.data);
+
+   } catch (error) {
+     throw new Error(`Failed to update campaign roster: ${(error as Error).message}`)
    }
 }
 

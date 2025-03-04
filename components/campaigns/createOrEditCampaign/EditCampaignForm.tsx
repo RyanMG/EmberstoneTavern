@@ -6,6 +6,7 @@ import {
   useQueryClient
 } from '@tanstack/react-query';
 
+import Campaign from '@classes/Campaign';
 import {
   TCampaign,
   TCampaignSetting
@@ -25,7 +26,7 @@ export default function EditCampaignForm({
   campaignData,
   campaignSettings
 }: {
-  campaignData: TCampaign;
+  campaignData: Campaign;
   campaignSettings: TCampaignSetting[]
 }) {
 

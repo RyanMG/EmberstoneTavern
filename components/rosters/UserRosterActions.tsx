@@ -27,7 +27,9 @@ export default function UserRosterActions({
     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 10, width: '100%', marginTop: 5}}>
       <Button
         title="Edit Roster Details"
-        onPress={() => {}}
+        onPress={() => {
+          router.push(`/(tabs)/campaigns/${campaignId}/rosters/${rosterId}/edit`);
+        }}
       />
       <Button
         title="Delete Roster"
