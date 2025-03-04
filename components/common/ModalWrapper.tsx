@@ -2,14 +2,19 @@ import { ReactNode } from 'react';
 import { Modal, View, StyleSheet } from 'react-native';
 import COLORS from '@constants/colors';
 
+import BodyText from '@components/common/BodyText';
+import IconButton from '@components/common/forms/IconButton';
+
 export default function ModalWrapper({
   visible,
   setModalVisible,
-  children
+  children,
+  title
 }: {
   visible: boolean
   setModalVisible: (visible: boolean) => void
   children: ReactNode
+  title: string
 }) {
   return (
     <Modal
@@ -19,9 +24,26 @@ export default function ModalWrapper({
       onRequestClose={() => {
         setModalVisible(!visible);
       }}>
+      <View style={styles.overlay} />
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          {children}
+          <View style={styles.modalHeader}>
+            <View style={{flex: 1}}>
+              <BodyText textSize="xl" bold={true}>{title}</BodyText>
+            </View>
+
+            <IconButton
+              iconName="close"
+              theme="white"
+              iconSize={28}
+              onPress={() => setModalVisible(!visible)}
+            />
+          </View>
+
+          <View style={{padding: 20, width: '100%'}}>
+            {children}
+          </View>
+
         </View>
       </View>
     </Modal>
@@ -29,6 +51,15 @@ export default function ModalWrapper({
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'black',
+    opacity: 0.6
+  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -38,10 +69,20 @@ const styles = StyleSheet.create({
     borderColor: COLORS.BORDER.BASE,
     borderWidth: 1,
     backgroundColor: COLORS.BACKGROUND.LIGHTEN,
-    width: '98%',
-    height: '98%',
-    padding: 20,
+    width: '95%',
     borderRadius: 5,
     alignItems: 'center'
+  },
+  modalHeader: {
+    width: '100%',
+    height: 50,
+    backgroundColor: COLORS.BACKGROUND.GREEN,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.BORDER.DARKEN50
   }
 });

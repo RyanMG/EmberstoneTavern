@@ -1,6 +1,5 @@
 import Button from '@components/common/forms/Button';
 import ModalWrapper from '@components/common/ModalWrapper';
-import ModalHeader from '@components/common/ModalHeader';
 import Spacer from '@components/common/Spacer';
 import InputElement from '@components/common/forms/InputElement';
 import { TCampaign } from '@definitions/campaign';
@@ -65,12 +64,9 @@ export default function JoinCampaignModal({
   }, [isSuccess, addUserResponse])
 
   return (
-    <ModalWrapper visible={visible} setModalVisible={setModalVisible}>
+    <ModalWrapper visible={visible} setModalVisible={setModalVisible} title="Join A Campaign">
       <View style={{display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between', width: '100%'}}>
         <View>
-          <ModalHeader text="Join A Campaign" />
-          <Spacer size="lg" />
-
           <InputElement
             label="Enter A Campaign Code"
             value={campaignCode}
@@ -88,14 +84,6 @@ export default function JoinCampaignModal({
 
         </View>
       </View>
-
-      <Button
-        title="Close"
-        disabled={isPending}
-        onPress={() => {
-          setModalVisible(!visible);
-        }}
-      />
     </ModalWrapper>
   );
 }

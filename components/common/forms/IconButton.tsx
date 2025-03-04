@@ -12,13 +12,13 @@ export default function IconButton({
   disabled?: boolean;
   iconName: string;
   iconSize?: number;
-  theme?: 'primary' | 'secondary' | 'destroy';
+  theme?: 'primary' | 'secondary' | 'destroy' | 'white';
 }) {
   return (
     <PaperIconButton
       icon={iconName}
       disabled={disabled}
-      iconColor={theme === 'primary' ? COLORS.BUTTON.PRIMARY : theme === 'secondary' ? COLORS.BUTTON.SECONDARY : COLORS.BUTTON.DESTROY}
+      iconColor={theme === 'primary' ? COLORS.BUTTON.PRIMARY : theme === 'secondary' ? COLORS.BUTTON.SECONDARY : theme === 'white' ? COLORS.TEXT.BASE : COLORS.BUTTON.DESTROY}
       size={iconSize}
       onPress={onPress}
     />

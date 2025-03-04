@@ -62,7 +62,15 @@ const styles = StyleSheet.create({
     lineHeight: 20
   },
   xl: {
+    fontSize: 20,
+    lineHeight: 22
+  },
+  '2xl': {
     fontSize: 24,
     lineHeight: 26
+  },
+  '3xl': {
+    fontSize: 28,
+    lineHeight: 30
   }
 });
