@@ -9,7 +9,6 @@ export default function RegimentListItem({
 }: {
   regiment: TRegiment
 }) {
-  console.log(regiment);
   return (
     <Card>
       <Text>Regiment</Text>
