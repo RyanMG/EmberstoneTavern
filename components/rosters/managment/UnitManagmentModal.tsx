@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 
 import ModalWrapper from '@components/common/ModalWrapper';
@@ -42,6 +42,7 @@ export default function UnitManagmentModal({
 
   const { showNotification } = useNotification();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [unitName, setUnitName] = useState<string>("");
   const [warscrollName, setWarscrollName] = useState<string>("");
@@ -60,7 +61,7 @@ export default function UnitManagmentModal({
     enabled: !!unitTypeId,
   })
   const saveUnitMutation = useMutation<GenericHTTPResponse<TUnit | string>>({
-    mutationFn: () => saveNewRosterUnit(rosterId, {
+    mutationFn: () => saveNewRosterUnit(rosterId, regimentId, {
       regimentId: regimentId,
       unitName,
       warscrollName,
@@ -81,7 +82,14 @@ export default function UnitManagmentModal({
         showNotification(successActions.onSuccessMessage);
 
       } else {
-        showNotification(failureActions.onFailureMessage);
+        if (data.message === 'There is an existing general present for this campaign') {
+          showNotification(data.message);
+          queryClient.invalidateQueries({ queryKey: ['campaignRoster', {id: rosterId}] });
+          setModalVisible(false);
+
+        } else {
+          showNotification(failureActions.onFailureMessage);
+        }
       }
     },
     onError: (error) => {

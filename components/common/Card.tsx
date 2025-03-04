@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    height: 60,
     backgroundColor: COLORS.BACKGROUND.BROWN,
     borderColor: COLORS.BORDER.DARKEN,
     borderWidth: 1,

@@ -5,15 +5,18 @@ import { View } from 'react-native';
 import { getRosterById } from '@api/rosterApi';
 import type { TRoster } from '@definitions/roster';
 import { useNotification } from '@context/NotificationContext';
+import { useAuth } from '@context/AuthContext';
 
 import PageContainer from '@/components/common/PageContainers';
-import RegimentManagment from '@/components/rosters/RegimentManagment';
+
 import BodyText from '@/components/common/BodyText';
 import PageLoading from '@/components/common/PageLoading';
 import Spacer from '@/components/common/Spacer';
 import Divider from '@/components/common/Divider';
-import CreateGeneral from '@/components/rosters/CreateGeneral';
-import UserRosterActions from '@/components/rosters/UserRosterActions';
+
+import UserRosterActions from '@/components/rosters/managment/UserRosterActions';
+import RosterOwnerManager from '@/components/rosters/managment/RosterOwnerManager';
+import RosterViewOnly from '@/components/rosters/RosterViewOnly';
 
 export default function CreateNewRosterPage() {
   let {
@@ -23,6 +26,7 @@ export default function CreateNewRosterPage() {
     id: string;
     rosterId: string
   } = useLocalSearchParams();
+  const { authState } = useAuth();
 
   const { isPending, error, data } = useQuery<TRoster>({
     queryKey: ['campaignRoster', {id: rosterId}],
@@ -49,16 +53,17 @@ export default function CreateNewRosterPage() {
         <BodyText textSize="sm" italic={true}>{data.faction?.name}</BodyText>
         <Divider />
 
-        {!data.general && (
-          <CreateGeneral regimentId={data.regiments[0].id} rosterId={rosterId} campaignId={campaignId} />
+        {authState.activeUser?.isSameAs(data.playerId) && (
+          <RosterOwnerManager rosterData={data} />
         )}
-
-        {data.general && (
-          <RegimentManagment regiments={data.regiments} />
+        {authState.activeUser?.isNotTheSameAs(data.playerId) && (
+          <RosterViewOnly rosterData={data} />
         )}
       </View>
 
-      <UserRosterActions rosterId={rosterId!} campaignId={campaignId} />
+      {authState.activeUser?.getId() === data.playerId && (
+        <UserRosterActions rosterId={rosterId!} campaignId={campaignId} />
+      )}
     </PageContainer>
   );
 }

@@ -21,5 +21,9 @@ export type TRoster = {
 export type TRegiment = {
   id: number;
   rosterId: string;
+  regimentNumber: number;
+  regimentName: string;
+  isGeneral: boolean;
+  isAuxiliary: boolean;
   units: TUnit[];
 }

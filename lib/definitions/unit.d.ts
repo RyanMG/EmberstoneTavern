@@ -17,6 +17,7 @@ export type TUnit = {
   battleScars: TBattleScar[];
   isReinforced: boolean;
   path: TPath;
+  pathRank: number;
   isGeneral: boolean;
   isHero: boolean;
   emberstoneWeapon?: TEmberstoneWeapon;

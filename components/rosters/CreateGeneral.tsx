@@ -6,7 +6,7 @@ import { TCampaign } from "@definitions/campaign";
 
 import Button from "@components/common/forms/Button";
 import BodyText from "@components/common/BodyText";
-import UnitManagmentModal from "./UnitManagmentModal";
+import UnitManagmentModal from "@components/rosters/managment/UnitManagmentModal";
 
 export default function CreateGeneral({
   regimentId,

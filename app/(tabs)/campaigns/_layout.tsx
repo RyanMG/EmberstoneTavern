@@ -1,26 +1,12 @@
 import { useAuth } from '@/lib/context/AuthContext';
-import { Redirect, Stack, ScreenProps } from 'expo-router';
-import COLORS from '@constants/colors';
+import { Redirect, Stack } from 'expo-router';
+import { pageHeaderOptions } from '@/lib/expoConfig';
 
 export default function Campaigns() {
   const { authState } = useAuth();
 
   if (!authState?.authenticated) return <Redirect href="/" />
-  const pageHeaderOptions: ScreenProps['options'] = {
-    headerStyle: {
-      backgroundColor: COLORS.BACKGROUND.BROWN,
-      height: 45,
-      borderBottomColor: COLORS.BORDER.DARKEN50,
-      borderBottomWidth: 1
-    },
-    headerTintColor: COLORS.TEXT.BASE,
-    headerTitleAlign: 'center',
-    headerTitleStyle: {
-      textAlign: 'center',
-      fontWeight: 'bold',
-      color: COLORS.TEXT.DARKEN20
-    },
-  };
+
 
   return (
     <Stack>
