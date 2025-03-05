@@ -1,11 +1,12 @@
 import { View } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 
 import ModalWrapper from '@components/common/ModalWrapper';
 import InputElement from '@components/common/forms/InputElement';
 import SelectElement from '@components/common/forms/SelectElement';
+import Checkbox from '@components/common/forms/Checkbox';
 import Spacer from '@components/common/Spacer';
 import Button from '@components/common/forms/Button';
 
@@ -56,6 +57,7 @@ export default function UnitManagmentModal({
   const [unitName, setUnitName] = useState<string>("");
   const [warscrollName, setWarscrollName] = useState<string>("");
   const [unitCost, setUnitCost] = useState<string>("");
+  const [isHero, setIsHero] = useState<boolean>(false);
   const [unitTypeId, setUnitTypeId] = useState<TUnitType['id'] | null>(null);
   const [generalPathId, setGeneralPathId] = useState<TPath['id'] | null>(null);
 
@@ -66,9 +68,13 @@ export default function UnitManagmentModal({
 
   const pathQuery = useQuery({
     queryKey: ['paths'],
-    queryFn: () => fetchPaths(true, unitTypeId!),
+    queryFn: () => fetchPaths(isHero, unitTypeId!),
     enabled: !!unitTypeId,
   })
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ['paths'] })
+  }, [unitTypeId, isHero])
 
   const saveUnitMutation = useMutation<GenericHTTPResponse<TUnit | string>>({
     mutationFn: () => saveNewRosterUnit(unitManagmentDetails!.rosterId, unitManagmentDetails!.regimentId, {
@@ -83,7 +89,7 @@ export default function UnitManagmentModal({
       pathId: generalPathId,
       pathRank: 1,
       isGeneral: true,
-      isHero: true,
+      isHero,
       emberstoneWeapon: null
     } as unknown as TUnit),
     onSuccess: (data: GenericHTTPResponse<TUnit | string>) => {
@@ -114,16 +120,26 @@ export default function UnitManagmentModal({
     showNotification("Error fetching data for unit creation");
   }
 
+  const closeUnitModal = () => {
+    setUnitName("");
+    setWarscrollName("");
+    setUnitCost("");
+    setIsHero(false);
+    setUnitTypeId(null);
+    setGeneralPathId(null);
+    closeModal();
+  }
+
   return (
     <ModalWrapper
       visible={visible}
-      closeModal={closeModal}
+      closeModal={closeUnitModal}
       title={title}
     >
       <View style={{width: '100%'}}>
         <View style={{display: 'flex', flexDirection: 'column', gap: 10}}>
           <InputElement
-            label={unitManagmentDetails?.unitNameLabel || "Name"}
+            label={`${unitManagmentDetails?.unitNameLabel} (Optional)` || "Name (Optional)"}
             onChangeText={setUnitName}
             value={unitName}
           />
@@ -142,6 +158,12 @@ export default function UnitManagmentModal({
             value={unitCost}
           />
 
+          <Checkbox
+            label="Is this a hero unit?"
+            isChecked={isHero}
+            setChecked={setIsHero}
+          />
+
           <SelectElement
             label="Unit Type"
             onSelectValue={value => setUnitTypeId(value)}
@@ -154,10 +176,10 @@ export default function UnitManagmentModal({
           />
 
           <SelectElement
-            label="Path"
+            label="Path (Optional)"
             onSelectValue={value => setGeneralPathId(value)}
             placeholder={unitManagmentDetails?.unitPathPlaceHolder || "Select a Path"}
-            disabled={!unitTypeId}
+            disabled={!unitTypeId || pathQuery.data?.length === 0}
             value={generalPathId}
             options={createFormSelectOptions(pathQuery.data || [], {
               labelKey: 'name',

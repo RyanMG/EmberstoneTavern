@@ -1,5 +1,7 @@
 import { View } from 'react-native';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { useRef } from 'react';
+
+import BouncyCheckbox, { BouncyCheckboxHandle} from 'react-native-bouncy-checkbox';
 
 import BodyText from '@components/common/BodyText';
 
@@ -16,13 +18,18 @@ export default function Checkbox({
   labelItalic?: boolean;
   isChecked: boolean;
   setChecked: (isChecked: boolean) => void;
-  labelPressAction?: () => void;
+  labelPressAction?: () => void | null;
 }) {
+
+  // Allow the label to toggle the checkbox IF we do not pass in a specific action for the label (e.g. a link out or dialog toggle)
+  const checkboxRef = useRef<BouncyCheckboxHandle>(null);
+
   return (
     <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 10}}>
       <BouncyCheckbox
         onPress={(isChecked: boolean) => setChecked(isChecked)}
         isChecked={isChecked}
+        ref={checkboxRef}
         fillColor={COLORS.CHECKBOX.CHECKED}
         unFillColor={'transparent'}
         innerIconStyle={{
@@ -36,8 +43,9 @@ export default function Checkbox({
       />
       <BodyText
         italic={labelItalic}
+        label={!!labelPressAction ? false : true}
         link={!!labelPressAction}
-        onPress={!!labelPressAction ? labelPressAction : undefined}
+        onPress={!!labelPressAction ? labelPressAction : checkboxRef.current?.onCheckboxPress}
       >
         {label}
       </BodyText>

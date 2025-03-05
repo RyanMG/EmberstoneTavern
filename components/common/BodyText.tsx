@@ -8,6 +8,7 @@ export default function BodyText({
   bold = false,
   link = false,
   center = false,
+  label = false,
   onPress,
   children
 }: {
@@ -15,16 +16,19 @@ export default function BodyText({
   italic?: boolean;
   bold?: boolean;
   link?: boolean;
+  label?: boolean;
   center?: boolean;
   onPress?: () => void;
   children: ReactNode;
 }) {
+
   return (
     <Text style={[
       styles.text,
       italic ? styles.italic : '',
       bold ? styles.bold : '',
       link ? styles.link : '',
+      label ? styles.label : '',
       center ? styles.center : '',
       styles[textSize as keyof typeof styles]
     ]} onPress={onPress}>
@@ -38,6 +42,14 @@ const styles = StyleSheet.create({
     color: COLORS.TEXT.BASE,
     fontStyle: 'normal',
     fontWeight: 'normal',
+    userSelect: 'none'
+  },
+  label: {
+    color: COLORS.TEXT.DARKEN20
+  },
+  link: {
+    color: COLORS.TEXT.LINK,
+    cursor: 'pointer'
   },
   center: {
     textAlign: 'center'
@@ -47,10 +59,6 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 'bold'
-  },
-  link: {
-    color: COLORS.TEXT.LINK,
-    cursor: 'pointer'
   },
   sm: {
     fontSize: 14,
