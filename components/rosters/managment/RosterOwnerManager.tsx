@@ -21,7 +21,7 @@ export default function RosterOwnerManager({
       {rosterData.general && (
         <View style={{display: 'flex', flexDirection: 'column', gap: 10, width: '100%'}}>
           <RosterGeneral general={rosterData.general} />
-          <RegimentManagment rosterId={rosterData.id!} regiments={rosterData.regiments} />
+          <RegimentManagment roster={rosterData} />
         </View>
       )}
     </>

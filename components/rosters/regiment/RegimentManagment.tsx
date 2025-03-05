@@ -7,32 +7,31 @@ import RegimentListItem from './RegimentListItem';
 import Button from '@components/common/forms/Button';
 
 import Regiment from '@classes/Regiment';
+import Roster from '@classes/Roster';
 import { createNewRegiment, deleteRegiment } from '@api/rosterApi';
 import { TRegiment } from '@definitions/roster';
 import { GenericHTTPResponse } from '@definitions/api';
 import { useNotification } from '@context/NotificationContext';
 
 export default function RegimentManagment({
-  rosterId,
-  regiments,
+  roster
 }: {
-  rosterId: string;
-  regiments: Regiment[];
+  roster: Roster;
 }) {
   const { showNotification } = useNotification();
-  const [regimentList, setRegimentList] = useState<Regiment[]>(regiments);
+  const [regimentList, setRegimentList] = useState<Regiment[]>(roster.regiments);
 
   const addRegimentMutation = useMutation({
     mutationFn: createNewRegiment,
     onSuccess: (saveResp: GenericHTTPResponse<TRegiment>) => {
       if (saveResp.success) {
-        regiments.push(new Regiment(saveResp.data as TRegiment));
+        roster.regiments.push(new Regiment(saveResp.data as TRegiment));
         showNotification("New regiment created.");
+        setRegimentList(roster.regiments);
 
       } else {
         showNotification(saveResp.message);
       }
-
     }
   })
 
@@ -41,8 +40,8 @@ export default function RegimentManagment({
     onSuccess: (saveResp: GenericHTTPResponse<number>) => {
       if (saveResp.success) {
         showNotification("Regiment deleted.");
-        regiments = regiments.filter(regiment => regiment.id !== saveResp.data);
-        setRegimentList(regiments);
+        roster.regiments = roster.regiments.filter(regiment => regiment.id !== saveResp.data);
+        setRegimentList(roster.regiments);
 
       } else {
         showNotification(saveResp.message);
@@ -52,7 +51,7 @@ export default function RegimentManagment({
 
   return (
     <>
-      {regiments.length === 0 && (
+      {regimentList.length === 0 && (
         <NoResultsBox text="This roster has no regiments assigned to it. Use the + button to add one." />
       )}
       <>
@@ -65,8 +64,9 @@ export default function RegimentManagment({
         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
           <Button
             title="Add regiment"
+            disabled={roster.hasEmptyRegiment()}
             onPress={() => addRegimentMutation.mutate({
-              rosterId,
+              rosterId: roster.id,
               isGeneral: false,
               isAuxiliary: false,
               units: [],

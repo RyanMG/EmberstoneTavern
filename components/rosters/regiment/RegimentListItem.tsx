@@ -58,14 +58,13 @@ export default function RegimentListItem({
 
         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 5, width: '100%', height: 40}}>
           <BodyText italic={true}>{regiment.getRegimentName()}</BodyText>
-          {regiment.isDeletable() && (
-            <IconButton
-              iconName="trash-can"
-              iconSize={20}
-              theme="white"
-              onPress={() => deleteRegiment(regiment.id)}
-            />
-          )}
+          <IconButton
+            iconName="trash-can"
+            disabled={!regiment.isDeletable()}
+            iconSize={20}
+            theme="white"
+            onPress={() => deleteRegiment(regiment.id)}
+          />
 
         </View>
 

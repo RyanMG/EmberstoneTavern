@@ -38,6 +38,10 @@ class Roster {
     this.emberStoneVault = roster.emberStoneVault;
     this.regiments = roster.regiments.map(regiment => new Regiment(regiment));
   }
+
+  public hasEmptyRegiment(): boolean {
+    return this.regiments.some(regiment => regiment.isDeletable());
+  }
 }
 
 export default Roster;
