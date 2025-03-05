@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { View } from 'react-native';
 
 import { getRosterById } from '@api/rosterApi';
-import type { TRoster } from '@definitions/roster';
+import Roster from "@classes/Roster"
 import { useNotification } from '@context/NotificationContext';
 import { useAuth } from '@context/AuthContext';
 
@@ -28,7 +28,7 @@ export default function CreateNewRosterPage() {
   } = useLocalSearchParams();
   const { authState } = useAuth();
 
-  const { isPending, error, data } = useQuery<TRoster>({
+  const { isPending, error, data } = useQuery<Roster>({
     queryKey: ['campaignRoster', {id: rosterId}],
     queryFn: () => getRosterById(rosterId!),
   })

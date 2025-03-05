@@ -12,7 +12,9 @@ class Roster {
   readonly general: Unit;
   readonly campaignId: TCampaign['id'];
   readonly playerId: TPerson['id'];
+  readonly grandAlliance: TGrandAlliance;
   readonly grandAllianceId: TGrandAlliance['id'];
+  readonly faction: TFaction;
   readonly factionId: TFaction['id'];
   pointTotal: number;
   hasFactionTerrain: boolean;
@@ -27,12 +29,14 @@ class Roster {
     this.campaignId = roster.campaignId;
     this.playerId = roster.playerId;
     this.grandAllianceId = roster.grandAllianceId!;
+    this.grandAlliance = roster.grandAlliance!;
     this.factionId = roster.factionId!;
+    this.faction = roster.faction!;
     this.pointTotal = roster.pointTotal;
     this.hasFactionTerrain = roster.hasFactionTerrain;
     this.emberstoneTotal = roster.emberstoneTotal;
     this.emberStoneVault = roster.emberStoneVault;
-    this.regiments = roster.regiments;
+    this.regiments = roster.regiments.map(regiment => new Regiment(regiment));
   }
 }
 

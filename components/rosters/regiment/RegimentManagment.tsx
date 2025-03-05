@@ -1,16 +1,55 @@
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
-import IconButton from '@/components/common/forms/IconButton';
 import NoResultsBox from '@components/common/NoResultsBox';
 import RegimentListItem from './RegimentListItem';
+import Button from '@components/common/forms/Button';
 
+import Regiment from '@classes/Regiment';
+import { createNewRegiment, deleteRegiment } from '@api/rosterApi';
 import { TRegiment } from '@definitions/roster';
+import { GenericHTTPResponse } from '@definitions/api';
+import { useNotification } from '@context/NotificationContext';
 
 export default function RegimentManagment({
-  regiments
+  rosterId,
+  regiments,
 }: {
-  regiments: TRegiment[];
+  rosterId: string;
+  regiments: Regiment[];
 }) {
+  const { showNotification } = useNotification();
+  const [regimentList, setRegimentList] = useState<Regiment[]>(regiments);
+
+  const addRegimentMutation = useMutation({
+    mutationFn: createNewRegiment,
+    onSuccess: (saveResp: GenericHTTPResponse<TRegiment>) => {
+      if (saveResp.success) {
+        regiments.push(new Regiment(saveResp.data as TRegiment));
+        showNotification("New regiment created.");
+
+      } else {
+        showNotification(saveResp.message);
+      }
+
+    }
+  })
+
+  const deleteRegimentMutation = useMutation({
+    mutationFn: deleteRegiment,
+    onSuccess: (saveResp: GenericHTTPResponse<number>) => {
+      if (saveResp.success) {
+        showNotification("Regiment deleted.");
+        regiments = regiments.filter(regiment => regiment.id !== saveResp.data);
+        setRegimentList(regiments);
+
+      } else {
+        showNotification(saveResp.message);
+      }
+    }
+  })
+
   return (
     <>
       {regiments.length === 0 && (
@@ -18,19 +57,24 @@ export default function RegimentManagment({
       )}
       <>
         <FlatList
-          data={regiments}
+          data={regimentList}
           keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) => <RegimentListItem regiment={item} />}
+          renderItem={({ item }) => <RegimentListItem regiment={item} deleteRegiment={deleteRegimentMutation.mutate} />}
         />
 
-        <IconButton
-          iconName="plus-box"
-          iconSize={48}
-          onPress={() => {
-          }}
-        />
+        <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
+          <Button
+            title="Add regiment"
+            onPress={() => addRegimentMutation.mutate({
+              rosterId,
+              isGeneral: false,
+              isAuxiliary: false,
+              units: [],
+            } as unknown as TRegiment)}
+          />
+        </View>
+
       </>
-
     </>
   );
 }

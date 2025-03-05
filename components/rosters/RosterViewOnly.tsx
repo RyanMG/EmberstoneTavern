@@ -2,13 +2,13 @@ import { View } from "react-native";
 
 import BodyText from "@/components/common/BodyText";
 
-import { TRoster } from "@definitions/roster";
+import Roster from "@classes/Roster";
 import NoResultsBox from "../common/NoResultsBox";
 
 export default function RosterViewOnly({
   rosterData
 }: {
-  rosterData: TRoster
+  rosterData: Roster
 }) {
   return (
     <View>

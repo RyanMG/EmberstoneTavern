@@ -154,7 +154,7 @@ export default function UnitManagmentModal({
           <Spacer />
           <Button
             title="Add This General"
-            disabled={saveUnitMutation.isPending}
+            disabled={saveUnitMutation.isPending || !unitTypeId || !warscrollName || !unitCost}
             onPress={() => saveUnitMutation.mutate()}
           />
         </View>

@@ -4,13 +4,14 @@ import RosterGeneral from '@/components/rosters/RosterGeneral';
 import RegimentManagment from '@/components/rosters/regiment/RegimentManagment';
 import CreateGeneral from '@/components/rosters/CreateGeneral';
 
-import { TRoster } from '@definitions/roster';
+import Roster from '@classes/Roster';
 
 export default function RosterOwnerManager({
   rosterData
 }: {
-  rosterData: TRoster;
+  rosterData: Roster;
 }) {
+
   return (
     <>
       {!rosterData.general && (
@@ -20,7 +21,7 @@ export default function RosterOwnerManager({
       {rosterData.general && (
         <View style={{display: 'flex', flexDirection: 'column', gap: 10, width: '100%'}}>
           <RosterGeneral general={rosterData.general} />
-          <RegimentManagment regiments={rosterData.regiments} />
+          <RegimentManagment rosterId={rosterData.id!} regiments={rosterData.regiments} />
         </View>
       )}
     </>
