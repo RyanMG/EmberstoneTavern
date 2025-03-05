@@ -44,7 +44,7 @@ export default function InviteMembersModal({
   }, [isError, isSuccess])
 
   return (
-    <ModalWrapper visible={visible} setModalVisible={setModalVisible} title="Invite Members">
+    <ModalWrapper visible={visible} closeModal={() => setModalVisible(false)} title="Invite Members">
       <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
         <View style={styles.inviteCodeBlock}>
           <BodyText textSize="sm">Campaign invite code:</BodyText>

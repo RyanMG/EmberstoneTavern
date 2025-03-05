@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import NoResultsBox from '@components/common/NoResultsBox';
 import RegimentListItem from './RegimentListItem';
 import Button from '@components/common/forms/Button';
+import UnitManagementModal, { TUnitManagmentDetails} from '@components/rosters/managment/UnitManagementModal';
 
 import Regiment from '@classes/Regiment';
 import Roster from '@classes/Roster';
@@ -20,6 +21,7 @@ export default function RegimentManagment({
 }) {
   const { showNotification } = useNotification();
   const [regimentList, setRegimentList] = useState<Regiment[]>(roster.regiments);
+  const [unitManagmentDetails, setUnitManagmentDetails] = useState<TUnitManagmentDetails | null>(null);
 
   const addRegimentMutation = useMutation({
     mutationFn: createNewRegiment,
@@ -58,7 +60,18 @@ export default function RegimentManagment({
         <FlatList
           data={regimentList}
           keyExtractor={item => item.id.toString()}
-          renderItem={({ item }) => <RegimentListItem regiment={item} deleteRegiment={deleteRegimentMutation.mutate} />}
+          renderItem={({ item }) => <RegimentListItem
+            regiment={item}
+            deleteRegiment={deleteRegimentMutation.mutate}
+            addNewUnit={(regimentId: number) => setUnitManagmentDetails({
+              regimentId,
+              rosterId: roster.id,
+              unitNameLabel: "Unit Name",
+              saveButtonLabel: "Add This Unit",
+              unitTypePlaceHolder: "Select your unit type",
+              unitPathPlaceHolder: "Select a Path for your unit"
+            })}
+            />}
         />
 
         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
@@ -73,6 +86,20 @@ export default function RegimentManagment({
             } as unknown as TRegiment)}
           />
         </View>
+
+        <UnitManagementModal
+          visible={!!unitManagmentDetails}
+          closeModal={() => setUnitManagmentDetails(null)}
+          title="Add a new unit"
+          unitManagmentDetails={unitManagmentDetails}
+          successActions={{
+            routeOnSuccess: null,
+            onSuccessMessage: "Unit created."
+          }}
+          failureActions={{
+            onFailureMessage: "Failed to create new unit."
+          }}
+        />
 
       </>
     </>

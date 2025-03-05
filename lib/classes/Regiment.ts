@@ -35,6 +35,10 @@ class Regiment {
   public isDeletable(): boolean {
     return this.isGeneral === false && this.units.length === 0;
   }
+
+  public isFull(): boolean {
+    return this.isGeneral ? this.units.length >= 5 : this.units.length >= 4;
+  }
 }
 
 export default Regiment;

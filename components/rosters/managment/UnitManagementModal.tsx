@@ -17,28 +17,37 @@ import { TRegiment, TRoster } from '@definitions/roster';
 import { fetchPaths, fetchUnitTypes, saveNewRosterUnit } from '@api/unitApi';
 import { useNotification } from '@context/NotificationContext';
 
-export default function UnitManagmentModal({
-  visible,
-  setModalVisible,
-  title,
-  regimentId,
-  rosterId,
-  successActions,
-  failureActions
-}: {
-  visible: boolean
-  setModalVisible: (visible: boolean) => void
-  title: string
+export type TUnitManagmentDetails = {
   regimentId: TRegiment['id'];
   rosterId: TRoster['id'];
+  unitNameLabel: string;
+  saveButtonLabel: string;
+  unitTypePlaceHolder: string;
+  unitPathPlaceHolder: string;
+}
+
+interface IUnitManagmentModalProps {
+  visible: boolean
+  closeModal: () => void;
+  title: string
+  unitManagmentDetails: TUnitManagmentDetails | null
   successActions: {
-    routeOnSuccess: '/(tabs)/campaigns/[id]/rosters/[rosterId]';
+    routeOnSuccess: '/(tabs)/campaigns/[id]/rosters/[rosterId]' | null;
     onSuccessMessage: string;
   },
   failureActions: {
     onFailureMessage: string;
   }
-}) {
+}
+
+export default function UnitManagmentModal({
+  visible,
+  closeModal,
+  title,
+  unitManagmentDetails,
+  successActions,
+  failureActions
+}: IUnitManagmentModalProps) {
 
   const { showNotification } = useNotification();
   const router = useRouter();
@@ -60,9 +69,10 @@ export default function UnitManagmentModal({
     queryFn: () => fetchPaths(true, unitTypeId!),
     enabled: !!unitTypeId,
   })
+
   const saveUnitMutation = useMutation<GenericHTTPResponse<TUnit | string>>({
-    mutationFn: () => saveNewRosterUnit(rosterId, regimentId, {
-      regimentId: regimentId,
+    mutationFn: () => saveNewRosterUnit(unitManagmentDetails!.rosterId, unitManagmentDetails!.regimentId, {
+      regimentId: unitManagmentDetails!.regimentId,
       unitName,
       warscrollName,
       unitCost: Number(unitCost),
@@ -78,14 +88,17 @@ export default function UnitManagmentModal({
     } as unknown as TUnit),
     onSuccess: (data: GenericHTTPResponse<TUnit | string>) => {
       if (data.success) {
-        router.replace(successActions.routeOnSuccess);
+        if (successActions.routeOnSuccess !== null) {
+          router.replace(successActions.routeOnSuccess);
+        }
+
         showNotification(successActions.onSuccessMessage);
 
       } else {
         if (data.message === 'There is an existing general present for this campaign') {
           showNotification(data.message);
-          queryClient.invalidateQueries({ queryKey: ['campaignRoster', {id: rosterId}] });
-          setModalVisible(false);
+          queryClient.invalidateQueries({ queryKey: ['campaignRoster', {id: unitManagmentDetails!.rosterId}] });
+          closeModal();
 
         } else {
           showNotification(failureActions.onFailureMessage);
@@ -104,13 +117,13 @@ export default function UnitManagmentModal({
   return (
     <ModalWrapper
       visible={visible}
-      setModalVisible={setModalVisible}
+      closeModal={closeModal}
       title={title}
     >
       <View style={{width: '100%'}}>
         <View style={{display: 'flex', flexDirection: 'column', gap: 10}}>
           <InputElement
-            label="General's Name"
+            label={unitManagmentDetails?.unitNameLabel || "Name"}
             onChangeText={setUnitName}
             value={unitName}
           />
@@ -132,7 +145,7 @@ export default function UnitManagmentModal({
           <SelectElement
             label="Unit Type"
             onSelectValue={value => setUnitTypeId(value)}
-            placeholder="Select your general's unit type"
+            placeholder={unitManagmentDetails?.unitTypePlaceHolder || "Select a Unit Type"}
             value={unitTypeId}
             options={createFormSelectOptions(unitTypeQuery.data || [], {
               labelKey: 'name',
@@ -143,7 +156,7 @@ export default function UnitManagmentModal({
           <SelectElement
             label="Path"
             onSelectValue={value => setGeneralPathId(value)}
-            placeholder="Select a Path for your general"
+            placeholder={unitManagmentDetails?.unitPathPlaceHolder || "Select a Path"}
             disabled={!unitTypeId}
             value={generalPathId}
             options={createFormSelectOptions(pathQuery.data || [], {
@@ -153,7 +166,7 @@ export default function UnitManagmentModal({
           />
           <Spacer />
           <Button
-            title="Add This General"
+            title={unitManagmentDetails?.saveButtonLabel || "Save Unit"}
             disabled={saveUnitMutation.isPending || !unitTypeId || !warscrollName || !unitCost}
             onPress={() => saveUnitMutation.mutate()}
           />

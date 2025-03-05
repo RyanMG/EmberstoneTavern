@@ -64,7 +64,7 @@ export default function JoinCampaignModal({
   }, [isSuccess, addUserResponse])
 
   return (
-    <ModalWrapper visible={visible} setModalVisible={setModalVisible} title="Join A Campaign">
+    <ModalWrapper visible={visible} closeModal={() => setModalVisible(false)} title="Join A Campaign">
       <View style={{display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between', width: '100%'}}>
         <View>
           <InputElement

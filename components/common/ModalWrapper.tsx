@@ -7,12 +7,12 @@ import IconButton from '@components/common/forms/IconButton';
 
 export default function ModalWrapper({
   visible,
-  setModalVisible,
+  closeModal,
   children,
   title
 }: {
   visible: boolean
-  setModalVisible: (visible: boolean) => void
+  closeModal: () => void
   children: ReactNode
   title: string
 }) {
@@ -22,7 +22,7 @@ export default function ModalWrapper({
       transparent={true}
       visible={visible}
       onRequestClose={() => {
-        setModalVisible(!visible);
+        closeModal();
       }}>
       <View style={styles.overlay} />
       <View style={styles.centeredView}>
@@ -36,7 +36,7 @@ export default function ModalWrapper({
               iconName="close"
               theme="white"
               iconSize={28}
-              onPress={() => setModalVisible(!visible)}
+              onPress={() => closeModal()}
             />
           </View>
 

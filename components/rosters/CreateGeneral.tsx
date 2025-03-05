@@ -6,7 +6,7 @@ import { TCampaign } from "@definitions/campaign";
 
 import Button from "@components/common/forms/Button";
 import BodyText from "@components/common/BodyText";
-import UnitManagmentModal from "@components/rosters/managment/UnitManagmentModal";
+import UnitManagmentModal, { TUnitManagmentDetails } from "@/components/rosters/managment/UnitManagementModal";
 
 export default function CreateGeneral({
   regimentId,
@@ -18,7 +18,7 @@ export default function CreateGeneral({
   campaignId: TCampaign['id'];
 }) {
 
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [unitManagmentDetails, setUnitManagmentDetails] = useState<TUnitManagmentDetails | null>(null);
 
   return (
     <View style={{display: 'flex', flexDirection: 'column', gap: 15, marginTop: 10}}>
@@ -26,15 +26,21 @@ export default function CreateGeneral({
       <Button
         title="Create a General"
         onPress={() => {
-          setModalVisible(true);
+          setUnitManagmentDetails({
+            regimentId,
+            rosterId,
+            unitNameLabel: "General Name",
+            saveButtonLabel: "Add This General",
+            unitTypePlaceHolder: "Select your general's unit type",
+            unitPathPlaceHolder: "Select a Path for your general"
+          });
         }}
       />
       <UnitManagmentModal
         title="Create a General"
-        visible={modalVisible}
-        setModalVisible={setModalVisible}
-        regimentId={regimentId}
-        rosterId={rosterId}
+        visible={!!unitManagmentDetails}
+        closeModal={() => setUnitManagmentDetails(null)}
+        unitManagmentDetails={unitManagmentDetails}
         successActions={{
           routeOnSuccess: `/(tabs)/campaigns/${campaignId}/rosters/${rosterId}` as '/(tabs)/campaigns/[id]/rosters/[rosterId]',
           onSuccessMessage: "General created successfully"

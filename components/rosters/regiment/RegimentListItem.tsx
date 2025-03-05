@@ -29,7 +29,7 @@ function UnitListItem({ unit }: { unit: Unit }) {
     <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 5, paddingLeft: 5, paddingRight: 10, width: '100%'}}>
       <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10}}>
         <Image
-          style={{height: 25, width: 25}}
+          style={{height: 20, width: 20}}
           source={unitTypeImageMap[unit.unitType.name.toLowerCase() as keyof typeof unitTypeImageMap]}
         />
         <BodyText>{unit.unitName}</BodyText>
@@ -46,15 +46,17 @@ function UnitListItem({ unit }: { unit: Unit }) {
  */
 export default function RegimentListItem({
   regiment,
-  deleteRegiment
+  deleteRegiment,
+  addNewUnit
 }: {
   regiment: Regiment
   deleteRegiment: UseMutateFunction<GenericHTTPResponse<number>, Error, number, unknown>
+  addNewUnit: (regimentId: number) => void
 }) {
 
   return (
     <Card>
-      <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingHorizontal: 10, paddingBottom: 10, width: '100%'}}>
+      <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingHorizontal: 10, width: '100%'}}>
 
         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 5, width: '100%', height: 40}}>
           <BodyText italic={true}>{regiment.getRegimentName()}</BodyText>
@@ -74,6 +76,16 @@ export default function RegimentListItem({
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => <UnitListItem unit={item} />}
         />
+
+        <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap: 10}}>
+          <IconButton
+            iconName="plus-box"
+            disabled={regiment.isFull()}
+            iconSize={32}
+            onPress={() => addNewUnit(regiment.id)}
+          />
+        </View>
+
       </View>
     </Card>
   );
