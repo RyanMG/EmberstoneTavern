@@ -1,5 +1,6 @@
 import { TRegiment, TRoster } from '@definitions/roster';
 import Unit from '@classes/Unit';
+import { TUnit } from '@definitions/unit';
 
 class Regiment {
   readonly id: TRegiment['id'];
@@ -17,7 +18,15 @@ class Regiment {
     this.regimentName = regiment.regimentName;
     this.isGeneral = regiment.isGeneral;
     this.isAuxiliary = regiment.isAuxiliary;
-    this.units = regiment.units.map(unit => new Unit(unit));
+    this.units = this.sortAndCreateUnits(regiment.units);
+  }
+
+  private sortAndCreateUnits(units: TUnit[]): Unit[] {
+    return units
+      .sort((a, b) => {
+        return a.isGeneral ? -1 : a.isHero ? -1 : a.unitNumber - b.unitNumber;
+      })
+      .map(unit => new Unit(unit));
   }
 
   public getRegimentName(): string {

@@ -6,20 +6,29 @@ export type TUnitType = {
   description: string;
 }
 
-export type TUnit = {
-  id: number;
+export type TNewUnit = {
   regimentId: TRegiment['id'];
   unitName: string;
   warscrollName: string;
   unitCost: number;
+  unitTypeId: TUnitType['id'];
+  battleWounds: number;
+  battleScars: TBattleScar[];
+  isReinforced: boolean;
+  pathId?: TPath['id'];
+  pathRank: number;
+  isGeneral: boolean;
+  isHero: boolean;
+}
+
+export type TUnit = TNewUnit & {
+  id: number;
+  unitNumber: number;
   unitType: TUnitType;
   battleWounds: number;
   battleScars: TBattleScar[];
   isReinforced: boolean;
   path: TPath;
-  pathRank: number;
-  isGeneral: boolean;
-  isHero: boolean;
   emberstoneWeapon?: TEmberstoneWeapon;
 }
 

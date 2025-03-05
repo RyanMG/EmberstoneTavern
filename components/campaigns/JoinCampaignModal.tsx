@@ -34,9 +34,7 @@ export default function JoinCampaignModal({
     data: addUserResponse,
     mutate
   } = useMutation({
-    mutationFn: () => {
-      return joinCampaign(campaignCode.toUpperCase());
-    }
+    mutationFn: () => joinCampaign(campaignCode.toUpperCase())
   })
 
   useEffect(() => {
@@ -76,9 +74,7 @@ export default function JoinCampaignModal({
           <Button
             title={isPending ? "Joining..." : "Join Campaign"}
             disabled={isPending}
-            onPress={() => {
-              mutate();
-            }}
+            onPress={mutate}
           />
           {joinError && <FormErrorText errorText={joinError}/>}
 

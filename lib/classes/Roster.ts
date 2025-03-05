@@ -25,7 +25,7 @@ class Roster {
   constructor(roster: TRoster) {
     this.id = roster.id!;
     this.name = roster.name;
-    this.general = roster.general;
+    this.general = roster.general as unknown as Unit;
     this.campaignId = roster.campaignId;
     this.playerId = roster.playerId;
     this.grandAllianceId = roster.grandAllianceId!;
@@ -36,7 +36,7 @@ class Roster {
     this.hasFactionTerrain = roster.hasFactionTerrain;
     this.emberstoneTotal = roster.emberstoneTotal;
     this.emberStoneVault = roster.emberStoneVault;
-    this.regiments = roster.regiments.map(regiment => new Regiment(regiment));
+    this.regiments = roster.regiments.map(regiment => new Regiment(regiment)).sort((a, b) => a.regimentNumber - b.regimentNumber);
   }
 
   public hasEmptyRegiment(): boolean {

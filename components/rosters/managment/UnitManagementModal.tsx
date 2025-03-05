@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 import { useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'expo-router';
+import { useQuery, useQueryClient, UseMutationResult } from '@tanstack/react-query';
 
 import ModalWrapper from '@components/common/ModalWrapper';
 import InputElement from '@components/common/forms/InputElement';
@@ -12,15 +11,14 @@ import Button from '@components/common/forms/Button';
 
 import { createFormSelectOptions } from '@utils/formUtils';
 
-import { TUnit, TPath, TUnitType } from '@definitions/unit';
-import type { GenericHTTPResponse } from '@definitions/api';
-import { TRegiment, TRoster } from '@definitions/roster';
-import { fetchPaths, fetchUnitTypes, saveNewRosterUnit } from '@api/unitApi';
+import { TRegiment } from '@definitions/roster';
+import { TNewUnit, TUnit, TPath, TUnitType } from '@definitions/unit';
+import { GenericHTTPResponse } from '@definitions/api';
+import { fetchPaths, fetchUnitTypes } from '@api/unitApi';
 import { useNotification } from '@context/NotificationContext';
 
 export type TUnitManagmentDetails = {
   regimentId: TRegiment['id'];
-  rosterId: TRoster['id'];
   unitNameLabel: string;
   saveButtonLabel: string;
   unitTypePlaceHolder: string;
@@ -28,38 +26,32 @@ export type TUnitManagmentDetails = {
 }
 
 interface IUnitManagmentModalProps {
-  visible: boolean
+  visible: boolean;
   closeModal: () => void;
-  title: string
-  unitManagmentDetails: TUnitManagmentDetails | null
-  successActions: {
-    routeOnSuccess: '/(tabs)/campaigns/[id]/rosters/[rosterId]' | null;
-    onSuccessMessage: string;
-  },
-  failureActions: {
-    onFailureMessage: string;
-  }
+  title: string;
+  isGeneral?: boolean;
+  unitManagmentDetails: TUnitManagmentDetails | null;
+  createUnitMutation: UseMutationResult<GenericHTTPResponse<string | TUnit>, Error, TNewUnit, unknown>
 }
 
 export default function UnitManagmentModal({
   visible,
   closeModal,
   title,
-  unitManagmentDetails,
-  successActions,
-  failureActions
+  isGeneral = false,
+  createUnitMutation,
+  unitManagmentDetails
 }: IUnitManagmentModalProps) {
 
   const { showNotification } = useNotification();
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const [unitName, setUnitName] = useState<string>("");
   const [warscrollName, setWarscrollName] = useState<string>("");
   const [unitCost, setUnitCost] = useState<string>("");
-  const [isHero, setIsHero] = useState<boolean>(false);
-  const [unitTypeId, setUnitTypeId] = useState<TUnitType['id'] | null>(null);
-  const [generalPathId, setGeneralPathId] = useState<TPath['id'] | null>(null);
+  const [isHero, setIsHero] = useState<boolean>(isGeneral);
+  const [unitTypeId, setUnitTypeId] = useState<TUnitType['id']>();
+  const [pathId, setPathId] = useState<TPath['id']>();
 
   const unitTypeQuery = useQuery({
     queryKey: ['unitTypes'],
@@ -76,64 +68,24 @@ export default function UnitManagmentModal({
     queryClient.invalidateQueries({ queryKey: ['paths'] })
   }, [unitTypeId, isHero])
 
-  const saveUnitMutation = useMutation<GenericHTTPResponse<TUnit | string>>({
-    mutationFn: () => saveNewRosterUnit(unitManagmentDetails!.rosterId, unitManagmentDetails!.regimentId, {
-      regimentId: unitManagmentDetails!.regimentId,
-      unitName,
-      warscrollName,
-      unitCost: Number(unitCost),
-      unitTypeId: unitTypeId!,
-      battleWounds: 0,
-      battleScars: [],
-      isReinforced: false,
-      pathId: generalPathId,
-      pathRank: 1,
-      isGeneral: true,
-      isHero,
-      emberstoneWeapon: null
-    } as unknown as TUnit),
-    onSuccess: (data: GenericHTTPResponse<TUnit | string>) => {
-      if (data.success) {
-        if (successActions.routeOnSuccess !== null) {
-          router.replace(successActions.routeOnSuccess);
-        }
-
-        showNotification(successActions.onSuccessMessage);
-
-      } else {
-        if (data.message === 'There is an existing general present for this campaign') {
-          showNotification(data.message);
-          queryClient.invalidateQueries({ queryKey: ['campaignRoster', {id: unitManagmentDetails!.rosterId}] });
-          closeModal();
-
-        } else {
-          showNotification(failureActions.onFailureMessage);
-        }
-      }
-    },
-    onError: (error) => {
-      showNotification(failureActions.onFailureMessage);
-    }
-  })
-
   if (unitTypeQuery.isError || pathQuery.isError) {
     showNotification("Error fetching data for unit creation");
   }
 
-  const closeUnitModal = () => {
+  useEffect(() => {
+    if (visible) return;
     setUnitName("");
     setWarscrollName("");
     setUnitCost("");
-    setIsHero(false);
-    setUnitTypeId(null);
-    setGeneralPathId(null);
-    closeModal();
-  }
+    setIsHero(isGeneral ? true : false);
+    setUnitTypeId(undefined);
+    setPathId(undefined);
+  }, [visible])
 
   return (
     <ModalWrapper
       visible={visible}
-      closeModal={closeUnitModal}
+      closeModal={closeModal}
       title={title}
     >
       <View style={{width: '100%'}}>
@@ -160,6 +112,7 @@ export default function UnitManagmentModal({
 
           <Checkbox
             label="Is this a hero unit?"
+            disabled={isGeneral}
             isChecked={isHero}
             setChecked={setIsHero}
           />
@@ -177,10 +130,10 @@ export default function UnitManagmentModal({
 
           <SelectElement
             label="Path (Optional)"
-            onSelectValue={value => setGeneralPathId(value)}
+            onSelectValue={setPathId}
             placeholder={unitManagmentDetails?.unitPathPlaceHolder || "Select a Path"}
             disabled={!unitTypeId || pathQuery.data?.length === 0}
-            value={generalPathId}
+            value={pathId}
             options={createFormSelectOptions(pathQuery.data || [], {
               labelKey: 'name',
               valueKey: 'id',
@@ -189,8 +142,23 @@ export default function UnitManagmentModal({
           <Spacer />
           <Button
             title={unitManagmentDetails?.saveButtonLabel || "Save Unit"}
-            disabled={saveUnitMutation.isPending || !unitTypeId || !warscrollName || !unitCost}
-            onPress={() => saveUnitMutation.mutate()}
+            disabled={createUnitMutation.isPending || !unitTypeId || !warscrollName || !unitCost}
+            onPress={() =>
+              createUnitMutation.mutate({
+                regimentId: unitManagmentDetails?.regimentId!,
+                unitName,
+                warscrollName,
+                unitCost: Number(unitCost),
+                unitTypeId: unitTypeId!,
+                battleWounds: 0,
+                battleScars: [],
+                isReinforced: false,
+                pathId,
+                pathRank: 1,
+                isGeneral: false,
+                isHero
+              })
+            }
           />
         </View>
       </View>

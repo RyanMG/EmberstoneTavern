@@ -5,9 +5,9 @@ import BodyText from "@components/common/BodyText";
 import IconButton from "@components/common/forms/IconButton";
 import Spacer from "@components/common/Spacer";
 
-import { TUnit } from "@/lib/definitions/unit.d";
+import Unit from "@classes/Unit";
 
-export default function RosterGeneral({ general }: { general: TUnit }) {
+export default function RosterGeneral({ general }: { general: Unit }) {
   return (
     <Card>
       <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: 10, width: '100%'}}>

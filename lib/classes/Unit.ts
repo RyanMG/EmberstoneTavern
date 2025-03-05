@@ -37,6 +37,10 @@ class Unit {
     this.isHero = unit.isHero;
     this.emberstoneWeapon = unit.emberstoneWeapon;
   }
+
+  public getUnitTypeForIcon(): string {
+    return this.isGeneral ? 'general' : this.isHero ? 'hero' : this.unitType?.name?.toLowerCase() || 'infantry';
+  }
 }
 
 export default Unit;

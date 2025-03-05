@@ -24,7 +24,7 @@ export default function UserRosterActions({
   })
 
   return (
-    <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 10, width: '100%', marginTop: 5}}>
+    <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 10, width: '100%', marginTop: 10}}>
       <Button
         title="Edit Roster Details"
         onPress={() => {

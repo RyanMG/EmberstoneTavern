@@ -41,15 +41,16 @@ const styles = StyleSheet.create({
   text: {
     color: COLORS.TEXT.BASE,
     fontStyle: 'normal',
-    fontWeight: 'normal',
-    userSelect: 'none'
+    fontWeight: 'normal'
   },
   label: {
-    color: COLORS.TEXT.DARKEN20
+    color: COLORS.TEXT.DARKEN20,
+    userSelect: 'none'
   },
   link: {
     color: COLORS.TEXT.LINK,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    userSelect: 'none'
   },
   center: {
     textAlign: 'center'

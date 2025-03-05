@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   TUnit,
+  TNewUnit,
   TPath,
   TUnitType
 } from '@definitions/unit';
@@ -27,7 +28,7 @@ export async function fetchPaths(isHero: boolean, unitTypeId: number): Promise<T
    }
 }
 
-export async function saveNewRosterUnit(rosterId: TRoster['id'], regimentId: TRegiment['id'], unit: TUnit): Promise<GenericHTTPResponse<TUnit>> {
+export async function saveNewRosterUnit(rosterId: TRoster['id'], regimentId: TRegiment['id'], unit: TNewUnit): Promise<GenericHTTPResponse<TUnit>> {
   try {
     return axios.post<GenericHTTPResponse<TUnit>>(`${API_ROOT}?rosterId=${rosterId}&regimentId=${regimentId}`, unit).then((res) => res.data);
 
