@@ -53,12 +53,15 @@ export default function CreateNewRosterPage() {
         <BodyText textSize="sm" italic={true}>{data.faction?.name}</BodyText>
         <Divider />
 
-        {authState.activeUser?.isSameAs(data.playerId) && (
-          <RosterOwnerManager rosterData={data} />
-        )}
-        {authState.activeUser?.isNotTheSameAs(data.playerId) && (
-          <RosterViewOnly rosterData={data} />
-        )}
+        <View style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%', alignItems: 'center', overflow: 'scroll'}}>
+          {authState.activeUser?.isSameAs(data.playerId) && (
+            <RosterOwnerManager rosterData={data} />
+          )}
+          {authState.activeUser?.isNotTheSameAs(data.playerId) && (
+            <RosterViewOnly rosterData={data} />
+          )}
+        </View>
+
       </View>
 
       {authState.activeUser?.getId() === data.playerId && (
