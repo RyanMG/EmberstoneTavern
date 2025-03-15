@@ -27,7 +27,7 @@ export default function RosterGeneral({ general }: { general: Unit }) {
 
         <View style={{display: 'flex', flexDirection: 'column'}}>
           <IconButton
-            iconName="pencil"
+            iconName="eye"
             iconSize={24}
             theme="white"
             onPress={() => {

@@ -1,4 +1,6 @@
 export type TCampaignStatus = 'ACTIVE' | 'COMPLETE';
+import Person from "@classes/Person";
+import { TPerson } from "@definitions/person";
 
 export type TCampaign = {
   id: string;
@@ -10,8 +12,8 @@ export type TCampaign = {
   campaignSettingId?: number;
   campaignCode: string;
   campaignStatus: TCampaignStatus;
-  owner: TPerson;
-  members: TPerson[];
+  owner: Person;
+  members: Person[];
 }
 
 export type TCampaignSetting = {
@@ -25,4 +27,26 @@ export type TCampaignInvite = {
   campaignOverview: TCampaign;
   owner: TPerson;
   player: TPerson;
+}
+
+export type TNewCampaignGame = {
+  campaignId: string;
+  winner: TPerson['id'];
+  opponent: TPerson['id'];
+  missionPlayed: string;
+  twist: string;
+  rounds: number;
+  winnerScore: number;
+  opponentScore: number;
+}
+
+export type TCampaignGame = {
+  campaignId: string;
+  winner: Person;
+  opponent: Person;
+  missionPlayed: string;
+  twist: string;
+  rounds: number;
+  winnerScore: number;
+  opponentScore: number;
 }
