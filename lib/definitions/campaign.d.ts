@@ -31,6 +31,7 @@ export type TCampaignInvite = {
 
 export type TNewCampaignGame = {
   campaignId: string;
+  gameDate: string;
   winner: TPerson['id'];
   opponent: TPerson['id'];
   missionPlayed: string;

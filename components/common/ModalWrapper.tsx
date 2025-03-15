@@ -40,7 +40,7 @@ export default function ModalWrapper({
             />
           </View>
 
-          <View style={{padding: 20, width: '100%'}}>
+          <View style={{padding: 20, width: '100%', flex: 1}}>
             {children}
           </View>
 
@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: COLORS.BACKGROUND.LIGHTEN,
     width: '95%',
+    maxHeight: '90%',
+    overflow: 'hidden',
     borderRadius: 5,
     alignItems: 'center'
   },

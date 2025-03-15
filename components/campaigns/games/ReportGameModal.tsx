@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import DateTimePicker, { DateType } from 'react-native-ui-datepicker';
 
 import ModalWrapper from "@components/common/ModalWrapper";
 import InputElement from "@components/common/forms/InputElement";
@@ -29,10 +30,12 @@ export default function ReportGameModal({
   const [rounds, setRounds] = useState<string>('0');
   const [winnerScore, setWinnerScore] = useState<string>('0');
   const [opponentScore, setOpponentScore] = useState<string>('0');
+  const [gameDate, setGameDate] = useState<Date>(new Date());
 
   const reportGameMutation = useMutation({
     mutationFn: () => reportGame({
       campaignId: campaign.id,
+      gameDate: gameDate.toISOString(),
       winner: winner!,
       opponent: opponent!,
       missionPlayed,
@@ -50,7 +53,21 @@ export default function ReportGameModal({
 
   return (
     <ModalWrapper visible={visible} closeModal={() => setModalVisible(false)} title="Report A Game">
-      <View style={{display: 'flex', flexDirection: 'column', gap: 10}}>
+      <View style={{display: 'flex', flexDirection: 'column', gap: 10, maxHeight: '100%', overflow: 'auto'}}>
+        <DateTimePicker
+          mode="single"
+          date={gameDate}
+          onChange={({date}: {date: DateType}) => {
+            if (!date) return;
+            if (date instanceof Date) {
+              setGameDate(date);
+            } else {
+              // @ts-ignore
+              setGameDate(new Date(date));
+            }
+          }}
+        />
+
         <SelectElement
           label="Winning Player"
           placeholder="Who won this game?"
@@ -84,7 +101,7 @@ export default function ReportGameModal({
           onChangeText={setMissionPlayed}
         />
         <InputElement
-          label="Twist"
+          label="Twist (Optional)"
           value={twist}
           onChangeText={setTwist}
         />
@@ -97,7 +114,7 @@ export default function ReportGameModal({
         <Spacer size="sm" />
         <Button
           title="Report Game"
-          disabled={reportGameMutation.isPending || (winner === null || opponent === null || missionPlayed === '' || twist === '' || isNaN(Number(rounds)) || Number(rounds) < 1)}
+          disabled={reportGameMutation.isPending || (winner === null || opponent === null || missionPlayed === '' || isNaN(Number(rounds)) || Number(rounds) < 1)}
           onPress={() => reportGameMutation.mutate()}
         />
       </View>
