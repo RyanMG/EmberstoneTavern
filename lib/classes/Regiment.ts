@@ -42,7 +42,7 @@ class Regiment {
   }
 
   public isDeletable(): boolean {
-    return this.isGeneral === false && this.units.length === 0;
+    return this.isGeneral === false;
   }
 
   public isFull(): boolean {

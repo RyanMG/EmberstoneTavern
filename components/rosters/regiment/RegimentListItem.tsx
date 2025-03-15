@@ -7,12 +7,14 @@ import BodyText from '@components/common/BodyText';
 import Divider from '@components/common/Divider';
 import IconButton from '@components/common/forms/IconButton';
 import UnitManagementModal, { TUnitManagmentDetails} from '@components/rosters/managment/UnitManagementModal';
+import Dialog from '@components/common/Dialog';
 
 import Regiment from '@classes/Regiment';
 import Unit from '@classes/Unit';
 import { TNewUnit, TUnit } from '@definitions/unit';
 import { TRoster } from '@definitions/roster';
 import { GenericHTTPResponse } from '@definitions/api';
+import { TDialogContent } from '@definitions/ui';
 import { saveNewRosterUnit } from '@api/unitApi';
 import { useNotification } from '@context/NotificationContext';
 
@@ -34,21 +36,29 @@ const unitTypeImageMap = {
 function UnitListItem({ unit }: { unit: Unit }) {
 
   return (
-    <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 5, paddingLeft: 5, paddingRight: 10, width: '100%'}}>
-      <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10}}>
-        <Image
-          style={{height: 20, width: 20}}
-          source={unitTypeImageMap[unit.getUnitTypeForIcon() as keyof typeof unitTypeImageMap]}
-        />
+    <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 5, width: '100%'}}>
+      <Image
+        style={{height: 20, width: 20}}
+        source={unitTypeImageMap[unit.getUnitTypeForIcon() as keyof typeof unitTypeImageMap]}
+      />
+
+      <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: 150}}>
         <BodyText>{unit.unitName}</BodyText>
+      </View>
+
+      <View style={{ flex: 1 }}>
         <BodyText italic={true}>{unit.warscrollName}</BodyText>
       </View>
 
-      {unit.path && (
-          <BodyText textSize="sm" italic={true}>{unit.path.name} - Rank {unit.pathRank}</BodyText>
-      )}
-
-     </View>
+      <View style={{display: 'flex', flexDirection: 'row', width: 48}}>
+        <IconButton
+          iconName="eye"
+          iconSize={20}
+          theme="white"
+          onPress={() => console.log('TODO')}
+        />
+      </View>
+    </View>
   );
 }
 
@@ -69,6 +79,7 @@ export default function RegimentListItem({
   const { showNotification } = useNotification();
 
   const [unitManagmentDetails, setUnitManagmentDetails] = useState<TUnitManagmentDetails | null>(null);
+  const [dialogContent, setDialogContent] = useState<TDialogContent | null>(null);
   const [regimentUnits, setRegimentUnits] = useState<Unit[]>(regiment.units);
 
   const saveUnitMutation = useMutation<GenericHTTPResponse<TUnit | string>, Error, TNewUnit>({
@@ -92,18 +103,37 @@ export default function RegimentListItem({
   return (
     <>
       <Card>
-        <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingHorizontal: 10, width: '100%'}}>
+        <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingHorizontal: 10, paddingBottom: 8, width: '100%'}}>
 
           <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 5, width: '100%', height: 40}}>
             <BodyText italic={true}>{regiment.getRegimentName()}</BodyText>
-            <IconButton
-              iconName="trash-can"
-              disabled={!regiment.isDeletable()}
-              iconSize={20}
-              theme="white"
-              onPress={() => deleteRegiment(regiment.id)}
-            />
-
+            <View style={{display: 'flex', flexDirection: 'row'}}>
+              <IconButton
+                iconName="trash-can"
+                disabled={!regiment.isDeletable()}
+                iconSize={20}
+                theme="white"
+                onPress={() => setDialogContent({
+                  title: 'Confirm Delete',
+                  body: `Are you sure you want to delete this regiment?`,
+                  actionLabel: 'Delete',
+                  action: () => deleteRegiment(regiment.id)
+                })}
+              />
+              <IconButton
+                iconName="plus-box"
+                disabled={regiment.isFull()}
+                iconSize={20}
+                theme="white"
+                onPress={() => setUnitManagmentDetails({
+                  regimentId: regiment.id,
+                  unitNameLabel: "Unit Name",
+                  saveButtonLabel: "Add This Unit",
+                  unitTypePlaceHolder: "Select your unit type",
+                  unitPathPlaceHolder: "Select a Path for your unit"
+                })}
+              />
+            </View>
           </View>
 
           <Divider size='sm' />
@@ -112,22 +142,6 @@ export default function RegimentListItem({
             keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => <UnitListItem unit={item} />}
           />
-
-          <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap: 10}}>
-            <IconButton
-              iconName="plus-box"
-              disabled={regiment.isFull()}
-              iconSize={32}
-              onPress={() => setUnitManagmentDetails({
-                regimentId: regiment.id,
-                unitNameLabel: "Unit Name",
-                saveButtonLabel: "Add This Unit",
-                unitTypePlaceHolder: "Select your unit type",
-                unitPathPlaceHolder: "Select a Path for your unit"
-              })}
-            />
-          </View>
-
         </View>
       </Card>
       <UnitManagementModal
@@ -136,6 +150,11 @@ export default function RegimentListItem({
         title="Add a new unit"
         unitManagmentDetails={unitManagmentDetails}
         createUnitMutation={saveUnitMutation}
+      />
+
+      <Dialog
+        dialogContent={dialogContent}
+        setDialogContent={setDialogContent}
       />
     </>
   );

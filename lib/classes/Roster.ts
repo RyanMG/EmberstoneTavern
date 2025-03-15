@@ -42,6 +42,12 @@ class Roster {
   public hasEmptyRegiment(): boolean {
     return this.regiments.some(regiment => regiment.isDeletable());
   }
+
+  public getPointTotal(): number {
+    return this.regiments.reduce((total, regiment) => {
+      return total + regiment.units.reduce((unitTotal, unit) => unitTotal + unit.unitCost, 0);
+    }, 0);
+  }
 }
 
 export default Roster;

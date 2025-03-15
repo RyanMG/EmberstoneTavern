@@ -30,6 +30,7 @@ interface IUnitManagmentModalProps {
   closeModal: () => void;
   title: string;
   isGeneral?: boolean;
+  isHero?: boolean;
   unitManagmentDetails: TUnitManagmentDetails | null;
   createUnitMutation: UseMutationResult<GenericHTTPResponse<string | TUnit>, Error, TNewUnit, unknown>
 }
@@ -38,6 +39,7 @@ export default function UnitManagmentModal({
   visible,
   closeModal,
   title,
+  isHero = false,
   isGeneral = false,
   createUnitMutation,
   unitManagmentDetails
@@ -49,7 +51,7 @@ export default function UnitManagmentModal({
   const [unitName, setUnitName] = useState<string>("");
   const [warscrollName, setWarscrollName] = useState<string>("");
   const [unitCost, setUnitCost] = useState<string>("");
-  const [isHero, setIsHero] = useState<boolean>(isGeneral);
+  const [isHeroUnit, setIsHeroUnit] = useState<boolean>(isGeneral || isHero);
   const [unitTypeId, setUnitTypeId] = useState<TUnitType['id']>();
   const [pathId, setPathId] = useState<TPath['id']>();
 
@@ -77,7 +79,7 @@ export default function UnitManagmentModal({
     setUnitName("");
     setWarscrollName("");
     setUnitCost("");
-    setIsHero(isGeneral ? true : false);
+    setIsHeroUnit((isGeneral || isHero) ? true : false);
     setUnitTypeId(undefined);
     setPathId(undefined);
   }, [visible])
@@ -112,9 +114,9 @@ export default function UnitManagmentModal({
 
           <Checkbox
             label="Is this a hero unit?"
-            disabled={isGeneral}
-            isChecked={isHero}
-            setChecked={setIsHero}
+            disabled={isGeneral || isHero}
+            isChecked={isHeroUnit}
+            setChecked={setIsHeroUnit}
           />
 
           <SelectElement
