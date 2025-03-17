@@ -14,7 +14,6 @@ import { removeUserFromCampaign } from '@api/campaignApi';
 
 import Button from '@components/common/forms/Button';
 import Dialog from '@components/common/Dialog';
-import ReportGameModal from '@components/campaigns/games/ReportGameModal';
 
 export default function CampaignMemberActions({
   campaign
@@ -27,7 +26,6 @@ export default function CampaignMemberActions({
   const queryClient = useQueryClient();
 
   const [dialogContent, setDialogContent] = useState<TDialogContent>(null);
-  const [reportGameModalVisible, setReportGameModalVisible] = useState(false);
 
   const member: Person | undefined = campaign.findMemberById(authState?.activeUser?.getId()!);
 
@@ -40,7 +38,9 @@ export default function CampaignMemberActions({
           {member.hasRoster() ? (
             <Button
               title="Report Game"
-              onPress={() => setReportGameModalVisible(true)}
+              onPress={() => {
+                router.push(`/campaigns/${campaign.id}/games/new`);
+              }}
             />
           ): (
             <Button
@@ -77,7 +77,6 @@ export default function CampaignMemberActions({
       </View>
 
       <Dialog dialogContent={dialogContent} setDialogContent={setDialogContent} />
-      <ReportGameModal visible={reportGameModalVisible} setModalVisible={setReportGameModalVisible} campaign={campaign} />
     </>
   )
 }

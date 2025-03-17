@@ -39,6 +39,11 @@ export default function Campaigns() {
         ...pageHeaderOptions,
         title: 'Edit Roster Details'
       }}/>
+
+      <Stack.Screen name="[id]/games/new" options={{
+        ...pageHeaderOptions,
+        title: 'Report Game'
+      }}/>
     </Stack>
   );
 }
