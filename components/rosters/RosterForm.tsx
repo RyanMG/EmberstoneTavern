@@ -23,7 +23,7 @@ interface IRosterFormProps {
   factionId: number | '';
   setFactionId: (id: number | '') => void;
   factionOptions: TFaction[];
-  rosterMutation: UseMutationResult<GenericHTTPResponse<TRoster>, Error, void, unknown>;
+  rosterMutation: UseMutationResult<GenericHTTPResponse<TRoster['id']>, Error, void, unknown>;
 }
 
 export default function RosterForm({

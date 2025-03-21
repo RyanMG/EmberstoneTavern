@@ -39,10 +39,10 @@ export const fetchCampaign = async (id: TCampaign['id']): Promise<Campaign> => {
   }
 }
 
-export const createCampaign = async (campaign: TCampaign): Promise<Campaign> => {
+export const createCampaign = async (campaign: TCampaign): Promise<Campaign['id']> => {
   try {
    const { data } = await axios.post<TCampaign>(`${API_ROOT}`, campaign);
-   return new Campaign(data);
+   return data.id;
 
   } catch (error) {
     throw new Error(`Failed to create campaign: ${(error as Error).message}`)

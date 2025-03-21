@@ -39,7 +39,7 @@ export default function CreateNewRosterPage() {
     enabled: !!grandAllianceId,
   })
 
-  const createRosterMutation = useMutation<GenericHTTPResponse<TRoster>>({
+  const createRosterMutation = useMutation<GenericHTTPResponse<TRoster['id']>>({
     mutationFn: () => {
       return createCampaignRoster({
         name: name,
@@ -53,11 +53,11 @@ export default function CreateNewRosterPage() {
         hasFactionTerrain: false
       } as TRoster);
     },
-    onSuccess: ({data}: {data: TRoster}) => {
+    onSuccess: ({data}: {data: TRoster['id']}) => {
       queryClient.invalidateQueries({
         queryKey: ['campaignRoster', {campaignId: id}],
       })
-      router.replace(`/(tabs)/campaigns/${id}/rosters/${data.id}`);
+      router.replace(`/(tabs)/campaigns/${id}/rosters/${data}`);
     }
   })
 

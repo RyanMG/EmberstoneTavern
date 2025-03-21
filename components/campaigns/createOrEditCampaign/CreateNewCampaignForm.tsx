@@ -40,10 +40,10 @@ export default function CreateNewCampaignModal({
     isPending,
     isError,
     isSuccess,
-    data,
+    data: campaignId,
     mutate
   } = useMutation({
-    mutationFn: (campaign: TCampaign) => {
+    mutationFn: (campaign: TCampaign): Promise<TCampaign['id']> => {
       return createCampaign(campaign);
     },
   })
@@ -52,9 +52,9 @@ export default function CreateNewCampaignModal({
     if (isSuccess) {
       showNotification('Campaign created.');
       queryClient.invalidateQueries({ queryKey: ['activeCampaigns'] });
-      router.replace(`/campaigns/${data.id}`);
+      router.replace(`/campaigns/${campaignId}`);
     }
-  }, [isSuccess])
+  }, [isSuccess, campaignId, router, showNotification, queryClient])
 
   return (
     <View style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%', paddingLeft: 20, paddingRight: 20}}>

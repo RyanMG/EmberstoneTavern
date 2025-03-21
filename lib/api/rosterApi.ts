@@ -27,9 +27,9 @@ export async function getRosterById(id: string): Promise<Roster> {
    }
 }
 
-export async function createCampaignRoster(roster: TRoster): Promise<GenericHTTPResponse<TRoster>> {
+export async function createCampaignRoster(roster: TRoster): Promise<GenericHTTPResponse<TRoster['id']>> {
   try {
-    return axios.post<GenericHTTPResponse<TRoster>>(`${API_ROOT}`, roster).then((res) => res.data);
+    return axios.post<GenericHTTPResponse<TRoster['id']>>(`${API_ROOT}`, roster).then((res) => res.data);
 
    } catch (error) {
      throw new Error(`Failed to create campaign roster: ${(error as Error).message}`)
