@@ -1,14 +1,17 @@
 import { useState, useRef } from "react";
-import DateTimePicker, { DateType, useDefaultStyles } from 'react-native-ui-datepicker';
+import dayjs from 'dayjs';
+
+import DateTimePicker, { useDefaultStyles } from 'react-native-ui-datepicker';
 import { TextInput } from 'react-native';
 
 import FakeInput from "@components/common/forms/FakeInput";
 import ModalWrapper from "@components/common/ModalWrapper";
+import { formatDateForDisplay } from "@utils/dateUtils";
 
 interface DateModalProps {
   title: string;
-  selectedDate: Date;
-  setSelectedDate: (date: Date) => void;
+  selectedDate: dayjs.Dayjs;
+  setSelectedDate: (date: dayjs.Dayjs) => void;
 }
 
 export default function DateModal({ title, selectedDate, setSelectedDate }: DateModalProps) {
@@ -21,7 +24,7 @@ export default function DateModal({ title, selectedDate, setSelectedDate }: Date
     <>
       <FakeInput
         label="Game Date"
-        value={selectedDate.toISOString()}
+        value={formatDateForDisplay(selectedDate)}
         inputRef={inputRef}
         onFocus={() => {
           setShowDateModal(true)
@@ -40,11 +43,10 @@ export default function DateModal({ title, selectedDate, setSelectedDate }: Date
           date={selectedDate}
           onChange={({ date }) => {
             if (!date) return;
-            if (date instanceof Date) {
+            if (date instanceof dayjs.Dayjs) {
               setSelectedDate(date);
             } else {
-              // @ts-ignore
-              setSelectedDate(new Date(date));
+              setSelectedDate(dayjs(date));
             }
             setShowDateModal(false);
           }}

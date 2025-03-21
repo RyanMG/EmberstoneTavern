@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { useState } from "react";
 import { UseMutationResult } from "@tanstack/react-query";
+import dayjs from 'dayjs';
 
 import InputElement from "@components/common/forms/InputElement";
 import SelectElement from "@components/common/forms/SelectElement";
@@ -17,14 +18,14 @@ export default function CampaignGameForm({
   reportGameMutation
 }: {campaign: Campaign, reportGameMutation: UseMutationResult<TCampaignGame, Error, TNewCampaignGame, unknown>}) {
 
-  const [winner, setWinner] = useState<string | null>(null);
-  const [opponent, setOpponent] = useState<string | null>(null);
+  const [winnerId, setWinnerId] = useState<string | null>(null);
+  const [opponentId, setOpponentId] = useState<string | null>(null);
   const [missionPlayed, setMissionPlayed] = useState<string>('');
   const [twist, setTwist] = useState<string>('');
-  const [rounds, setRounds] = useState<string>('0');
-  const [winnerScore, setWinnerScore] = useState<string>('0');
-  const [opponentScore, setOpponentScore] = useState<string>('0');
-  const [gameDate, setGameDate] = useState<Date>(new Date());
+  const [rounds, setRounds] = useState<string>('');
+  const [winnerScore, setWinnerScore] = useState<string>('');
+  const [opponentScore, setOpponentScore] = useState<string>('');
+  const [gameDate, setGameDate] = useState<dayjs.Dayjs>(dayjs());
 
   return (
     <View style={{display: 'flex', flexDirection: 'column', gap: 10, maxHeight: '100%', overflowY: 'auto'}}>
@@ -37,8 +38,8 @@ export default function CampaignGameForm({
         label="Winning Player"
         placeholder="Who won this game?"
         options={createFormSelectOptions([campaign.owner, ...campaign.members], { labelFunction: (member) => member.getFullName(), valueKey: 'id' })}
-        value={winner}
-        onSelectValue={setWinner}
+        value={winnerId}
+        onSelectValue={setWinnerId}
       />
       <InputElement
         label="Winner's Score"
@@ -49,10 +50,10 @@ export default function CampaignGameForm({
       <SelectElement
         label="Opponent"
         placeholder="Who lost this game?"
-        disabled={winner === null}
-        options={createFormSelectOptions([campaign.owner, ...campaign.members].filter(member => member.id !== winner), { labelFunction: (member) => member.getFullName(), valueKey: 'id' })}
-        value={opponent}
-        onSelectValue={setOpponent}
+        disabled={winnerId === null}
+        options={createFormSelectOptions([campaign.owner, ...campaign.members].filter(member => member.id !== winnerId), { labelFunction: (member) => member.getFullName(), valueKey: 'id' })}
+        value={opponentId}
+        onSelectValue={setOpponentId}
       />
       <InputElement
         label="Opponent's Score"
@@ -79,12 +80,12 @@ export default function CampaignGameForm({
       <Spacer size="sm" />
       <Button
         title="Report Game"
-        disabled={reportGameMutation.isPending || (winner === null || opponent === null || missionPlayed === '' || isNaN(Number(rounds)) || Number(rounds) < 1)}
+        disabled={reportGameMutation.isPending || (winnerId === null || opponentId === null || missionPlayed === '' || isNaN(Number(rounds)) || Number(rounds) < 1)}
         onPress={() => reportGameMutation.mutate({
           campaignId: campaign.id,
           gameDate: gameDate.toISOString(),
-          winner: winner!,
-          opponent: opponent!,
+          winnerId: winnerId!,
+          opponentId: opponentId!,
           missionPlayed,
           twist,
           rounds: Number(rounds),
