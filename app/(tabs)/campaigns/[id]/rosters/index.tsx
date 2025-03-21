@@ -9,7 +9,7 @@ import RosterItemCard from '@components/rosters/RosterItemCard';
 
 import { getAllCampaignRosters } from '@api/rosterApi';
 
-export default function CreateNewRosterPage() {
+export default function RostersPage() {
 
   const { id: campaignId }: {id: string} = useLocalSearchParams();
 

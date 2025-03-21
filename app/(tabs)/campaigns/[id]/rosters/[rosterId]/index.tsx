@@ -18,7 +18,7 @@ import UserRosterActions from '@/components/rosters/managment/UserRosterActions'
 import RosterOwnerManager from '@/components/rosters/managment/RosterOwnerManager';
 import RosterViewOnly from '@/components/rosters/RosterViewOnly';
 
-export default function CreateNewRosterPage() {
+export default function RosterPage() {
   let {
     id: campaignId,
     rosterId
