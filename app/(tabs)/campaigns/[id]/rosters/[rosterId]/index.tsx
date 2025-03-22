@@ -9,7 +9,7 @@ import { useAuth } from '@context/AuthContext';
 
 import PageContainer from '@/components/common/PageContainers';
 
-import BodyText from '@/components/common/BodyText';
+import BodyText from '@/components/common/text/BodyText';
 import PageLoading from '@/components/common/PageLoading';
 import Spacer from '@/components/common/Spacer';
 import Divider from '@/components/common/Divider';

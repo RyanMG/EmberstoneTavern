@@ -3,7 +3,7 @@ import { useLocalSearchParams, Redirect } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
 import PageContainer from "@components/common/PageContainers";
-import PageLoading from "@components/common/PageLoading";
+import PendingScreen from "@components/common/PendingScreen";
 import GameCard from "@components/campaigns/games/GameCard";
 import NoResultsBox from "@components/common/NoResultsBox";
 
@@ -20,7 +20,8 @@ export default function CampaignGamesPage() {
     queryFn: () => fetchCampaignGames(campaignId!),
   })
 
-  if (isPending) return <PageLoading />
+  if (isPending) return <PendingScreen />;
+
   if (error) {
     showNotification(error.message);
     return <Redirect href="/campaigns" />

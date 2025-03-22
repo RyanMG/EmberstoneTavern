@@ -1,7 +1,7 @@
 import { View } from "react-native";
 
 import Card from "@components/common/Card";
-import BodyText from "@components/common/BodyText";
+import BodyText from "@/components/common/text/BodyText";
 import IconButton from "@components/common/forms/IconButton";
 import Spacer from "@components/common/Spacer";
 

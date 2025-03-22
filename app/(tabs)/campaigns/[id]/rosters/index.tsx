@@ -4,7 +4,7 @@ import { FlatList, View } from 'react-native';
 
 import PageContainer from '@components/common/PageContainers';
 import PageLoading from '@components/common/PageLoading';
-import BodyText from '@components/common/BodyText';
+import BodyText from '@/components/common/text/BodyText';
 import RosterItemCard from '@components/rosters/RosterItemCard';
 
 import { getAllCampaignRosters } from '@api/rosterApi';

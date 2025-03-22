@@ -1,6 +1,6 @@
 import ContentBox from '@components/common/ContentBox';
 import PageTitle from '@components/common/PageTitle';
-import BodyText from '@components/common/BodyText';
+import BodyText from '@/components/common/text/BodyText';
 import Button from '@components/common/forms/Button';
 import Spacer from '@components/common/Spacer';
 import { useRouter } from 'expo-router';

@@ -1,7 +1,7 @@
 import { View, FlatList } from "react-native";
 import { Link } from "expo-router";
 
-import BodyText from "@components/common/BodyText";
+import BodyText from "@/components/common/text/BodyText";
 
 import Person from "@classes/Person";
 import Campaign from "@classes/Campaign";

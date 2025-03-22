@@ -9,7 +9,7 @@ import CampaignMembers from "@components/campaigns/campaignDetails/CampaignMembe
 import CampaignMemberActions from "@components/campaigns/campaignDetails/CampaignMemberActions";
 import CampaignOwnerActions from "@components/campaigns/campaignDetails/CampaignOwnerActions";
 import Spacer from "@components/common/Spacer";
-import BodyText from "@components/common/BodyText";
+import BodyText from "@/components/common/text/BodyText";
 
 import Campaign from "@classes/Campaign";
 import { fetchCampaign } from "@api/campaignApi";

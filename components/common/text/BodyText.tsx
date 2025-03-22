@@ -12,7 +12,7 @@ export default function BodyText({
   onPress,
   children
 }: {
-  textSize?: 'sm' | 'md' | 'lg' | 'xl';
+  textSize?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
   italic?: boolean;
   bold?: boolean;
   link?: boolean;

@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import COLORS from "@constants/colors";
-import BodyText from "@components/common/BodyText";
+import BodyText from "@/components/common/text/BodyText";
 
 export default function NoResultsBox({
   text

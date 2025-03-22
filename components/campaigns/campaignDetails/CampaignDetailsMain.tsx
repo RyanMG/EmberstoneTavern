@@ -1,5 +1,5 @@
 import CampaignIcon from "@components/campaigns/CampaignIcon";
-import BodyText from "@components/common/BodyText";
+import BodyText from "@/components/common/text/BodyText";
 
 import Campaign from "@classes/Campaign";
 

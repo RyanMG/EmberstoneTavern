@@ -4,7 +4,7 @@ import { View } from "react-native";
 import Card from '@components/common/Card'
 import CampaignIcon from '../CampaignIcon';
 import { Link } from "expo-router";
-import BodyText from "@components/common/BodyText";
+import BodyText from "@/components/common/text/BodyText";
 
 export default function CampaignCard({
   campaign

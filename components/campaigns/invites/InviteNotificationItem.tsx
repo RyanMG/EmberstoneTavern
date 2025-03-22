@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { TCampaignInvite } from '@definitions/campaign';
 
 import Button from '@components/common/forms/Button';
-import BodyText from '@components/common/BodyText';
+import BodyText from '@/components/common/text/BodyText';
 
 export default function InviteNotificationItem({
   invite,

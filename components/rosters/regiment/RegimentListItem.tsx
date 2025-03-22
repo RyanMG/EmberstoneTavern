@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useMutation, UseMutateFunction, useQueryClient } from '@tanstack/react-query';
 
 import Card from '@components/common/Card';
-import BodyText from '@components/common/BodyText';
+import BodyText from '@/components/common/text/BodyText';
 import Divider from '@components/common/Divider';
 import IconButton from '@components/common/forms/IconButton';
 import UnitManagementModal, { TUnitManagmentDetails} from '@components/rosters/managment/UnitManagementModal';

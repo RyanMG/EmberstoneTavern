@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import NoResultsBox from '@components/common/NoResultsBox';
 import RegimentListItem from './RegimentListItem';
 import Button from '@components/common/forms/Button';
-import BodyText from '@components/common/BodyText';
+import BodyText from '@/components/common/text/BodyText';
 import UnitManagementModal, { TUnitManagmentDetails} from '@components/rosters/managment/UnitManagementModal';
 
 import Regiment from '@classes/Regiment';

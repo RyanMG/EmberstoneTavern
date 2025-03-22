@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Modal, View, StyleSheet } from 'react-native';
 import COLORS from '@constants/colors';
 
-import BodyText from '@components/common/BodyText';
+import BodyText from '@/components/common/text/BodyText';
 import IconButton from '@components/common/forms/IconButton';
 
 export default function ModalWrapper({

@@ -3,7 +3,7 @@ import { useRef } from 'react';
 
 import BouncyCheckbox, { BouncyCheckboxHandle} from 'react-native-bouncy-checkbox';
 
-import BodyText from '@components/common/BodyText';
+import BodyText from '@/components/common/text/BodyText';
 
 import COLORS from '@constants/colors';
 

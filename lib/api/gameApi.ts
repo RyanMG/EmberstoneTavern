@@ -33,3 +33,20 @@ export async function fetchCampaignGames(campaignId: string): Promise<TCampaignG
     throw new Error(`Failed to fetch campaign games: ${(error as Error).message}`);
   }
 }
+
+export async function fetchGame(campaignId: string, gameId: string): Promise<TCampaignGame> {
+  try {
+    const { data } = await axios.get<GenericHTTPResponse<TCampaignGame>>(`${API_ROOT}/${campaignId}/games/${gameId}`);
+    if (data.success) {
+      const game = data.data;
+      game.campaign = new Campaign(game.campaign);
+      game.winner = new Person(game.winner);
+      game.opponent = new Person(game.opponent);
+      return game;
+    }
+
+    throw new Error(`Failed to fetch game.`);
+  } catch (error) {
+    throw new Error(`Failed to fetch game: ${(error as Error).message}`);
+  }
+}

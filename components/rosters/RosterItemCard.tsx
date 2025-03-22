@@ -2,7 +2,7 @@ import { TRoster } from '@definitions/roster';
 import { View } from 'react-native';
 import { Link } from 'expo-router';
 
-import BodyText from '@components/common/BodyText';
+import BodyText from '@/components/common/text/BodyText';
 import Card from '@components/common/Card';
 
 export default function RosterItemCard({

@@ -55,4 +55,5 @@ export type TCampaignGame = {
   rounds: number;
   winnerScore: number;
   opponentScore: number;
+  story: string;
 }

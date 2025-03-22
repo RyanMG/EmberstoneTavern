@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-import BodyText from "@/components/common/BodyText";
+import BodyText from "@/components/common/text/BodyText";
 
 import Roster from "@classes/Roster";
 import NoResultsBox from "../common/NoResultsBox";

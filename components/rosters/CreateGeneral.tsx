@@ -8,7 +8,7 @@ import { TUnit, TNewUnit } from "@definitions/unit";
 import { TCampaign } from "@definitions/campaign";
 
 import Button from "@components/common/forms/Button";
-import BodyText from "@components/common/BodyText";
+import BodyText from "@/components/common/text/BodyText";
 
 import UnitManagmentModal, { TUnitManagmentDetails } from "@/components/rosters/managment/UnitManagementModal";
 import { GenericHTTPResponse } from "@definitions/api";
