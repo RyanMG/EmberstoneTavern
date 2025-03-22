@@ -1,11 +1,10 @@
 import { View } from "react-native";
-
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useLocalSearchParams, Redirect } from "expo-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useLocalSearchParams, useRouter, Redirect } from "expo-router";
 
 import PageLoading from "@components/common/PageLoading";
 import PageContainer from "@components/common/PageContainers";
-import CampaignGameForm from "@components/campaigns/games/campaignGameForm";
+import CampaignGameForm from "@/components/campaigns/games/CampaignGameForm";
 
 import { reportGame } from "@api/gameApi";
 import { fetchCampaign } from "@api/campaignApi";
@@ -16,20 +15,22 @@ import { useNotification } from "@context/NotificationContext";
 
 export default function NewGamePage() {
 
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id: campaignId } = useLocalSearchParams<{ id: string }>();
   const { showNotification } = useNotification();
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { isPending, error, data: campaign } = useQuery<Campaign>({
-    queryKey: ['campaign', {id: id}],
-    queryFn: () => fetchCampaign(id!),
+    queryKey: ['campaign', {id: campaignId}],
+    queryFn: () => fetchCampaign(campaignId!),
   })
 
   const reportGameMutation = useMutation({
     mutationFn: (newGame: TNewCampaignGame) => reportGame(newGame),
     onSuccess: () => {
       showNotification('Game reported successfully');
-      // queryClient.invalidateQueries({ queryKey: ['campaign', {id: id}] });
-      // router.push(`/campaigns/${campaign.id}`);
+      queryClient.invalidateQueries({ queryKey: ['campaignGames', {id: campaignId}] });
+      router.push(`/campaigns/${campaignId}/games`);
     }
   });
 

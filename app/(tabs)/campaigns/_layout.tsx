@@ -33,7 +33,7 @@ export default function Campaigns() {
       }}/>
       <Stack.Screen name="[id]/rosters/[rosterId]/index" options={{
         ...pageHeaderOptions,
-        title: 'Roster details page'
+        title: 'Roster Details Page'
       }}/>
       <Stack.Screen name="[id]/rosters/[rosterId]/edit" options={{
         ...pageHeaderOptions,
@@ -43,6 +43,18 @@ export default function Campaigns() {
       <Stack.Screen name="[id]/games/new" options={{
         ...pageHeaderOptions,
         title: 'Report Game'
+      }}/>
+      <Stack.Screen name="[id]/games/index" options={{
+        ...pageHeaderOptions,
+        title: 'Games Played'
+      }}/>
+      <Stack.Screen name="[id]/games/[gameId]/index" options={{
+        ...pageHeaderOptions,
+        title: 'Game Details'
+      }}/>
+      <Stack.Screen name="[id]/games/[gameId]/edit" options={{
+        ...pageHeaderOptions,
+        title: 'Edit Game Details'
       }}/>
     </Stack>
   );

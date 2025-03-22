@@ -42,6 +42,8 @@ export type TNewCampaignGame = {
 }
 
 export type TCampaignGame = {
+  id: number;
+  campaign: Campaign;
   campaignId: string;
   gameDate: string;
   winner: Person;

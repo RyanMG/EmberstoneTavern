@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, Link } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { View, StyleSheet } from "react-native";
 
@@ -9,6 +9,7 @@ import CampaignMembers from "@components/campaigns/campaignDetails/CampaignMembe
 import CampaignMemberActions from "@components/campaigns/campaignDetails/CampaignMemberActions";
 import CampaignOwnerActions from "@components/campaigns/campaignDetails/CampaignOwnerActions";
 import Spacer from "@components/common/Spacer";
+import BodyText from "@components/common/BodyText";
 
 import Campaign from "@classes/Campaign";
 import { fetchCampaign } from "@api/campaignApi";
@@ -17,12 +18,12 @@ import { useAuth } from "@context/AuthContext";
 import { Redirect } from "expo-router";
 
 export default function CampaignPage() {
-  let { id }: { id: string } = useLocalSearchParams();
+  let { id: campaignId }: { id: string } = useLocalSearchParams();
   const { authState } = useAuth();
 
   const { isPending, error, data } = useQuery<Campaign>({
-    queryKey: ['campaign', {id: id}],
-    queryFn: () => fetchCampaign(id!),
+    queryKey: ['campaign', {id: campaignId}],
+    queryFn: () => fetchCampaign(campaignId!),
   })
   const { showNotification } = useNotification();
 
@@ -44,6 +45,17 @@ export default function CampaignPage() {
           <CampaignDetailsMain campaign={data} />
           <Spacer />
           <CampaignMembers campaign={data} />
+          <Spacer />
+
+          <Link href={`/campaigns/${campaignId}/games`}>
+            <BodyText
+              link={true}
+              bold={true}
+              italic={true}
+              textSize="lg"
+              children="See all games played in this campaign"
+            />
+          </Link>
         </View>
 
         {authState?.activeUser?.isSameAs(data.owner.id) && (

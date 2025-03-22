@@ -43,7 +43,7 @@ export default function DateModal({ title, selectedDate, setSelectedDate }: Date
           date={selectedDate}
           onChange={({ date }) => {
             if (!date) return;
-            if (date instanceof dayjs.Dayjs) {
+            if (dayjs.isDayjs(date)) {
               setSelectedDate(date);
             } else {
               setSelectedDate(dayjs(date));

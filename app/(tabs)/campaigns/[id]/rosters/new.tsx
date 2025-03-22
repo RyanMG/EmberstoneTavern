@@ -55,7 +55,11 @@ export default function CreateNewRosterPage() {
     },
     onSuccess: ({data}: {data: TRoster['id']}) => {
       queryClient.invalidateQueries({
-        queryKey: ['campaignRoster', {campaignId: id}],
+        // Need to invalidate the campaign and the roster
+        predicate: (query: {queryKey: [string, {id?: string}]}) => {
+          return (query.queryKey[0] === 'campaign' && query.queryKey[1]?.id === id) ||
+            (query.queryKey[0] === 'campaignRoster' && query.queryKey[1]?.id === id);
+        }
       })
       router.replace(`/(tabs)/campaigns/${id}/rosters/${data}`);
     }
