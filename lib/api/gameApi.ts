@@ -59,3 +59,12 @@ export async function fetchGame(campaignId: string, gameId: string): Promise<TCa
     throw new Error(`Failed to fetch game: ${(error as Error).message}`);
   }
 }
+
+export async function updateGameStory(campaignId: string, gameId: number, story: string): Promise<void> {
+  try {
+    await axios.put<GenericHTTPResponse<void>>(`${API_ROOT}/${campaignId}/games/${gameId}/story`, { story });
+
+  } catch (error) {
+    throw new Error(`Failed to update game story: ${(error as Error).message}`);
+  }
+}
