@@ -43,17 +43,17 @@ export type TNewCampaignGame = {
 
 export type TCampaignGame = {
   id: number;
-  campaign: Campaign;
+  campaign?: Campaign;
   campaignId: string;
   gameDate: string;
-  winner: Person;
+  winner?: Person;
   winnerId: TPerson['id'];
-  opponent: Person;
+  opponent?: Person;
   opponentId: TPerson['id'];
   missionPlayed: string;
   twist: string;
   rounds: number;
   winnerScore: number;
   opponentScore: number;
-  story: string;
+  story?: string;
 }

@@ -34,6 +34,10 @@ export default function NewGamePage() {
     }
   });
 
+  const saveGame = (game: TNewCampaignGame) => {
+    reportGameMutation.mutate(game);
+  }
+
   if (isPending) return <PageLoading />
   if (error) {
     showNotification(error.message);
@@ -48,7 +52,12 @@ export default function NewGamePage() {
   return (
     <PageContainer>
       <View style={{ width: '100%' }}>
-        <CampaignGameForm campaign={campaign} reportGameMutation={reportGameMutation} />
+        <CampaignGameForm
+          campaign={campaign}
+          saveGame={saveGame}
+          savePending={reportGameMutation.isPending}
+          buttonTitle="Report Game"
+        />
       </View>
     </PageContainer>
   );

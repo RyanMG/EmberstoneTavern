@@ -17,7 +17,7 @@ export default function GameCard({ game }: { game: TCampaignGame }) {
       >
         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={{display: 'flex', flexDirection: 'column'}}>
-            <BodyText textSize="md" bold={true}>{game.winner.getFullName()} vs {game.opponent.getFullName()}</BodyText>
+            <BodyText textSize="md" bold={true}>{game.winner!.getFullName()} vs {game.opponent!.getFullName()}</BodyText>
             <BodyText textSize="sm" italic={true}>{game.missionPlayed}</BodyText>
             <BodyText textSize="sm" italic={true}>Played on {formatDateForDisplay(game.gameDate)}</BodyText>
           </View>

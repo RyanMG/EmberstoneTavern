@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import { useState } from "react";
-import { UseMutationResult } from "@tanstack/react-query";
 import dayjs from 'dayjs';
 
 import InputElement from "@components/common/forms/InputElement";
@@ -11,21 +10,32 @@ import Spacer from "@components/common/Spacer";
 
 import Campaign from "@classes/Campaign";
 import { createFormSelectOptions } from "@/lib/utils/formUtils";
-import { TCampaignGame, TNewCampaignGame } from "@definitions/campaign";
+import { TNewCampaignGame, TCampaignGame } from "@definitions/campaign";
+
+interface ICampaignGameFormProps {
+  campaign: Campaign;
+  saveGame: (game: TNewCampaignGame) => void;
+  game?: TCampaignGame;
+  savePending: boolean;
+  buttonTitle: string;
+}
 
 export default function CampaignGameForm({
   campaign,
-  reportGameMutation
-}: {campaign: Campaign, reportGameMutation: UseMutationResult<TCampaignGame, Error, TNewCampaignGame, unknown>}) {
+  saveGame,
+  game,
+  savePending,
+  buttonTitle
+}: ICampaignGameFormProps) {
 
-  const [winnerId, setWinnerId] = useState<string | null>(null);
-  const [opponentId, setOpponentId] = useState<string | null>(null);
-  const [missionPlayed, setMissionPlayed] = useState<string>('');
-  const [twist, setTwist] = useState<string>('');
-  const [rounds, setRounds] = useState<string>('');
-  const [winnerScore, setWinnerScore] = useState<string>('');
-  const [opponentScore, setOpponentScore] = useState<string>('');
-  const [gameDate, setGameDate] = useState<dayjs.Dayjs>(dayjs());
+  const [winnerId, setWinnerId] = useState<string | null>(game?.winnerId || null);
+  const [opponentId, setOpponentId] = useState<string | null>(game?.opponentId || null);
+  const [missionPlayed, setMissionPlayed] = useState<string>(game?.missionPlayed || '');
+  const [twist, setTwist] = useState<string>(game?.twist || '');
+  const [rounds, setRounds] = useState<string>(game?.rounds?.toString() || '');
+  const [winnerScore, setWinnerScore] = useState<string>(game?.winnerScore?.toString() || '');
+  const [opponentScore, setOpponentScore] = useState<string>(game?.opponentScore?.toString() || '');
+  const [gameDate, setGameDate] = useState<dayjs.Dayjs>(game?.gameDate ? dayjs(game.gameDate) : dayjs());
 
   return (
     <View style={{display: 'flex', flexDirection: 'column', gap: 10, maxHeight: '100%', overflowY: 'auto'}}>
@@ -79,9 +89,9 @@ export default function CampaignGameForm({
       />
       <Spacer size="sm" />
       <Button
-        title="Report Game"
-        disabled={reportGameMutation.isPending || (winnerId === null || opponentId === null || missionPlayed === '' || isNaN(Number(rounds)) || Number(rounds) < 1)}
-        onPress={() => reportGameMutation.mutate({
+        title={buttonTitle}
+        disabled={savePending || (winnerId === null || opponentId === null || missionPlayed === '' || isNaN(Number(rounds)) || Number(rounds) < 1)}
+        onPress={() => saveGame({
           campaignId: campaign.id,
           gameDate: gameDate.toISOString(),
           winnerId: winnerId!,

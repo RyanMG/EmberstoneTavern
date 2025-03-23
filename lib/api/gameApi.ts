@@ -16,14 +16,23 @@ export async function reportGame(game: TNewCampaignGame): Promise<TCampaignGame>
    }
 }
 
+export async function updateGame(game: TCampaignGame): Promise<TCampaignGame> {
+  try {
+    const { data } = await axios.put<TCampaignGame>(`${API_ROOT}/${game.campaignId}/games/${game.id}`, game);
+    return data;
+  } catch (error) {
+    throw new Error(`Failed to update game: ${(error as Error).message}`);
+  }
+}
+
 export async function fetchCampaignGames(campaignId: string): Promise<TCampaignGame[]> {
   try {
     const { data } = await axios.get<GenericHTTPResponse<TCampaignGame[]>>(`${API_ROOT}/${campaignId}/games`);
     if (data.success) {
       return data.data.map((game: TCampaignGame) => {
         game.campaign = new Campaign(game.campaign);
-        game.winner = new Person(game.winner);
-        game.opponent = new Person(game.opponent);
+        game.winner = new Person(game.winner!);
+        game.opponent = new Person(game.opponent!);
         return game;
       });
     }
@@ -40,8 +49,8 @@ export async function fetchGame(campaignId: string, gameId: string): Promise<TCa
     if (data.success) {
       const game = data.data;
       game.campaign = new Campaign(game.campaign);
-      game.winner = new Person(game.winner);
-      game.opponent = new Person(game.opponent);
+      game.winner = new Person(game.winner!);
+      game.opponent = new Person(game.opponent!);
       return game;
     }
 
