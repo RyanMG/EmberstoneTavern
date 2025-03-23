@@ -62,13 +62,13 @@ export default function UnitManagmentModal({
 
   const pathQuery = useQuery({
     queryKey: ['paths'],
-    queryFn: () => fetchPaths(isHero, unitTypeId!),
+    queryFn: () => fetchPaths(isHeroUnit, unitTypeId!),
     enabled: !!unitTypeId,
   })
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ['paths'] })
-  }, [unitTypeId, isHero])
+  }, [unitTypeId, isHeroUnit])
 
   if (unitTypeQuery.isError || pathQuery.isError) {
     showNotification("Error fetching data for unit creation");

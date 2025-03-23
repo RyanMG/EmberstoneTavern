@@ -3,7 +3,6 @@ import { View } from "react-native";
 
 import Card from "@components/common/Card";
 import BodyText from "@/components/common/text/BodyText";
-import IconButton from "@components/common/forms/IconButton";
 
 import { TCampaignGame } from "@definitions/campaign";
 import { formatDateForDisplay } from "@utils/dateUtils";

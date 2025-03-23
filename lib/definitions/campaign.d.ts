@@ -1,6 +1,7 @@
-export type TCampaignStatus = 'ACTIVE' | 'COMPLETE';
 import Person from "@classes/Person";
 import { TPerson } from "@definitions/person";
+
+export type TCampaignStatus = 'ACTIVE' | 'COMPLETE';
 
 export type TCampaign = {
   id: string;
